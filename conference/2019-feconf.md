@@ -347,7 +347,7 @@ type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
   * 각 기능 내부에서 오류가 발생해도, 전체 앱은 멈추지 않도록 한다
   * 각 기능은 SDK의 형태로, 충분히 추상화되어 쉽게 개발할 수 있도록 만든다
 
-### 아쉬운 
+### 아쉬운 점
 
 * 복잡도가 높지 않은 프로젝트에서 MSA는 기존 Monolithic 방식보다 효율성은 낮다.
 * 초기 단계에 개발자들의 역량이 많이 필요하다.
@@ -363,11 +363,15 @@ type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
     * postMessage, onmessage 인터페이스는 보안상의 샌드박스를 위한 추상화에 불과
     * iframe으로 인한 렌더링 성능 하락 \(약 30%\)
 
-### 좋았던 
+### 좋았던 점
 
 * 각 서비스 팀별 분리 및 배포 사이클 분리
 * url 변경만으로 충분한 알파테스트가 이루어 짐으로 배포할 것만 신경쓰면됨.
 * 신규 feature에 오류가 발생해도 iframe을 통한 물리적인 격리로 사이드 이펙트 최소
+
+### 기타 의견\([**@sunginHwang**](https://github.com/sunginHwang)**\)**
+
+* 크롬 한정의 서비스라 보통의 프로덕트에서는 적용하기 힘든 방식이 아닐지..
 
 ## 3달간 GitHub 스타 3K 받은 Scene.js, Moveable 오픈소스 개발기
 
