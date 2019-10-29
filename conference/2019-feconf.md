@@ -298,7 +298,7 @@ f2(imgs2).catch(_ => 0).then(log);
 
 ### 네가지 인터페이스 관리하기 위한 메세지 프로토콜 구성 
 
-![](../.gitbook/assets/image%20%2811%29.png)
+![](../.gitbook/assets/image%20%2813%29.png)
 
 ### 핵심 역할 인터페이스 명
 
@@ -337,7 +337,7 @@ type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
 
 ### 위 설계들을 통하여 취한 Isomorphic Implementation 개발
 
-![Server - Client\(Parent\) - Client\(iframe\)](../.gitbook/assets/image%20%2813%29.png)
+![Server - Client\(Parent\) - Client\(iframe\)](../.gitbook/assets/image%20%2815%29.png)
 
 * 이전 항목에서 언급한 core의 구현체를 서로 던져가며 이득을 취하는 것 같다.
 * MSA 기반 대규모 Front-end Application의 지향점
@@ -424,7 +424,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 하다보니 유튜버가 소개를 하기도..
 
-![DesignCourse](../.gitbook/assets/image%20%289%29.png)
+![DesignCourse](../.gitbook/assets/image%20%2810%29.png)
 
 ## 글로벌 서비스를 하게 되면 겪게 될 폰트 렌더링 문제
 
@@ -453,7 +453,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 다른 글로벌 서비스 사이트는 어떻게 대응하는가
 
-![&#xBC1C;&#xD45C;&#xC790;&#xAC00; &#xAC00;&#xC7A5; &#xCD94;&#xCC9C;&#xD558;&#xB294; &#xBC29;&#xC2DD;](../.gitbook/assets/image%20%2812%29.png)
+![&#xBC1C;&#xD45C;&#xC790;&#xAC00; &#xAC00;&#xC7A5; &#xCD94;&#xCC9C;&#xD558;&#xB294; &#xBC29;&#xC2DD;](../.gitbook/assets/image%20%2814%29.png)
 
 ### lang attribute
 
@@ -467,7 +467,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 말은 쉽지만 그 수많은 페이지를 어떻게 UI 테스트 합니까?
 
-![Cypress.io](../.gitbook/assets/image%20%2810%29.png)
+![Cypress.io](../.gitbook/assets/image%20%2812%29.png)
 
 * 다른 E2E 테스트를 시도하지 않았다곤 한다.
 * 크롬브라우저 위에서 Dom 기반으로 진행하는 테스트
@@ -483,4 +483,122 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 * 연사가 [TestCafe](https://devexpress.github.io/testcafe/documentation/getting-started/)도 있다고 했다. 
 
 ## Vue.js 입문자가 실무에서 주의해야 할 5가지 특징
+
+### 반응성 - 왜 내 화면은 다시 그려지지 않는 걸까?
+
+![](../.gitbook/assets/image%20%2818%29.png)
+
+* 생성하는 시점에 객체에 없던 프로퍼티에 대하여 값의 변경을 요할 경우 반응을 하지 않는다.
+* 크게 다음과 같은 경우에 실수를 유발한다고 한다.
+  * toggle 역할을 하는 ui를 다룰 경우
+  * 서버에서 불러온 데이터에 임의의 값을 추가하여 사용하는 경
+
+![](../.gitbook/assets/image%20%2816%29.png)
+
+* vuex의 state 도 동일하니 주의가 필요하다.
+* Vue 3.0에서는 Proxy를 기반으로 변화할 예정이므로 괜찮다고 한다.
+
+### DOM 조작 - 오래된 습관 버리기
+
+* 기존 DOM 요소 제어 방식
+  * ```javascript
+    // 네이티브 자바스크립트
+    document.querySelector('#app');
+    // 제이쿼리 라이브러리
+    $('#app');
+
+    // 버튼 요소 검색
+    var btn = document.querySelector('#btn');
+    btn.addEventListener('click', function(event) {  
+        event.target.closest('.tag1').remove(); 
+    });
+    ```
+* Vue.js DOM 요소 제어 방식
+  * ```javascript
+    <!-- HTML 태그에 ref 속성 추가 --> 
+    <div ref="hello">Hello Ref</div> // 인스턴스에서 접근 가능한 ref 속성 
+    this.$refs.hello; // div 엘리먼트 정보
+
+    <!-- 뷰 디렉티브에서 제공되는 정보를 활용 -->
+    <ul>  
+        <li v-for="(item, index) in items">    
+            <span v-bind:id="index">{{ item }}</span>  
+        </li>
+    </ul>
+
+    <ul>
+        <li @click="removeItem">
+            <span>메뉴 1</span>    
+            <div class="child hide">메뉴 설명</div>  
+        </li>  
+        <li @click="removeItem">
+            <span>메뉴 2</span>
+                <div class="child hide">메뉴 설명</div>  
+        /li>  ...
+    </ul>
+    ```
+
+### 라이프 사이클 - 나는 인스턴스를 얼마나 파악하나
+
+![Vue Life Cycle](../.gitbook/assets/image%20%2811%29.png)
+
+#### 뷰의 템플릿 속성
+
+```javascript
+// 인스턴스 옵션 속성 
+new Vue({
+    data: {str: 'Hello World'}, 
+    template: '<div>{{ str }}</div>'}
+); 
+<!-- 싱글 파일 컴포넌트 -->
+<template>
+    <div>{{str}}</div>
+</template>
+
+// 싱글 파일 컴포넌트의 라이브러리 내부적으로 변환한 모습 
+function render() {
+  with(this) {
+       return _c('div', [_v(_s(str))]);
+  } 
+}  
+```
+
+* 뷰의 인스턴스 컴포넌트의 표현부를 정의하는 속
+*  **vue tempalate-explorer** 확인하면  랜더링된 부분을  볼수 있다고 한다.
+* 실제 DOM이 아닌 Virtual DOM\(javascript object\)이다.
+* **인스턴스가 실제로 화면에 mounted\(부착\) 된 이후부터 유효하다.**
+* 실제로 이 사실을 알고 가지 않는다면 다음과 같은 경우를 겪을 수 있다.
+  * ```javascript
+    <!-- 템플릿 속성 -->
+    <template>
+      <canvas id="myChart"></canvas>
+    </template>
+
+    // 인스턴스 옵션 
+    new Vue({
+      created: function() {
+          var ctx = document.querySelector('#myChart'); // null
+          new Chart(ctx, chartOptions);
+      }
+    });
+
+    // 인스턴스 옵션 
+    new Vue({
+      mounted: function() {
+          var ctx = document.querySelector('#myChart'); // <canvas>
+          new Chart(ctx, chartOptions);
+      }
+    });
+    ```
+
+### ref attribute - 만들다만 ref 속성
+
+* 특정 DOM, 하위 Component 를 가르키기 위한 용
+  * DOM에 사용하는 경우 DOM 정보를 접근
+  * 하위 Component를 지정하는 경우 인스턴스 정보 접
+  * v-for 디렉티브에 사용하는 경우 Array 형태로 정보를 제공한다.
+
+### computed attribute - 간결한 템플릿의 완성
+
+
 
