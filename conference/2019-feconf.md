@@ -2,6 +2,8 @@
 
 #### [https://blog.woolta.com/categories/9/posts/192](https://blog.woolta.com/categories/9/posts/192) 에도 2019 feconf 내용이 잘 정리 되어있다.
 
+[**@sunginHwang**](https://github.com/sunginHwang) **이 도움.**
+
 ## 팀장님: 우린 내일부터 React + TypeScript로 갑니다.
 
 ### 왜 선택했나
@@ -96,7 +98,6 @@
 
 ## ES6+ 비동기 프로그래밍과 실전 에러 핸들링
 
-* 전반적인 내용정리는 [**@sunginHwang**](https://github.com/sunginHwang) **이 도와줬음.**
 * 라이브 세션인지라 따라가기 힘들었다.
 
 ### 예제코드
@@ -198,7 +199,6 @@ f2(imgs2).catch(_ => 0).then(log);
 
 ### 개요
 
-* 전반적인 내용정리는 [**@sunginHwang**](https://github.com/sunginHwang) **이 도와줬음.**
 * 애니메이션과 인터렉션이 모바일에서 사용자에게 좋은 경험을 제공하지 않을까? 라는 관점을 소개 
 * 내부적으로 작동하는 방식에 대해서, 자료는 크게 없어서 직접 뜯어봐야하는편
 
