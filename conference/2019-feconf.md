@@ -161,7 +161,7 @@ async function f1() {
 // f1();
 ```
 
-### 해결 방안 제
+### 해결 방안 제시
 
 ```javascript
 function* map(f, iter) {
@@ -294,14 +294,80 @@ f2(imgs2).catch(_ => 0).then(log);
 
 * MobX를 사용하여, React, Vue, Angular 모두 지원
 * Props를 Component 등에서 Observer로 사용
+* event Interface \(Mobx Observable 활용\) 는 잘 기억이 나지 않는다.
 
+### 네가지 인터페이스 관리하기 위한 메세지 프로토콜 구성 
 
+![](../.gitbook/assets/image%20%285%29.png)
 
-* event Interface \(Mobx Observable 활용\)
-* 위 인터페이스를 관리하기 위한 메세지 프로토콜을 구
-* websocket server를 위 인터페이스를 활용하여 구성할 수 있지 않을까 하고 이야기 했으나 아직은 하지 않음.
+### 핵심 역할 인터페이스 명
 
+```typescript
+export class Core {
+    public listeners: {       
+        request: Listeners<RequestListener>,       
+        action: Listeners<ActionListener>   
+    }
+    private createMessage(eventName: string, body: any): Message
+    private sendMessageToParent(message: Message): void
+    private sendMessageToChild(sid: string, message: Message): void
+    private onMessage(message: Message): void
+}
 
+class Listeners<T> {
+    getListener(name: string): T[]
+    ﬁre(name: string, body: any): Promise<void>
+    ﬁreOne(name: string, body: any): Promise<void>
+    register(name: string, listener: T): void
+    unregister(name?: string, listener?:T):void
+}
+
+type RequestListener = (…args: string[]) => any
+type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
+```
+
+* 해당 코어의 기능은 다음과 같다.
+  * 메세지 생성
+  * 메세지 송수신\(드라이버\)
+  * 메세지 처리
+  * 메세지 리스너 등록
+* 그리고 코어적인 부분의 구현의 된 이후 SPA 웹앱을 Static File Hosting 을 통해 배포후 해당 url을 받아 iframe내부에서 사용한다
+* 내부 js에 구현체가 로드되어 있다면, 쉽게 url 만으로 마이크로 서비스로 사용이 가능하다고 한다.
+* 웹소켓 서버는 이벤트를 emit/listen 하는 방식으로 통신하므로 위와같은 내용을 적용할 수 있을거란 생각을 했다고한하나 아직 하지 않은 것으로 알고있다.
+
+### 위 설계들을 통하여 취한 Isomorphic Implementation 개발
+
+![Server - Client\(Parent\) - Client\(iframe\)](../.gitbook/assets/image%20%286%29.png)
+
+* 이전 항목에서 언급한 core의 구현체를 서로 던져가며 이득을 취하는 것 같다.
+* MSA 기반 대규모 Front-end Application의 지향점
+  * 기능들 사이의 의존성을 최소화한다 
+  * 기능들 사이의 통신은 공통의 Protocol로만 가능하도록 설계한다
+  * 기능들 사이의 통신은 충분히 고도화된 하나의 코드로 관리한다
+  * 각 기능 내부에서 오류가 발생해도, 전체 앱은 멈추지 않도록 한다
+  * 각 기능은 SDK의 형태로, 충분히 추상화되어 쉽게 개발할 수 있도록 만든다
+
+### 아쉬운 
+
+* 복잡도가 높지 않은 프로젝트에서 MSA는 기존 Monolithic 방식보다 효율성은 낮다.
+* 초기 단계에 개발자들의 역량이 많이 필요하다.
+* feature 단계의 까지의 개발 및 배포 환경 설정이 상대적으로 많다.
+* 이상과 현실의 차이를 느낌
+  * 이
+    * postMessage는 WebWorker에서도 사용되는 인터페이스
+    * iframe + postMessage 역시 WebWorker처럼 Multi-Thread를 지원하지 않을까?
+    * 렌더링 단계도 브라우저의 최적화를 통해 멀티쓰레드로 가능하지 않을까?
+  * 현실
+    * iframe + postMessage은 Single-Thread로 동작
+    * OOPIFs\(Out-of-Process iframes\) 에 대한 논의는 현재 진행형
+    * postMessage, onmessage 인터페이스는 보안상의 샌드박스를 위한 추상화에 불과
+    * iframe으로 인한 렌더링 성능 하락 \(약 30%\)
+
+### 좋았던 
+
+* 각 서비스 팀별 분리 및 배포 사이클 분리
+* url 변경만으로 충분한 알파테스트가 이루어 짐으로 배포할 것만 신경쓰면됨.
+* 신규 feature에 오류가 발생해도 iframe을 통한 물리적인 격리로 사이드 이펙트 최소
 
 ## 3달간 GitHub 스타 3K 받은 Scene.js, Moveable 오픈소스 개발기
 
