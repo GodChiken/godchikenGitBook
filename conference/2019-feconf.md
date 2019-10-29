@@ -1,6 +1,6 @@
 # 2019 feconf
 
-#### [https://blog.woolta.com/categories/9/posts/192](https://blog.woolta.com/categories/9/posts/192) 에도 2019feconf 내용이 잘 정리 되어있다.
+#### [https://blog.woolta.com/categories/9/posts/192](https://blog.woolta.com/categories/9/posts/192) 에도 2019 feconf 내용이 잘 정리 되어있다.
 
 ## 팀장님: 우린 내일부터 React + TypeScript로 갑니다.
 
@@ -98,6 +98,93 @@
 
 * 전반적인 내용정리는 [**@sunginHwang**](https://github.com/sunginHwang) **이 도와줬음.**
 * 라이브 세션인지라 따라가기 힘들었다.
+
+### 예제코드
+
+```javascript
+const {log, clear} = console;
+
+const imgs = [
+  { name: "HEART", url: "https://s3.marpple.co/files/m2/t3/colored_images/45_1115570_1162087_150x0.png" },
+  { name: "6", url: "https://s3.marpple.co/f1/2018/1/1054966_1516076919028_64501_150x0.png"},
+  { name: "하트", url: "https://s3.marpple.co/f1/2019/1/1235206_1548918825999_78819_150x0.png" },
+  { name: "도넛", url:"https://s3.marpple.co/f1/2019/1/1235206_1548918758054_55883_150x0.png"},
+];
+
+const imgs2 = [
+  { name: "HEART", url: "https://s3.marpple.co/files/m2/t3/colored_images/45_1115570_1162087_150x0.png" },
+  { name: "6", url: "https://s3.marpple.co/f1/2018/1/1054966_1516076919028_64501_150x0.jpg"},
+  { name: "하트", url: "https://s3.marpple.co/f1/2019/1/1235206_1548918825999_78819_150x0.png" },
+  { name: "도넛", url:"https://s3.marpple.co/f1/2019/1/1235206_1548918758054_55883_150x0.png"},
+];
+
+const loadImage = url => new Promise((resolve, reject) => {
+  let img = new Image();
+  img.src = url;
+  // log('이미지로드: ', url);
+  img.onload = function() {
+    resolve(img);
+  };
+  img.onerror = function(e) {
+    reject(e);
+  };
+  return img;
+});
+
+// loadImage(imgs[0].url).then(img => log(img.height));
+```
+
+### 실전 - 이미지의 모든 높이를 더하
+
+```javascript
+async function f1() {
+  try {
+    let error = null;
+    const total = await imgs2
+      .map(async ({url}) => {
+        if (error) return;
+        try {
+          const img = await loadImage(url);
+          return img.height;
+        } catch (e) {
+          log(e);
+          throw e;
+        }
+      })
+      .reduce(async (total, height) => await total + await height, 0);
+
+    log(total);
+  } catch (e) {
+    log(0);
+  }
+}
+// f1();
+```
+
+### 해결 방안 제
+
+```javascript
+function* map(f, iter) {
+  for (const a of iter) {
+    yield a instanceof Promise ? a.then(f) : f(a);
+  }
+}
+async function reduceAsync(f, acc, iter) {
+  for await (const a of iter) {
+    acc = f(acc, a);
+  }
+  return acc;
+}
+
+const f2 = imgs =>
+  reduceAsync((a, b) => a + b, 0,
+    map(img => img.height,
+      map(({url}) => loadImage(url), imgs)));
+
+// f2(imgs).catch(_ => 0).then(log);
+f2(imgs2).catch(_ => 0).then(log);
+```
+
 * 불러온 이미지들의 height 값을 합산한 값을 구하는 라이브 코딩이었다.
 * 이미지는 onLoad 된 시점에서만 구할수 있다고 한다.
 * **Promise, async/await , try/catch** 에 대한 정확한 이해 필요
