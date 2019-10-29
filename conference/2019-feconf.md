@@ -117,7 +117,41 @@
 
 ### 사용자 입장에서의 좋은 앱의 기준은 무엇인가?
 
-* 애
+* 애니메이션과 인터렉션\(상호작용\)이 기준이 아닐까 생각한다고 한다.
+
+### 발표목적
+
+* React Native 에서 가장 간단한 애니메이션 동작원리 이해하기
+* 이해를 하기 위하여 내부 코드를 살펴보기
+* 이를 통해 전반적인 React Native 에 개발에 도움을 되길 원함
+
+### React Native Architecture
+
+![Native Thread &#xC640; JS Thread&#xC758; &#xD1B5;&#xC2E0; &#xBC29;&#xC2DD;](../.gitbook/assets/20191029_095045.png)
+
+* 리액트 네이티브에는 크게 위와 같은 `Native Thread` , `Bridge`,`JS Thread`로 이루어졌다.
+  * `Bridge`는 두 스레드의 통신 공유를 위하여 존재한다.
+  * 데이터를 JSON 포맷으로 전달하여 호출당 시리얼라이징, 언시리얼라이징이 이루어지면 비효율 적이므로 5ms 단위로 큐 형태의 자료구조에 넣어 전달하는 `Batch Bridge` 방식으로 전달된다고 한다.
+  * Animated는 `Animated.timing(translateX, config).start()`를 실행 후  여러 함수를 거쳐서 `requestAnimationFram(callback)`이 실행된다.
+
+### React Native Animated
+
+#### without useNativeDriver
+
+![without useNativeDriver &#xC758; &#xACFC;&#xC815;](../.gitbook/assets/20191029_100808.png)
+
+* 단 1 프레임을 업데이트 하기위하여 많은 호출과정이 이루어진다.
+* 프레임 단위로 호출되기에 1프레임이 생성시 3번의 브릿지 페이지를 호출하는 과정을 취하는데 50프레임 기준 180번의 브릿지 페이지가 호출됨을 의미한다고한다.
+* 브릿지 통신 구간에 blocking 코드를 만나면 애니메이션이 멈춰버리는 단점이 존재한다.
+
+#### with useNativeDriver
+
+![with useNativeDriver](../.gitbook/assets/20191029_101150.png)
+
+* startNativeAnimation 함수로 처리하게 되면 네이티브를 호출하여 처리하는 방식
+* 모든프레임에 대한 연산을 한꺼번에 진행하기때문에 blocking 코드를 만나더라도 애니메이션에 영향이 없다고 한다.
+
+### 그래서 둘에 대해 최종적으로 비교를 해본다면?
 
 
 
