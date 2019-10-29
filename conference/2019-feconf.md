@@ -626,7 +626,7 @@ function render() {
           return lastPageCondition || nothingFetched;  
     }
 
-    //뷰엑스의 state 값을 접근할 때)
+    //뷰엑스의 state 값을 접근할 때
     <div>
       <p>{{ this.$store.state.module1.str }}</p>
       <p>{{ module1Str }}</p>
