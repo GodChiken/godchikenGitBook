@@ -597,8 +597,60 @@ function render() {
   * DOM에 사용하는 경우 DOM 정보를 접근
   * 하위 Component를 지정하는 경우 인스턴스 정보 접
   * v-for 디렉티브에 사용하는 경우 Array 형태로 정보를 제공한다.
+* v-if 태그 내부에 사용할 결우 조건으로 인하여 DOM 자체가 존재하지 않을수 있기에 사용하지 말것
+* 하위 Component에 접근이 가능하나 유지보수를 위해 남용하지 말
 
 ### computed attribute - 간결한 템플릿의 완성
 
+* 간결하고 직관적인 템플릿 표현식을위해 뷰에서 제공하는 속성
+  * ```javascript
+    <p>{{ 'hello' + str + '!!' }}</p> <!-- 템플릿 표현식만 이용하는 경우 --> 
+    <p>{{ greetingStr }}</p> <!-- computed 속성을 활용하는 경우 -->
+    new Vue({
+      data: { str: 'world' },
+      computed: {    
+        greetingStr: function() {
+          return 'hello' + this.str + '!!';    
+        }
+      }
+    });
 
+    // 조건에 따른 클래스의 추가 및 변경
+    <li v-bind:class="{ disabled: isLastPage }"></li>
+
+    computed: {
+      isLastPage: function() {
+          var lastPageCondition =
+            this.paginationInfo.current_page >= this.paginationInfo.last_page;
+          var nothingFetched = Object.keys(this.paginationInfo).length === 0;
+          return lastPageCondition || nothingFetched;  
+    }
+
+    //뷰엑스의 state 값을 접근할 때)
+    <div>
+      <p>{{ this.$store.state.module1.str }}</p>
+      <p>{{ module1Str }}</p>
+    </div>
+    new Vue({
+      computed: {
+          module1Str: function() {
+                return this.$store.state.module1.str;
+          }
+      }
+    });
+
+    //Vue i18n 다국어 라이브러리에 활
+    <p>{{ 'userPage.common.filter.input.label' }}</p> 
+    <p>{{ inputLabel }}</p>
+    computed: {  
+      inputLabel: function() {    
+        return $t('userPage.common.filter.input.label');
+      }
+    }
+    ```
+
+### Vue.js 3.0 소식
+
+* 내년 3월 오픈 예정 vuex 의 map helper 함수가 사라진다는 이야기가 있다.
+* 이것 때문에 TypeScript 도입이 좌절되는 요소가 있다곤하는데 잘 모르겠다.
 
