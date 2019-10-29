@@ -134,7 +134,7 @@ const loadImage = url => new Promise((resolve, reject) => {
 // loadImage(imgs[0].url).then(img => log(img.height));
 ```
 
-### 실전 - 이미지의 모든 높이를 더하
+### 실전 - 이미지의 모든 높이를 더하기
 
 ```javascript
 async function f1() {
