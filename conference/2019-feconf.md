@@ -164,9 +164,57 @@
 
 * 어떤 문제점을 찾으려면 원론적으로 깊게 파고드는 자세가 필요함을 배웠다.
 
-
-
 ## 프론트엔드에서의 마이크로 서비스 아키텍쳐
+
+### 문제점과 그에 대한 대응을 위한 고찰
+
+* 클라이언트의 복잡도로 인한 예측 불가능한 오류로 인하여 고객 경험에 치명적인 단점을 유발
+* 다양한 기능으로 인하여 사이드 이펙트와 예측불가
+* 한 페이지 내에 모든 기능을 처리하긴 복잡함을 느낌
+* 각 기능간 의존성과 오류를을 없애고 작업속도를 증가시킬 방법은 없는가 고민
+  * 약속된 프로토콜에 의해서 각 feature를 어떻게 구성하는가가 아닌 의사소통을 어떻게 처리할 것인가의 관점에서 고민함
+
+### iframe 과 postMessage api 소개
+
+* iframe의 보안상 이슈때문에 많이 사용은 안됬으나 iframe 당 api를 설정.
+* 각 iframe당 통신을 postMessage, onMessage 등으로 해결해 나갔으나 Payload를 통해 단 하나의 메세지 통로로 분기하는 방식을 취하다보니 코드가 엉망이 되는 상황이 발생함.
+
+#### 그래서 다음을 고려
+
+* 자식이 부모에게 데이터를 받아야 하는 경우
+* 부모가 자식의 데이터를 변경해야 하는 경우
+
+#### MSA 도입
+
+* 기능 사이의 의존성 최소화
+* 기능들 사이에 통신은 공통 프로토콜만 가능하도록 설계
+* 기능들 사이에 통신은 충분히 고도화된 하나의 코드로 관리
+* iframe 간 부모와 자식의 통신을 위하여 4가지 개념을 담은 인터페이스를 만들어 나감
+
+#### 4가지의 인터페이스
+
+![request - response Interface](../.gitbook/assets/20191029_105822.png)
+
+* 각 Message 마다 Unique한 ID를 생성합니다 \(UUID\)
+* 응답 메시지에 요청 메시지의 ID를 넣어 One-to-one 대응 관계를 만들어줍니다
+
+![action - reaction Interface](../.gitbook/assets/image%20%281%29.png)
+
+* 응답 메세지와 요청 메세지에 유니크한 id\(uuid\) 부여하여 관리
+* 응답 메시지에 요청 메시지의 ID를 넣어 One-to-many 대응 관계를 만들어줍니다
+
+![one-way - binding Interface](../.gitbook/assets/image.png)
+
+* MobX를 사용하여, React, Vue, Angular 모두 지원
+* Props를 Component 등에서 Observer로 사용
+
+
+
+* event Interface \(Mobx Observable 활용\)
+* 위 인터페이스를 관리하기 위한 메세지 프로토콜을 구
+* websocket server를 위 인터페이스를 활용하여 구성할 수 있지 않을까 하고 이야기 했으나 아직은 하지 않음.
+
+
 
 ## 3달간 GitHub 스타 3K 받은 Scene.js, Moveable 오픈소스 개발기
 
