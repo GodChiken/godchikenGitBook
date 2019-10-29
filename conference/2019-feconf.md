@@ -298,7 +298,7 @@ f2(imgs2).catch(_ => 0).then(log);
 
 ### 네가지 인터페이스 관리하기 위한 메세지 프로토콜 구성 
 
-![](../.gitbook/assets/image%20%286%29.png)
+![](../.gitbook/assets/image%20%2811%29.png)
 
 ### 핵심 역할 인터페이스 명
 
@@ -337,7 +337,7 @@ type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
 
 ### 위 설계들을 통하여 취한 Isomorphic Implementation 개발
 
-![Server - Client\(Parent\) - Client\(iframe\)](../.gitbook/assets/image%20%287%29.png)
+![Server - Client\(Parent\) - Client\(iframe\)](../.gitbook/assets/image%20%2813%29.png)
 
 * 이전 항목에서 언급한 core의 구현체를 서로 던져가며 이득을 취하는 것 같다.
 * MSA 기반 대규모 Front-end Application의 지향점
@@ -424,11 +424,63 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 하다보니 유튜버가 소개를 하기도..
 
-![DesignCourse](../.gitbook/assets/image%20%285%29.png)
+![DesignCourse](../.gitbook/assets/image%20%289%29.png)
 
 ## 글로벌 서비스를 하게 되면 겪게 될 폰트 렌더링 문제
 
+> 외국 서비스를 해나가며 폰트의 에러의 해결한 경험 소개
 
+### 폰트 렌더링의 어려움
+
+* 수많은 고려사항이 있다.
+  * 국가
+  * OS 및 버전
+  * platform
+  * browser 및 버전
+  * 유니코드 이전의 인코딩방식이 파편화
+  * 18만개의 문자를 하나의 폰트로 표현하는것을 불가능
+  * 이모지도 폰트다
+
+### 예측하기 어려운 폰트의 대응안
+
+![Redered Fonts &#xB97C; &#xCCB4;&#xD06C;&#xB97C; &#xD544;&#xD788; &#xD558;&#xC790;](../.gitbook/assets/image%20%283%29.png)
+
+* 폰트는 미리 예측하기 어렵다.
+* 크롬 디버그 툴을 이용하여 랜더링 폰트를 체크하면 내가 적용한 폰트가 잘 적용됬는지 확인이 가능하다. 
+* [폰트의 상세적인 속성에 대해 공부하려면 다음 링크를 보라](http://designwithfontforge.com/en-US/The_EM_Square.html)😀 
+* 디자이너와의 협업으로 유연한 UI를 구성하라
+* 웹폰트로 고정 및 최적화를 시도하
+
+### 다른 글로벌 서비스 사이트는 어떻게 대응하는가
+
+![&#xBC1C;&#xD45C;&#xC790;&#xAC00; &#xAC00;&#xC7A5; &#xCD94;&#xCC9C;&#xD558;&#xB294; &#xBC29;&#xC2DD;](../.gitbook/assets/image%20%2812%29.png)
+
+### lang attribute
+
+![&#xC5B8;&#xC5B4;&#xB97C; &#xC9C0;&#xC815;&#xD558;&#xB294; &#xC804;&#xC5ED;&#xC18D;&#xC131;](../.gitbook/assets/image%20%284%29.png)
+
+* 언어별 폰트셋을 사용
+* 언어별 CSS 스타일 적용
+* 번역툴에게 힌트를 제공 
+* 검색엔진에 힌트를 제공 브라우저의 문법 체크 기능 
+* 그 외 각종 파서에서 유용하게 사용 가능
+
+### 말은 쉽지만 그 수많은 페이지를 어떻게 UI 테스트 합니까?
+
+![Cypress.io](../.gitbook/assets/image%20%2810%29.png)
+
+* 다른 E2E 테스트를 시도하지 않았다곤 한다.
+* 크롬브라우저 위에서 Dom 기반으로 진행하는 테스트
+* 유저의 실제 행위에 대한 테스트 가능 \(클릭, 스크롤 등\)
+* 에러 발생 시, 스크린샷을 제공
+* 동상 녹화 기능 제
+
+### 개인적인 의견
+
+* UI의 Unit Test 용으로는 적절하나 모든 브라우저의 테스트 용도는 아닌 듯 하다.
+  * [관련 글](https://medium.com/hbsmith/selenium%EC%97%90%EC%84%9C-cypress%EB%A1%9C-%EA%B0%88%EC%95%84%ED%83%84-%ED%9B%84%EA%B8%B0-324f224c14db)이다.
+* 다른 테스트 도구도 찾아봐야겠다. 
+* 연사가 [TestCafe](https://devexpress.github.io/testcafe/documentation/getting-started/)도 있다고 했다. 
 
 ## Vue.js 입문자가 실무에서 주의해야 할 5가지 특징
 
