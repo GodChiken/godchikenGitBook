@@ -298,7 +298,7 @@ f2(imgs2).catch(_ => 0).then(log);
 
 ### 네가지 인터페이스 관리하기 위한 메세지 프로토콜 구성 
 
-![](../.gitbook/assets/image%20%285%29.png)
+![](../.gitbook/assets/image%20%286%29.png)
 
 ### 핵심 역할 인터페이스 명
 
@@ -337,7 +337,7 @@ type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
 
 ### 위 설계들을 통하여 취한 Isomorphic Implementation 개발
 
-![Server - Client\(Parent\) - Client\(iframe\)](../.gitbook/assets/image%20%286%29.png)
+![Server - Client\(Parent\) - Client\(iframe\)](../.gitbook/assets/image%20%287%29.png)
 
 * 이전 항목에서 언급한 core의 구현체를 서로 던져가며 이득을 취하는 것 같다.
 * MSA 기반 대규모 Front-end Application의 지향점
@@ -353,7 +353,7 @@ type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
 * 초기 단계에 개발자들의 역량이 많이 필요하다.
 * feature 단계의 까지의 개발 및 배포 환경 설정이 상대적으로 많다.
 * 이상과 현실의 차이를 느낌
-  * 이
+  * 이상
     * postMessage는 WebWorker에서도 사용되는 인터페이스
     * iframe + postMessage 역시 WebWorker처럼 Multi-Thread를 지원하지 않을까?
     * 렌더링 단계도 브라우저의 최적화를 통해 멀티쓰레드로 가능하지 않을까?
@@ -375,7 +375,60 @@ type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
 
 ## 3달간 GitHub 스타 3K 받은 Scene.js, Moveable 오픈소스 개발기
 
+> 인싸인척하며 자랑을 한다곤 하나 그럴 자격이 있는 발표였다.
+>
+> 오픈 소스 개발시 필히 가이드 문서를 제작하자고 한다.
+
+### Scene.js
+
+애니메이션을 타임라인 기반으로 제작이 가능한 에디터
+
+[제작자가 직접 소개하는 곳](https://medium.com/@daybrush/%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98-%EC%9B%B9-%EC%82%AC%EC%9D%B4%ED%8A%B8%EB%A5%BC-%EB%A7%8C%EB%93%A4-%EC%88%98-%EC%9E%88%EB%8A%94-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-scene-js-%EC%86%8C%EA%B0%9C-d2697f969694)
+
+### Moveable
+
+이미지를 관리하기 위한 툴
+
+Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snappable 등을 총
+
+[제작자의 깃허브](https://github.com/daybrush/moveable)
+
+### 위 두가지를 개발해야 했던 요구사항들
+
+* % 가 아닌 초로 관리하는 애니메이션 필요
+* 동시제어
+* 자바스크립트나 css에서도 같은 재생방식이 필요
+* css를 자바스크립트에서 더 쉽게 쓸수 있는 방법
+* 리액트, 뷰, 앵귤러 용의 릴리즈가 필요
+
+### 그런건 없기에 직접 만들어감
+
+* **react-scenejs** : React용 Scene.js
+* **ngx-scenejs** : Angular용 Scene.js
+* **vue-scenejs** : Vue용 Scene.js 
+* **@scenejs/effects** : 이펙트 컬렉션
+* **@scenejs/media** : Video, Audio를 재생할 수 있는 모듈
+* **@scenejs/iframe** : Iframe에있는Scene을재생할 수 있는 모듈
+* **@scenejs/timeline** : Scene을 타임라인 형태로 시각화 해주는 모듈
+* **@scenejs/render** : Scene을 mp4로 인코딩 해주는 모듈
+
+### 그래서 홍보는 이렇게 했다.
+
+* **Echo JS**
+* **Hacker News**
+* **Find best open source**
+* **Best of JavaScript**
+* **JavaScriptKicks**
+* **프론트엔드개발그룹**
+* **CodePen**
+
+### 하다보니 유튜버가 소개를 하기도..
+
+![DesignCourse](../.gitbook/assets/image%20%285%29.png)
+
 ## 글로벌 서비스를 하게 되면 겪게 될 폰트 렌더링 문제
+
+
 
 ## Vue.js 입문자가 실무에서 주의해야 할 5가지 특징
 
