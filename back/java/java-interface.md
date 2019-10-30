@@ -92,11 +92,11 @@
 
 
 
-![&#xD0A4;&#xC6CC;&#xB4DC;&#xB97C; &#xC81C;&#xAC70;&#xD558;&#xC9C0; &#xC54A;&#xB294; &#xACBD;&#xC6B0; &#xB2E4;&#xC74C;&#xACFC; &#xAC19;&#xC740; &#xACBD;&#xACE0; &#xBA54;&#xC138;&#xC9C0;&#xAC00; &#xCD9C;&#xB825;&#xB41C;&#xB2E4;.](../.gitbook/assets/interfacewarnning.png)
+![&#xD0A4;&#xC6CC;&#xB4DC;&#xB97C; &#xC81C;&#xAC70;&#xD558;&#xC9C0; &#xC54A;&#xB294; &#xACBD;&#xC6B0; &#xB2E4;&#xC74C;&#xACFC; &#xAC19;&#xC740; &#xACBD;&#xACE0; &#xBA54;&#xC138;&#xC9C0;&#xAC00; &#xCD9C;&#xB825;&#xB41C;&#xB2E4;.](../../.gitbook/assets/interfacewarnning.png)
 
 
 
-![&#xD574;&#xB2F9; &#xC778;&#xD130;&#xD398;&#xC774;&#xC2A4;&#xC5D0;&#xB294; &#xAC01; &#xC694;&#xC18C;&#xB9C8;&#xB2E4; &#xD0A4;&#xC6CC;&#xB4DC;&#xB97C; &#xC81C;&#xC678;&#xD558;&#xACE0; &#xCEF4;&#xD30C;&#xC77C; &#xD588;&#xC9C0;&#xB9CC;, &#xAE30;&#xBCF8;&#xC801;&#xC73C;&#xB85C; &#xBD99;&#xB294;&#xB2E4;&#xB294; &#xAC83;&#xC744; &#xD559;&#xC2B5;&#xD588;&#xB2E4;.](../.gitbook/assets/interfacejavapresult.png)
+![&#xD574;&#xB2F9; &#xC778;&#xD130;&#xD398;&#xC774;&#xC2A4;&#xC5D0;&#xB294; &#xAC01; &#xC694;&#xC18C;&#xB9C8;&#xB2E4; &#xD0A4;&#xC6CC;&#xB4DC;&#xB97C; &#xC81C;&#xC678;&#xD558;&#xACE0; &#xCEF4;&#xD30C;&#xC77C; &#xD588;&#xC9C0;&#xB9CC;, &#xAE30;&#xBCF8;&#xC801;&#xC73C;&#xB85C; &#xBD99;&#xB294;&#xB2E4;&#xB294; &#xAC83;&#xC744; &#xD559;&#xC2B5;&#xD588;&#xB2E4;.](../../.gitbook/assets/interfacejavapresult.png)
 
 
 

@@ -165,7 +165,7 @@
   * 와일드 카드는 제네릭의 제한을 상위와 하위 타입으로 제한할 수 있는 반면 오직 상위 타입으로만 제한할 수 있다. 이 말은 곧 타입 파라미터는 super 키워드를 활용하여 제한할 수 없다.
   * 타입 파라미터는 Multiple Bounding 이 가능하지만 와일드 카드는 불가하다.   
 
-![](../.gitbook/assets/typeparameterandmultiplebound.png)
+![](../../.gitbook/assets/typeparameterandmultiplebound.png)
 
 * [https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card](https://stackoverflow.com/questions/18176594/when-to-use-generic-methods-and-when-to-use-wild-card)
 * [제네릭에 관하여 최고로 정리가 잘된\(?\) 것 같은 곳도 링크](https://www.tutorialspoint.com/java_generics/java_generics_multiple_bounds.htm)

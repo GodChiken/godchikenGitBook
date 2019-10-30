@@ -26,9 +26,10 @@
 
 ## Back
 
-* [Java - Generic](back/untitled.md)
-* [Java - Inheritance\(상속\)](back/java-inheritance.md)
-* [Java - Interface](back/java-interface.md)
+* [Java](back/java/README.md)
+  * [Java - Generic](back/java/untitled-1.md)
+  * [Java - Inheritance\(상속\)](back/java/java-inheritance.md)
+  * [Java - Interface](back/java/java-interface.md)
 
 ## DevOps
 
