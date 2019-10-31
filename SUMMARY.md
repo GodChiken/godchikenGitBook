@@ -22,6 +22,7 @@
   * [객체의 변경불가성 \(immutability\)](front/javascript/immutability.md)
   * [let, const, BlockLevel Scope](front/javascript/let-const-blocklevel-scope.md)
   * [Iteration](front/javascript/iteration.md)
+  * [Generator](front/javascript/generator.md)
   * [문법과 어휘구조2\(ES6~new\)](front/javascript/2-es6-new.md)
   * [class Keyword](front/javascript/class-keyword.md)
 * [패스트 캠퍼스 - 벨로퍼트와 함께하는 모던 리액트](front/undefined-1/README.md)
