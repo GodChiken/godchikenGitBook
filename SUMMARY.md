@@ -5,7 +5,7 @@
 ## Front
 
 * [JavaScript](front/javascript/README.md)
-  * [class Keyword](front/javascript/class-keyword.md)
+  * [모듈](front/javascript/undefined-1.md)
   * [자바스크립트란](front/javascript/untitled-1.md)
   * [변수](front/javascript/untitled-2.md)
   * [문법 어휘구조](front/javascript/undefined.md)
@@ -23,6 +23,7 @@
   * [let, const, BlockLevel Scope](front/javascript/let-const-blocklevel-scope.md)
   * [Iteration](front/javascript/iteration.md)
   * [문법과 어휘구조2\(ES6~new\)](front/javascript/2-es6-new.md)
+  * [class Keyword](front/javascript/class-keyword.md)
 * [패스트 캠퍼스 - 벨로퍼트와 함께하는 모던 리액트](front/undefined-1/README.md)
   * [리액트 입문](front/undefined-1/undefined.md)
   * [컴포넌트 스타일링](front/undefined-1/undefined-1.md)
