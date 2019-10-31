@@ -473,7 +473,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 * 크롬브라우저 위에서 Dom 기반으로 진행하는 테스트
 * 유저의 실제 행위에 대한 테스트 가능 \(클릭, 스크롤 등\)
 * 에러 발생 시, 스크린샷을 제공
-* 동상 녹화 기능 제
+* 동영상 녹화 기능 제공
 
 ### 개인적인 의견
 
