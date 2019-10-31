@@ -5,6 +5,7 @@
 ## Front
 
 * [JavaScript](front/javascript/README.md)
+  * [class Keyword](front/javascript/class-keyword.md)
   * [자바스크립트란](front/javascript/untitled-1.md)
   * [변수](front/javascript/untitled-2.md)
   * [문법 어휘구조](front/javascript/undefined.md)
