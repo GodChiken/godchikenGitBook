@@ -27,7 +27,7 @@
   * [Generator](front/javascript-es6-now/generator.md)
   * [class Keyword](front/javascript-es6-now/class-keyword.md)
 * [패스트 캠퍼스 - 벨로퍼트와 함께하는 모던 리액트](front/undefined-1/README.md)
-  * [리액트 입문](front/undefined-1/undefined.md)
+  * [리액트 입문](front/undefined-1/react-tutorial.md)
   * [컴포넌트 스타일링](front/undefined-1/undefined-1.md)
   * [멋진 To-Do List 만들기](front/undefined-1/to-do-list.md)
   * [API 연동](front/undefined-1/api.md)
