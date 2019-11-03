@@ -295,6 +295,16 @@ f2(imgs2).catch(_ => 0).then(log);
 * MobX를 사용하여, React, Vue, Angular 모두 지원
 * Props를 Component 등에서 Observer로 사용
 * event Interface \(Mobx Observable 활용\) 는 잘 기억이 나지 않는다.
+  * 그래서 발표자에게 직접 질문을 했다.
+  * Event 인터페이스 같은 경우에는 postMessage, onmessage 방식 그대로이기 때문에 제가 따로 설명하지 않았다고 한다.
+  * 혹시나 해서 다시 정리를 해준 내용
+    * R-R 인터페이스와 A-R 인터페이스는 반드시 자식 → 부모로 요청을 보내는 형식으로 디자인.
+    * 부모→ 자식은 One-way Binding으로만 통신
+    * Event 인터페이스는 특정 상황에서 부모 → 자식에게 이벤트를 Push 할 때만 보통 사용됨.
+    * 예를 들면, 단축키 기능을 만든다고 했을때, 상위 마이크로서비스에서 KeyDown 이벤트가 발생하면 자식에게 해당 이벤트를 내려주는 형식이 있을 수 있다. 
+    * React, Vue, Angular 역시 컴포넌트 간 One-way binding 방식을 사용하고 있고, 해당 프레임워크에서 부모 → 자식으로의 Event Push는 대부분 전역 Event Bus를 통해 예외적으로 처리합니다. 따라서 Event 인터페이스를 반드시 사용해야하는 요구사항은 어플리케이션 상에서 거의 발생하지 않기 때문에, 이리온 클래스룸 역시 대부분 R-R, A-R, OB 방식으로 구현.
+    * off-the-record로 Practical하게 말씀드리면, 일단 특정 복잡한 통신 기능이 당장 개발이 빨리 되야된다고 하면 onmessage 리스너에서 대충 switch-case로 처리한 뒤에 추후 리팩토링 과정에서 세가지 인터페이스의 조합으로 바꾸는 방식을 주로 사용.
+    * Message Protocol는 반드시 지키기 때문에 추후 리팩토링 과정에서 어려움은 없었다고 한다.
 
 ### 네가지 인터페이스 관리하기 위한 메세지 프로토콜 구성 
 
@@ -354,7 +364,7 @@ type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
 * feature 단계의 까지의 개발 및 배포 환경 설정이 상대적으로 많다.
 * 이상과 현실의 차이를 느낌
   * 이상
-    * postMessage는 WebWorker에서도 사용되는 인터페이스
+    * postMessage는 WebWorker에서도 사용되는 인터페이스.
     * iframe + postMessage 역시 WebWorker처럼 Multi-Thread를 지원하지 않을까?
     * 렌더링 단계도 브라우저의 최적화를 통해 멀티쓰레드로 가능하지 않을까?
   * 현실
