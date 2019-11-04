@@ -69,6 +69,63 @@ decrease.onclick = () => {
 
 ### props 를 통해 컴포넌트에게 값 전달하기 
 
+#### props의 개요
+
+```javascript
+import React from 'react';
+
+function Hello(props) {
+  return <div>안녕하세요 {props.name}</div>
+}
+
+export default Hello;
+```
+
+* 부모에서 자식 컴포넌트로 값을 전달하는 용도로 사용한다.
+
+#### 번거로운 props 과정을 생략하는 비 구조화 할 
+
+```javascript
+import React from 'react';
+
+function Hello(props) {
+  return <div style={{ color: props.color }}>안녕하세요 {props.name}</div>
+}
+
+export default Hello;
+```
+
+* 매번 위와 같은 구조로 `props.` 과 같은 과정으로 호출하게되면 상당히 귀찮기 마련이다.비구조화 할당을 통해서 바로 사용하고자 하는 값을 곧바로 쓸 수도 있다. 
+* 아래와 같은 구조로 사용하는 것이 비 구조화 할당이라 명명한다.
+
+```javascript
+import React from 'react';
+
+function Hello({ color, name }) {
+  return <div style={{ color }}>안녕하세요 {name}</div>
+}
+
+export default Hello;
+```
+
+#### defaultProps 로 기본값을 할당해보자
+
+```javascript
+import React from 'react';
+
+function Hello({ color, name }) {
+  return <div style={{ color }}>안녕하세요 {name}</div>
+}
+
+Hello.defaultProps = {
+  name: '이름없음'
+}
+
+export default Hello;
+```
+
+* 다음과 같이  Hello 컴포넌트에 defaultProps 를 활용하는 법을 배웠다.
+
 ### 조건부 렌더링 
 
 ### useState 를 통해 컴포넌트에서 바뀌는 값 관리하기 
