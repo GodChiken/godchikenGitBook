@@ -126,6 +126,67 @@ export default Hello;
 
 * 다음과 같이  Hello 컴포넌트에 defaultProps 를 활용하는 법을 배웠다.
 
+#### props.children 로 컴포넌트 태그사이의 값 조회하
+
+```javascript
+import React from 'react';
+
+function Wrapper() {
+  const style = {
+    border: '2px solid black',
+    padding: '16px',
+  };
+  return (
+    <div style={style}>
+
+    </div>
+  )
+}
+
+export default Wrapper;
+```
+
+* 컴포넌트를 래핑하기 위한 용도의 별도의 컴포넌트이다.
+
+```javascript
+import React from 'react';
+import Hello from './Hello';
+import Wrapper from './Wrapper';
+
+function App() {
+  return (
+    <Wrapper>
+      <Hello name="react" color="red"/>
+      <Hello color="pink"/>
+    </Wrapper>
+  );
+}
+
+export default App;
+```
+
+* `Wrapper` 를 특정 컴포넌트에서 사용하려면 위와 같은 형태에서는 사용이 불가하기 때문에 `Wrapper`에서 `props.children` 을 활용해야한다.
+
+```javascript
+import React from 'react';
+
+function Wrapper({ children }) {
+  const style = {
+    border: '2px solid black',
+    padding: '16px',
+  };
+  return (
+    <div style={style}>
+      {children}
+    </div>
+  )
+}
+
+export default Wrapper;
+```
+
+* 이전 항목에서 배운 비구조화 할당을 활용하면 위와 같이 간략하게 작성이 가능해졌다.
+
 ### 조건부 렌더링 
 
 ### useState 를 통해 컴포넌트에서 바뀌는 값 관리하기 
