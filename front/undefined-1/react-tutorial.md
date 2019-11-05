@@ -235,6 +235,64 @@ Hello.defaultProps = {
 
 ### useState 를 통해 컴포넌트에서 바뀌는 값 관리하기 
 
+#### 사용자 인터렉션에 변화에 따른 구현 방법
+
+* 리액트 16.8 버전 이전에는 함수형 컴포넌트로 state를 관리할 수 없었다.
+* 이후 버전부터 Hooks의 등장으로 정식적인 기능은 아니였으나 많은 리액트 유저들이 이용한다.
+* 맛보기로 Hooks의 useState 를 활용하여  함수형 컴포넌트의 동적인 부분에 대응해본다.
+
+{% tabs %}
+{% tab title="배열 비구조화 할당하여 useState 활용" %}
+```javascript
+import React, {useState} from 'react'
+
+export default function Counter() {
+    const [number,setNumber] = useState(0);
+    const onIncrease = () => {
+        setNumber(number+1);
+    };
+    const onDecrease = () => {
+        setNumber(number-1);
+    };
+    return (
+      <div>
+          <h1>{number}</h1>
+          <button onClick={onIncrease}>+1</button>
+          <button onClick={onDecrease}>-1</button>
+      </div>
+    );
+}
+```
+{% endtab %}
+
+{% tab title="직접 선언하여 사용" %}
+```javascript
+import React, {useState} from 'react'
+
+export default function Counter() {
+    const numberState = useState(0);
+    const number = numberState[0];
+    const setNumber = numberState[1];
+    const onIncrease = () => {
+        setNumber(number+1);
+    };
+    const onDecrease = () => {
+        setNumber(number-1);
+    };
+    return (
+      <div>
+          <h1>{number}</h1>
+          <button onClick={onIncrease}>+1</button>
+          <button onClick={onDecrease}>-1</button>
+      </div>
+    );
+}
+```
+{% endtab %}
+{% endtabs %}
+
+* 엘리먼트에 이벤트를 설정 시 `xxxMethod()`와 같은 형태 호출하여로 넣게되면 `DOM`이 렌더링 되기 전에 실행되버리므로 오류가 난다. 
+
 ### input 상태 관리하기 
 
 ### 여러개의 input 상태 관리하기 
