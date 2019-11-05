@@ -95,7 +95,7 @@ function Hello(props) {
 export default Hello;
 ```
 
-* 매번 위와 같은 구조로 `props.` 과 같은 과정으로 호출하게되면 상당히 귀찮기 마련이다.비구조화 할당을 통해서 바로 사용하고자 하는 값을 곧바로 쓸 수도 있다. 
+* 매번 위와 같은 구조로 `props.` 과 같은 과정으로 호출하게되면 상당히 귀찮기 마련이다. 비 구조화 할당을 통해서 바로 사용하고자 하는 값을 곧바로 쓸 수도 있다. 
 * 아래와 같은 구조로 사용하는 것이 비 구조화 할당이라 명명한다.
 
 ```javascript
@@ -126,7 +126,7 @@ export default Hello;
 
 * 다음과 같이  Hello 컴포넌트에 defaultProps 를 활용하는 법을 배웠다.
 
-#### props.children 로 컴포넌트 태그사이의 값 조회하
+#### `props.children` 로 컴포넌트 태그사이의 값 조회하
 
 ```javascript
 import React from 'react';
@@ -188,6 +188,50 @@ export default Wrapper;
 * 이전 항목에서 배운 비구조화 할당을 활용하면 위와 같이 간략하게 작성이 가능해졌다.
 
 ### 조건부 렌더링 
+
+#### isSpecial 사용자 정의 props 설정 및 활용해보기
+
+```javascript
+import React from 'react';
+import Hello from './Hello';
+import Wrapper from './Wrapper';
+
+
+export default function App() {
+  return (
+    <Wrapper>
+      <Hello name="react" color="red" isSpecial={true}/>
+      <Hello name="react" color="red" isSpecial/>
+      <Hello color="pink" />
+    </Wrapper>
+  )
+}
+```
+
+* 간단한 삼항 연산자로 조건부 렌더링을 실습해보았다.
+* 다양하게 props 값을 설정할 수 있으나, 자바스크립트 값을 쓰기위해선 `{}`를 사용한다. 
+* 또한 props 값을 생략하면 default value 는 `true` 이다.
+
+#### 조금더 축약된 표현을 활용해 본다면..
+
+```javascript
+import React from 'react';
+
+export default function Hello({color, name, isSpecial}){
+    return (
+      <div style={{color}}>
+          {isSpecial ? <p>*</p> : null}
+          {isSpecial && <p>*</p>}
+          안녕하세요 {name}
+      </div>
+    );
+}
+Hello.defaultProps = {
+    name : '이름 없음'
+};
+```
+
+* 우리가 단순히 보이고 안 보이고 수준의 표기용도이라면 `&&` 연산자를 고려해보는 것도 나쁘지 않다.
 
 ### useState 를 통해 컴포넌트에서 바뀌는 값 관리하기 
 
