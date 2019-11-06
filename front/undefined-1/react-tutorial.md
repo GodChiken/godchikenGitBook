@@ -377,7 +377,70 @@ export default function InputSample() {
 
 ### useRef 로 특정 DOM 선택하기 
 
+#### DOM을 선택해야하는 상황과 리액트에서 처리하는 방향
 
+* 리액트에서 직접적으로 `DOM`을 선택해야 하는 상황이 있다.
+  * 엘리먼트의 크기, 위치, 포커스 설정
+  * 외부 라이브러리
+* 위와 같은 상황일 경우 리액트에서는 `ref` 라는 것을 사용한다.
+* 함수형 컴포넌트의 경우 `Hook`의 `useRef` 함수를 사용.
+* 클래스형 컴포넌트의 경우 `React.createRef` 함수를 사용.
+
+#### 특정 DOM의 포커싱에 대해 처리해보자
+
+```javascript
+import React, {useState, useRef} from 'react'
+
+export default function InputSample() {
+    const [inputs, setInputs] = useState({
+        name: '',
+        nickname: ''
+    });
+    const nameInputs = useRef();
+    const {name, nickname} = inputs;
+
+    const onChange = e => {
+        const {value, name} = e.target;
+        setInputs({
+            ...inputs,
+            [name]: value
+        })
+    };
+
+    const onReset = () => {
+        setInputs({
+            name: '',
+            nickname: ''
+        });
+        nameInputs.current.focus();
+    };
+
+    return (
+        <div>
+            <input
+                name='name'
+                placeholder='이름'
+                onChange={onChange}
+                value={name}
+                ref={nameInputs}
+            />
+            <input
+                name='nickname'
+                placeholder='별명'
+                onChange={onChange}
+                value={nickname}
+            />
+            <button onClick={onReset}>초기화</button>
+            <div>
+                <b>값 : </b>
+                {name}({nickname})
+            </div>
+        </div>
+    );
+}
+```
+
+* `useRef()` 를 사용하여 `Ref` 객체 생성하여 선택하고자하는 `DOM` 요소에 `ref` 값으로 설정한 코
 
 ### 배열 렌더링하기 
 
