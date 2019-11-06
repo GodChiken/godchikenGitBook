@@ -368,7 +368,7 @@ export default function InputSample() {
 * 대신에 새로운 객체를 생성하여 새 객체에 변화를 주고 이것을 상태로 사용해야 한다.
   * ```javascript
     setInputs({
-    ...inputs, 
+        ...inputs, 
         [name]: value
     });
     ```
