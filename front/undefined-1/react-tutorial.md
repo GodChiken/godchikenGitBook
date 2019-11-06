@@ -757,11 +757,126 @@ export default function UserList({ users }) {
 
 ### 배열에 항목 제거하기 
 
+{% tabs %}
+{% tab title="CreateUser Component" %}
+```javascript
+import React from 'react';
 
+export default function CreateUser({ username, email, onChange, onCreate}) {
+    return (
+        <div>
+            <input
+                name="username"
+                placeholder="계정명"
+                onChange={onChange}
+                value={username}
+            />
+            <input
+                name="email"
+                placeholder="이메일"
+                onChange={onChange}
+                value={email}
+            />
+            <button onClick={onCreate}>등록</button>
+        </div>
+    );
+}
+```
+{% endtab %}
 
-### 배열에 항목 수정하기 
+{% tab title="App Component" %}
+```javascript
+import React,{useRef, useState} from 'react';
+import UserList from "./UserList";
+import CreateUser from "./CreateUser";
 
+export default function App() {
+    const [inputs,setInputs] = useState({
+        username: '',
+        email: ''
+    });
+    const {username, email} = inputs;
+    const onChange = e => {
+        const {value,name} = e.target;
+        setInputs({
+            ...inputs,
+            [name] : value
+        })
+    };
+    const [users,setUsers] = useState([
+        {
+            id: 1,
+            username: 'godchiken',
+            email: 'godchiken@naver.com'
+        },
+        {
+            id: 2,
+            username: 'tester',
+            email: 'tester@example.com'
+        },
+        {
+            id: 3,
+            username: 'liz',
+            email: 'liz@example.com'
+        }
+    ]);
 
+    const nextId = useRef(4);
+    const onCreate = () => {
+        const user = {
+            id : nextId.current,
+            username,
+            email
+        };
+        setUsers([...users,user]);
+        setInputs({ username : '', email: '' });
+        nextId.current += 1;
+    };
+    const onRemove = id => {
+        setUsers(users.filter(user => user.id !== id))
+    };
+    return (
+        <>
+            <CreateUser
+                username={username}
+                email={email}
+                onChange={onChange}
+                onCreate={onCreate}
+            />
+            <UserList users={users} onRemove={onRemove}/>
+        </>
+    );
+}
+```
+{% endtab %}
+
+{% tab title="UserList Component" %}
+```javascript
+import React from 'react';
+
+function User({ user, onRemove }) {
+    return (
+        <div>
+            <b>{user.username}</b> <span>({user.email})</span>
+            <button onClick={() => onRemove(user.id)}>삭제하기</button>
+        </div>
+    );
+}
+
+export default function UserList({ users, onRemove }) {
+    return (
+        <div>
+            {users.map(user => (
+                <User user={user} key={user.id} onRemove={onRemove}/>
+            ))}
+        </div>
+    );
+}
+```
+{% endtab %}
+{% endtabs %}
+
+### 배열에 항목 수정하
 
 ### useEffect를 사용하여 마운트/언마운트/업데이트시 할 작업 설정하기 
 
