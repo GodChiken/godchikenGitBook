@@ -180,7 +180,7 @@
   * 하여 보통 분리를 하여 개선한다고 한다.
   * ES6 에서는 Promise, Async 등으로 이용하여 더 편하게 구현한다곤하나, 이 마저도 결국 좋은 방법은 아니라는 말이 있긴하다. 결국 이해하기 좋은 코드는 동기식 코드라는 말이 있었다. 무슨 말이었나 기억이 안났지만 [황성인](https://github.com/sunginHwang) 개발자의 도움을 얻었다.
 
-![](../../.gitbook/assets/image%20%2819%29.png)
+![](../../.gitbook/assets/image%20%2821%29.png)
 
-![](../../.gitbook/assets/image%20%286%29.png)
+![](../../.gitbook/assets/image%20%288%29.png)
 

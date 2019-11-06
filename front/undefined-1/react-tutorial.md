@@ -40,7 +40,7 @@ decrease.onclick = () => {
 * `react`는 대상이 되는 `component`를  특정한 규칙에 의해서 업데이트를 하는 것이 아닌, 새로 만드는 것에 대해서 사상을 가지고  있다.
 * 매번 복잡한 구조의 컴포넌트를 새로 만든다면 시간 낭비일 수 있으나, `virtual DOM` 이라는 것을 통해서 성능적인 이슈도 해결했다고 한다. 
 
-![&#xB9AC;&#xC561;&#xD2B8;&#xC758; DOM Rendering &#xACFC;&#xC815;](../../.gitbook/assets/image%20%284%29.png)
+![&#xB9AC;&#xC561;&#xD2B8;&#xC758; DOM Rendering &#xACFC;&#xC815;](../../.gitbook/assets/image%20%286%29.png)
 
 * `react`가 DOM을 Rendering 하는 과정
   * RealDOM &lt;--&gt; VirtualDOM 비교 과정
@@ -444,7 +444,158 @@ export default function InputSample() {
 
 ### 배열 렌더링하기 
 
+{% tabs %}
+{% tab title="고정적으로 코드 구성" %}
+```javascript
+import React from 'react';
 
+export default function UserList() {
+    const users = [
+        {
+            id: 1,
+            username: 'godchiken',
+            email: 'godchiken@naver.com'
+        },
+        {
+            id: 2,
+            username: 'tester',
+            email: 'tester@example.com'
+        },
+        {
+            id: 3,
+            username: 'liz',
+            email: 'liz@example.com'
+        }
+    ];
+    return (
+        <div>
+            <div>
+                <b>{users[0].username}</b> <span>({users[0].email})</span>
+            </div>
+            <div>
+                <b>{users[1].username}</b> <span>({users[1].email})</span>
+            </div>
+            <div>
+                <b>{users[2].username}</b> <span>({users[1].email})</span>
+            </div>
+        </div>
+    );
+}
+```
+{% endtab %}
+
+{% tab title="자식 컴포넌트 생성으로 구성" %}
+```javascript
+import React from 'react';
+
+function User({user}) {
+    return (
+        <div>
+            {user.username}({user.email})
+        </div>
+    );
+}
+
+export default function UserList() {
+    const users = [
+        {
+            id: 1,
+            username: 'godchiken',
+            email: 'godchiken@naver.com'
+        },
+        {
+            id: 2,
+            username: 'tester',
+            email: 'tester@example.com'
+        },
+        {
+            id: 3,
+            username: 'liz',
+            email: 'liz@example.com'
+        }
+    ];
+    return (
+        <div>
+            <User user={users[0]}/>
+            <User user={users[1]}/>
+            <User user={users[2]}/>
+        </div>
+    );
+}
+```
+{% endtab %}
+
+{% tab title="동적 데이터에 대응하는 구성" %}
+```javascript
+import React from 'react';
+
+function User({user}) {
+    return (
+        <div>
+            {user.username}({user.email})
+        </div>
+    );
+}
+
+export default function UserList() {
+    const users = [
+        {
+            id: 1,
+            username: 'godchiken',
+            email: 'godchiken@naver.com'
+        },
+        {
+            id: 2,
+            username: 'tester',
+            email: 'tester@example.com'
+        },
+        {
+            id: 3,
+            username: 'liz',
+            email: 'liz@example.com'
+        }
+    ];
+    return (
+        <div>
+            {
+                users.map(user =>(
+                    <User user={user}/>
+                ))
+            }
+        </div>
+    );
+}
+```
+{% endtab %}
+{% endtabs %}
+
+* 각 배열 요소를 사용하여 자식 컴포넌트를 구성하고 활용해보고, 앞으로 배열의 요소가 늘어날 경우를 대비한 동적인 구성에 대해서 배웠다.
+
+![key props &#xC124;&#xC815;&#xC744; &#xC548;&#xD55C; &#xACBD;&#xC6B0;](../../.gitbook/assets/image%20%283%29.png)
+
+* 리액트에서 배열을 랜더링시 key 라는 props 를 설정해야 한다. 
+
+```javascript
+return (
+    <div>
+        {
+            users.map(user =>(
+                <User user={user} key={user.id}/>
+            ))
+        }
+    </div>
+);
+```
+
+* 고유한 값을 다음과 같이 key props에 설정해본다. 왜 귀찮게 해야 하는가 생각이 들 수 있다.
+
+![key props &#xAC00; &#xC5C6;&#xB294;&#xACBD;&#xC6B0;](../../.gitbook/assets/3rkaiy1.gif)
+
+* 리렌더링 때, 해당 변화를 주고자하는 컴포넌트의 인덱스와 상관없이 모든 컴포넌트를 순차적으로 변경하는 과정을 취한다.
+
+![key props &#xAC00; &#xC788;&#xB294; &#xACBD;&#xC6B0;](../../.gitbook/assets/yeus6bx.gif)
+
+* 특정 인덱스의 컴포넌트에 변화를 주려면 고유 값을 알아야 원하는 곳만 변화를 줄 수 있다.  
 
 ### useRef 로 useRef 로 컴포넌트 안의 변수 만들기 
 
