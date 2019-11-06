@@ -42,7 +42,7 @@ decrease.onclick = () => {
 
 ![&#xB9AC;&#xC561;&#xD2B8;&#xC758; DOM Rendering &#xACFC;&#xC815;](../../.gitbook/assets/image%20%286%29.png)
 
-* `react`가 DOM을 Rendering 하는 과정
+* `react`가 `DOM`을 `Rendering` 하는 과정
   * RealDOM &lt;--&gt; VirtualDOM 비교 과정
   * 일치하지 않는 것을 patch 과정을 통해서 부분적인 업데이트를 진
   *  이로서 전체적인 것을 다시 그리는 행위를 취하지 않고 성능도 지켜나갈 수 있다.
@@ -50,8 +50,8 @@ decrease.onclick = () => {
 
 ### 작업환경 준비 
 
-* Node.js 설치
-* yarn\(더 빠른 설치\) or npm 중 취향적인 선택
+* `Node.js` 설치
+* `yarn`\(더 빠른 설치\) or `npm` 중 취향적인 선택
 * 본인인 intellij 에서 프로젝트를 함. 
 
 ### 나의 첫번째 리액트 컴포넌트 
@@ -60,11 +60,11 @@ decrease.onclick = () => {
 
 ### JSX 
 
-* JSX 에서 선언하는 태그는 반드시 닫혀야한다.
+* `JSX` 에서 선언하는 태그는 반드시 닫혀야한다.
 * N개 이상의 태그는 하나로 감싸야하고 감싸는 용도로 보통 `<div>` 를 사용하는 편이나 이마저도 싫다면 편법으로는 fragment를 사용한다. 
-* javascript 변수를 JSX 내에서 사용하고 자하는경우 `{}`를 사용하면 된다.
-* JSX 내에서 style 은 객체 형태로 지정해야한다. 그리고 camelCase 형식으로 지정해야한다.
-* JSX 내에서 css의 class 를 지하는 것은 className으로 사용해야 한다.
+* `javascript` 변수를 `JSX` 내에서 사용하고 자하는경우 `{}`를 사용하면 된다.
+* `JSX` 내에서 style 은 객체 형태로 지정해야한다. 그리고 camelCase 형식으로 지정해야한다.
+* `JSX` 내에서 `css`의 class 를 지하는 것은 className으로 사용해야 한다.
 * 주석을 작성하는 법은 제시해줬으나 사용하고 싶지 않다. `{}` 사용
 
 ### props 를 통해 컴포넌트에게 값 전달하기 
@@ -124,7 +124,7 @@ Hello.defaultProps = {
 export default Hello;
 ```
 
-* 다음과 같이  Hello 컴포넌트에 defaultProps 를 활용하는 법을 배웠다.
+* 다음과 같이  `Hello` 컴포넌트에 `defaultProps` 를 활용하는 법을 배웠다.
 
 #### `props.children` 로 컴포넌트 태그사이의 값 조회하
 
@@ -209,8 +209,8 @@ export default function App() {
 ```
 
 * 간단한 삼항 연산자로 조건부 렌더링을 실습해보았다.
-* 다양하게 props 값을 설정할 수 있으나, 자바스크립트 값을 쓰기위해선 `{}`를 사용한다. 
-* 또한 props 값을 생략하면 default value 는 `true` 이다.
+* 다양하게 `props` 값을 설정할 수 있으나, 자바스크립트 값을 쓰기위해선 `{}`를 사용한다. 
+* 또한 `props` 값을 생략하면 default value 는 `true` 이다.
 
 #### 조금더 축약된 표현을 활용해 본다면..
 
@@ -237,9 +237,9 @@ Hello.defaultProps = {
 
 #### 사용자 인터렉션에 변화에 따른 구현 방법
 
-* 리액트 16.8 버전 이전에는 함수형 컴포넌트로 state를 관리할 수 없었다.
+* 리액트 16.8 버전 이전에는 함수형 컴포넌트로 `state`를 관리할 수 없었다.
 * 이후 버전부터 Hooks의 등장으로 정식적인 기능은 아니였으나 많은 리액트 유저들이 이용한다.
-* 맛보기로 Hooks의 useState 를 활용하여  함수형 컴포넌트의 동적인 부분에 대응해본다.
+* 맛보기로 `Hooks`의 `useState` 를 활용하여  함수형 컴포넌트의 동적인 부분에 대응해본다.
 
 {% tabs %}
 {% tab title="배열 비구조화 할당하여 useState 활용" %}
@@ -444,6 +444,8 @@ export default function InputSample() {
 
 ### 배열 렌더링하기 
 
+#### 배열 데이터 처리 변천
+
 {% tabs %}
 {% tab title="고정적으로 코드 구성" %}
 ```javascript
@@ -571,9 +573,11 @@ export default function UserList() {
 
 * 각 배열 요소를 사용하여 자식 컴포넌트를 구성하고 활용해보고, 앞으로 배열의 요소가 늘어날 경우를 대비한 동적인 구성에 대해서 배웠다.
 
+#### key Props
+
 ![key props &#xC124;&#xC815;&#xC744; &#xC548;&#xD55C; &#xACBD;&#xC6B0;](../../.gitbook/assets/image%20%283%29.png)
 
-* 리액트에서 배열을 랜더링시 key 라는 props 를 설정해야 한다. 
+* 리액트에서 배열을 랜더링시 `key`라는 `props`를 설정해야 한다. 
 
 ```javascript
 return (
@@ -587,7 +591,7 @@ return (
 );
 ```
 
-* 고유한 값을 다음과 같이 key props에 설정해본다. 왜 귀찮게 해야 하는가 생각이 들 수 있다.
+* 고유한 값을 다음과 같이 `key props`에 설정해본다. 왜 귀찮게 해야 하는가 생각이 들 수 있다.
 
 ![key props &#xAC00; &#xC5C6;&#xB294;&#xACBD;&#xC6B0;](../../.gitbook/assets/3rkaiy1.gif)
 
@@ -597,13 +601,159 @@ return (
 
 * 특정 인덱스의 컴포넌트에 변화를 주려면 고유 값을 알아야 원하는 곳만 변화를 줄 수 있다.  
 
-### useRef 로 useRef 로 컴포넌트 안의 변수 만들기 
+### useRef 로 컴포넌트 안의 변수 만들기 
 
+#### useRef의 또다른 용도
 
+* 컴포넌트 내부에서 조회 및 수정이 가능한 변수를 관리하는 용도
+* 값이 변경이 되어도 컴포넌트 리렌더링에 관여하지 않는다.
+* 일반적인 컴포넌트는 상태를 바꾸는 함수를 호출 -&gt; 랜더링 이후에 업데이트 된 상태를 조회하는 반면 useRef는 관리하고 있는 변수를 설정 이후 바로 조회가 가능하다.
 
-### 배열에 항목 추가하기 
+#### 위 용도를 통한 다양한 관리 사례
 
+* 비동기 이벤트를 통해 생성된 고유값 \(ex: id값\)
+* 외부 라이브러리를 통해 생성된 인스턴스
+* scroll 위치
 
+#### 직접 실습하여 보자 
+
+```javascript
+const nextId = useRef(4);
+const onCreate = () => {
+    nextId.current+=1;
+}
+```
+
+### 배열에 항목 추가하기
+
+{% tabs %}
+{% tab title="CreateUser Component" %}
+```javascript
+import React from 'react';
+
+export default function CreateUser({ username, email, onChange, onCreate }) {
+    return (
+        <div>
+            <input
+                name="username"
+                placeholder="계정명"
+                onChange={onChange}
+                value={username}
+            />
+            <input
+                name="email"
+                placeholder="이메일"
+                onChange={onChange}
+                value={email}
+            />
+            <button onClick={onCreate}>등록</button>
+        </div>
+    );
+}
+
+```
+{% endtab %}
+
+{% tab title="App Component" %}
+```javascript
+import React,{useRef, useState} from 'react';
+import UserList from "./UserList";
+import CreateUser from "./CreateUser";
+
+export default function App() {
+    const [inputs,setInputs] = useState({
+        username: '',
+        email: ''
+    });
+    const {username, email} = inputs;
+    const onChange = e => {
+        const {value,name} = e.target;
+        setInputs({
+            ...inputs,
+            [name] : value
+        })
+    };
+    const [users,setUsers] = useState([
+        {
+            id: 1,
+            username: 'godchiken',
+            email: 'godchiken@naver.com'
+        },
+        {
+            id: 2,
+            username: 'tester',
+            email: 'tester@example.com'
+        },
+        {
+            id: 3,
+            username: 'liz',
+            email: 'liz@example.com'
+        }
+    ]);
+
+    const nextId = useRef(4);
+    const onCreate = () => {
+        const user = {
+            id : nextId.current,
+            username,
+            email
+        };
+        setUsers([...users,user]);
+        setInputs({
+            username : '',
+            email: ''
+        });
+        nextId.current += 1;
+    };
+    return (
+        <>
+            <CreateUser
+                username={username}
+                email={email}
+                onChange={onChange}
+                onCreate={onCreate}
+            />
+            <UserList users={users} />
+        </>
+    );
+}
+```
+{% endtab %}
+
+{% tab title="UserList Component" %}
+```javascript
+import React from 'react';
+
+function User({ user }) {
+    return (
+        <div>
+            <b>{user.username}</b> <span>({user.email})</span>
+        </div>
+    );
+}
+
+export default function UserList({ users }) {
+    return (
+        <div>
+            {users.map(user => (
+                <User user={user} key={user.id} />
+            ))}
+        </div>
+    );
+}
+```
+{% endtab %}
+{% endtabs %}
+
+* 부모컴포넌트 `App`에서 `state` 관리를 하며, `input` 엘리먼트에 필요한 함수들을 `prop` 를 넘겨서 실습.
+* `CreateUser` 에서 비구조화 할당을 통하여 `props`에서 필요한 변수, 함수를 전달받는다.
+* `App` 에서 자식 컴포넌트 `CreateUser`에서 사용할 `props` 를 관리한다.
+
+#### 배열에 대한 변화를 줄 시 주의점
+
+* 불변성을 지키기 위해 배열의 `push`, `splice`, `sort` 등의 함수를 사용할 경우 새로운 배열에 복사하여 사용한다. 간편하게 사용하고 싶을 때는 다음의 두가지 방법을 따른다.
+  * `spread` 연산자
+  * `concat`\(\) : 기존 배열을 수정하지 않고 새로운 배열을 생성
 
 ### 배열에 항목 제거하기 
 
