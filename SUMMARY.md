@@ -1,6 +1,7 @@
 # Table of contents
 
-* [소개](README.md)
+* [게시물 출처](README.md)
+* [소개](developer.md)
 
 ## Front
 
