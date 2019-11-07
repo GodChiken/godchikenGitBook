@@ -1075,17 +1075,189 @@ export default function UserList({ users, onRemove, onToggle }) {
 {% endtab %}
 {% endtabs %}
 
-#### 구현 화
+#### 구현 화면
 
 ![&#xAD6C;&#xD604; &#xD654;&#xBA74;](../../.gitbook/assets/captured-1.gif)
 
-### useEffect를 사용하여 마운트/언마운트/업데이트시 할 작업 설정하기 
+### `useEffect`를 사용하여 마운트/언마운트/업데이트시 할 작업 설정하기 
 
-### 
+#### `useEffect`를 통한 컴포넌트 마운트, 언마운트 관리
+
+```jsx
+useEffect(() =>{
+    console.log("컴포넌트 마운트!");
+    return () => {
+        console.log("컴포넌트가 화면에서 사라짐");
+    }
+},[]);
+```
+
+* `useEffect`를 사용할 때에는 첫번째 파라미터에 함수, 두번째 파라미터에 의존값이 들어있는 배열\(`deps`\)를 넣는다. 
+* 첫번째 함수에서 함수를 반환이 가능하며 이 함수를 `cleanup`함수라고 부른다. `cleanup`함수는 `deps`를 생략한 경우 컴포넌트가 사라질 때 사용된다.
+
+#### `mount`시 주요 작업 예시
+
+* `props`로 받은 값을 컴포넌트의 로컬 `state`로 설정.
+* 외부 api 요청.
+* 라이브러리 사용.
+* `setInterval()`,`setTimeout()` 을 통한 작업.
+
+#### `unmount`시 주요 작업 예시
+
+* `setInterval()`,`setTimeout()` 사용한 작업 clear. \(`clearInterval()`, `clearTimeout()`\)
+* 라이브러리 인스턴스 제거
+
+#### `deps`에 특정 값 넣기
+
+```jsx
+useEffect(() => {
+  console.log('user 값이 설정됨');
+  console.log(user);
+  return () => {
+    console.log('user 가 바뀌기 전..');
+    console.log(user);
+  };
+}, [user]);
+```
+
+* `deps`에 특정 값을 넣게된다면 컴포넌트가 처음 마운트/언마운트 되거나 지정된 값이 바뀌거나 바뀌기 직전에도 호출이된다.
+* `useEffect` 안에서 사용하는 `state`나 `props`가 존재한다면 `deps`에 기입해야하 하는것이 규칙이다.
+* 만약 기입을 하지 않게될 경우 `useEffect`에 등록한 함수가 실행 될 때 최신 `props`/`state`를 가르키지 않게되며 다음과 같은 경고문을 보게된다.
+
+{% hint style="warning" %}
+React Hook useEffect has a missing dependency: 'user'. Either include it or remove the dependency array react-hooks/exhaustive-deps
+{% endhint %}
+
+#### deps 파라미터를 생략하는 경우
+
+```jsx
+useEffect(() => {
+  console.log(user);
+});
+```
+
+* 이럴 경우 리렌더링 될때마다 호출이 된다.
+
+![&#xB9AC;&#xB79C;&#xB354;&#xB9C1;&#xB9C8;&#xB2E4; &#xD638;&#xCD9C;](../../.gitbook/assets/image%20%288%29.png)
+
+* 리액트 컴포넌트는 부모가 리렌더링 되면 자식컴포넌트 또한 리렌더링이 수행된다.
+* 실제 `DOM`에 변화가 반영되는것은 바뀐 내용에 해당되는 컴포넌트만 되지만, `Virtual DOM`에서는 모든 `DOM`을 렌더링하므로 컴포넌트의 최적화하는 과정에서 이러한 불필요한 과정의 리소스를 절약하는 것이 가능하다.
 
 ### useMemo 를 사용하여 연산한 값 재사용하기 
 
+{% tabs %}
+{% tab title="활성 사용자 수" %}
+```jsx
+const count = useMemo( () => {
+    console.log('활성 사용자 수를 세는중...');
+    return users.filter(user => user.active).length;
+},[users]);
+```
+{% endtab %}
 
+{% tab title="활성 사용자 수 구성하기" %}
+```jsx
+return (
+    <>
+        <CreateUser
+            username={username}
+            email={email}
+            onChange={onChange}
+            onCreate={onCreate}
+        />
+            <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
+            <div>활성사용자 수 : {count}</div>
+    </>
+);
+```
+{% endtab %}
+
+{% tab title="App.js" %}
+```jsx
+import React,{useRef, useState, useMemo} from 'react';
+import UserList from "./UserList";
+import CreateUser from "./CreateUser";
+
+export default function App() {
+    const [inputs,setInputs] = useState({
+        username: '',
+        email: ''
+    });
+    const {username, email} = inputs;
+    const onChange = e => {
+        const {value,name} = e.target;
+        setInputs({
+            ...inputs,
+            [name] : value
+        })
+    };
+    const [users,setUsers] = useState([
+        {
+            id: 1,
+            username: 'godchiken',
+            email: 'godchiken@naver.com',
+            active : true
+        },
+        {
+            id: 2,
+            username: 'tester',
+            email: 'tester@example.com',
+            active : false
+        },
+        {
+            id: 3,
+            username: 'liz',
+            email: 'liz@example.com',
+            active : false
+        }
+    ]);
+
+    const nextId = useRef(4);
+    const onCreate = () => {
+        const user = {
+            id : nextId.current,
+            username,
+            email
+        };
+        setUsers([...users,user]);
+        setInputs({ username : '', email: '' });
+        nextId.current += 1;
+    };
+    const onRemove = id => {
+        setUsers(users.filter(user => user.id !== id))
+    };
+    const onToggle = id => {
+        setUsers(users.map(user =>
+                user.id === id
+                ? {...user, active: !user.active}
+                : user
+            )
+        )
+    };
+    const count = useMemo( () => {
+        console.log('활성 사용자 수를 세는중...');
+        return users.filter(user => user.active).length;
+    },[users]);
+    return (
+        <>
+            <CreateUser
+                username={username}
+                email={email}
+                onChange={onChange}
+                onCreate={onCreate}
+            />
+            <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
+            <div>활성사용자 수 : {count}</div>
+        </>
+    );
+}
+```
+{% endtab %}
+{% endtabs %}
+
+* 활성 사용자 수를 세는건, users 에 변화가 있을때만 세야되는건데, input 값이 바뀔 때에도 컴포넌트가 리렌더링 되므로 이렇게 불필요할때에도 호출하여서 자원이 낭비된다.
+* 이러한 상황에는 `useMemo` 라는 Hook 함수를 사용하면 성능을 최적화 한다. 이전에 계산 한 값을 재사용하는 방법이다.
+* `useMemo` 의 첫번째 파라미터에는 어떻게 연산할지 정의하는 함수를 넣어주면 되고 두번째 파라미터에는 `deps` 배열을 넣어주면 되는데, 이 배열 안에 넣은 내용이 바뀌면, 우리가 등록한 함수를 호출해서 값을 연산해주고, 만약에 내용이 바뀌지 않았다면 이전에 연산한 값을 재사용한다.
 
 ### useCallback 를 사용하여 함수 재사용하기 
 

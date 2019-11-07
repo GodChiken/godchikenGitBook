@@ -236,7 +236,7 @@ function* map(f, iter) {  for (const a of iter) {    yield a instanceof Promise 
 
 ### 네가지 인터페이스 관리하기 위한 메세지 프로토콜 구성 
 
-![](../.gitbook/assets/image%20%2817%29.png)
+![](../.gitbook/assets/image%20%2818%29.png)
 
 ### 핵심 역할 인터페이스 명
 
@@ -255,7 +255,7 @@ export class Core {    public listeners: {               request: Listeners<Requ
 
 ### 위 설계들을 통하여 취한 Isomorphic Implementation 개발
 
-![Server - Client\(Parent\) - Client\(iframe\)](../.gitbook/assets/image%20%2819%29.png)
+![Server - Client\(Parent\) - Client\(iframe\)](../.gitbook/assets/image%20%2820%29.png)
 
 * 이전 항목에서 언급한 core의 구현체를 서로 던져가며 이득을 취하는 것 같다.
 * MSA 기반 대규모 Front-end Application의 지향점
@@ -342,7 +342,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 하다보니 유튜버가 소개를 하기도..
 
-![DesignCourse](../.gitbook/assets/image%20%2814%29.png)
+![DesignCourse](../.gitbook/assets/image%20%2815%29.png)
 
 ## 글로벌 서비스를 하게 되면 겪게 될 폰트 렌더링 문제
 
@@ -371,7 +371,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 다른 글로벌 서비스 사이트는 어떻게 대응하는가
 
-![&#xBC1C;&#xD45C;&#xC790;&#xAC00; &#xAC00;&#xC7A5; &#xCD94;&#xCC9C;&#xD558;&#xB294; &#xBC29;&#xC2DD;](../.gitbook/assets/image%20%2818%29.png)
+![&#xBC1C;&#xD45C;&#xC790;&#xAC00; &#xAC00;&#xC7A5; &#xCD94;&#xCC9C;&#xD558;&#xB294; &#xBC29;&#xC2DD;](../.gitbook/assets/image%20%2819%29.png)
 
 ### lang attribute
 
@@ -385,7 +385,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 말은 쉽지만 그 수많은 페이지를 어떻게 UI 테스트 합니까?
 
-![Cypress.io](../.gitbook/assets/image%20%2816%29.png)
+![Cypress.io](../.gitbook/assets/image%20%2817%29.png)
 
 * 다른 E2E 테스트를 시도하지 않았다곤 한다.
 * 크롬브라우저 위에서 Dom 기반으로 진행하는 테스트
@@ -404,14 +404,14 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 반응성 - 왜 내 화면은 다시 그려지지 않는 걸까?
 
-![](../.gitbook/assets/image%20%2823%29.png)
+![](../.gitbook/assets/image%20%2824%29.png)
 
 * 생성하는 시점에 객체에 없던 프로퍼티에 대하여 값의 변경을 요할 경우 반응을 하지 않는다.
 * 크게 다음과 같은 경우에 실수를 유발한다고 한다.
   * toggle 역할을 하는 ui를 다룰 경우
   * 서버에서 불러온 데이터에 임의의 값을 추가하여 사용하는 경
 
-![](../.gitbook/assets/image%20%2821%29.png)
+![](../.gitbook/assets/image%20%2822%29.png)
 
 * vuex의 state 도 동일하니 주의가 필요하다.
 * Vue 3.0에서는 Proxy를 기반으로 변화할 예정이므로 괜찮다고 한다.
@@ -429,7 +429,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 라이프 사이클 - 나는 인스턴스를 얼마나 파악하나
 
-![Vue Life Cycle](../.gitbook/assets/image%20%2815%29.png)
+![Vue Life Cycle](../.gitbook/assets/image%20%2816%29.png)
 
 #### 뷰의 템플릿 속성
 
