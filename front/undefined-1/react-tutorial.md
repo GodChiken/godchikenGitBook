@@ -1261,7 +1261,114 @@ export default function App() {
 
 ### useCallback 를 사용하여 함수 재사용하기 
 
+```jsx
+import React,{useRef, useState, useMemo, useCallback} from 'react';
+import UserList from "./UserList";
+import CreateUser from "./CreateUser";
 
+export default function App() {
+    const [inputs,setInputs] = useState({
+        username: '',
+        email: ''
+    });
+    const {username, email} = inputs;
+    const onChange = useCallback(e => {
+        const {value,name} = e.target;
+        setInputs({
+            ...inputs,
+            [name] : value
+        })
+    },[inputs]);
+    const [users,setUsers] = useState([
+        {
+            id: 1,
+            username: 'godchiken',
+            email: 'godchiken@naver.com',
+            active : true
+        },
+        {
+            id: 2,
+            username: 'tester',
+            email: 'tester@example.com',
+            active : false
+        },
+        {
+            id: 3,
+            username: 'liz',
+            email: 'liz@example.com',
+            active : false
+        }
+    ]);
+
+    const nextId = useRef(4);
+    const onCreate = useCallback(() => {
+        const user = {
+            id : nextId.current,
+            username,
+            email
+        };
+        setUsers([...users,user]);
+        setInputs({ username : '', email: '' });
+        nextId.current += 1;
+    },[inputs]);
+    const onRemove = useCallback(id => {
+        setUsers(users.filter(user => user.id !== id))
+    },[users]);
+    const onToggle = useCallback(id => {
+        setUsers(users.map(user =>
+                user.id === id
+                    ? {...user, active: !user.active}
+                    : user
+            )
+        )
+    },[users]);
+    const count = useMemo( () => {
+        console.log('활성 사용자 수를 세는중...');
+        return users.filter(user => user.active).length;
+    },[users]);
+    return (
+        <>
+            <CreateUser
+                username={username}
+                email={email}
+                onChange={onChange}
+                onCreate={onCreate}
+            />
+            <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
+            <div>활성사용자 수 : {count}</div>
+        </>
+    );
+}
+```
+
+* `useMemo`와 비슷한 형태의 `Hook`함수이나 확실히 다른점
+  * `useMemo()` : 특정한 결과값을 재사용할 때 사용.
+  * `useCallback()` :  특정 함수를 재사용할 때 사용.
+* 함수 선언자체의 리소스는 큰 부하의 작업이 아니나, 재사용이 가능할 경우 활용하는 것이 중요하다.
+  * 컴포넌트에서 `props`가 바뀌지 않았다면 `Virtual DOM`에 새로 랜더링하지 않고 컴포넌트의 결과물을 재사용하는 최적화 작업을 하기 위해서 필수적이다.
+* 함수 안에서 사용하는 `state`,`props`가 있다면 꼭 `deps`에 포함시켜야 최신 값을 참조할 수 있다.
+* `props` 를 통해 받아온 함수가 있다면, 이또한 `deps`에 포함해야한다.
+
+#### 사실은 `useCallBack`은 `useMemo`기반으로 만들어졌다.
+
+```jsx
+const onToggle = useMemo(
+  () => () => {
+    /* 구현하고자 하는 코드 */
+  },
+  [users]
+);
+```
+
+* 다만 이런식으로 적기에는 효율적이지 않아 더욱 편하게 사용하기 위해 등장했다.
+
+#### React DevTool
+
+![hightlight update](../../.gitbook/assets/captured-2.gif)
+
+* v4 버전으로 업그레이드 되면서 hightlight update 기능이 보이지 않았다.
+* [https://blog.woolta.com/categories/1/posts/159](https://blog.woolta.com/categories/1/posts/159) 에서 그에 대한 대처법을 블로그했다.
+* 하지만 4.2버전부터는 원활하게 잘된다.
 
 ### React.memo 를 사용한 컴포넌트 리렌더링 방지 
 
