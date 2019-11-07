@@ -15,9 +15,7 @@ description: 함수에대하여 공부한다.
     * 함수 정의 표현식
 
       ```javascript
-        var functionExpressions = function(){
-            //..something
-        }
+        var functionExpressions = function(){      //..something  }
       ```
 
       * 호이스팅에 영향을 받지 않는다.
@@ -25,9 +23,7 @@ description: 함수에대하여 공부한다.
     * 함수 선언식
 
       ```javascript
-        function functionDeclarations(){
-            //..something
-        }
+        function functionDeclarations(){      //..something  }
       ```
 
       * 호이스팅에 영향을 받는다.  
@@ -52,8 +48,7 @@ description: 함수에대하여 공부한다.
       * 또한 \(\) 값이 생략됨이 허용된다.
 
         ```javascript
-          var o = new Object();
-          var o = new Object;
+          var o = new Object();  var o = new Object;
         ```
 
       * 호출 시 생성자의 prototype 프로퍼티를 상속받은 빈 객체가 생성된다.
@@ -86,13 +81,7 @@ description: 함수에대하여 공부한다.
     * 반대로 호출한 쪽에서 넘긴 인자 값에 쓸데 없는 것이 있는 경우 방어 코딩이 가능하다.
 
       ```javascript
-        // 이런 식으로 호출했을 경우
-        f(1,2,3,4,5,6,7,8);
-        function f(i,j){
-            if (argument.length > 2){
-                console.log("쓸데없는 것을 넘기지 마시오");
-            }
-        }
+        // 이런 식으로 호출했을 경우  f(1,2,3,4,5,6,7,8);  function f(i,j){      if (argument.length > 2){          console.log("쓸데없는 것을 넘기지 마시오");      }  }
       ```
 
     * 위와 같이 가변적인 전달인자를 받을 수 있는 함수를 명명하는 것은 여러가지가 있으나 'varargs' 만 기억하겠다.    

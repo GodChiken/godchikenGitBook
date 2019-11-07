@@ -52,15 +52,11 @@
 * 정적 타입을 제공하여 안정성을 제공한다고 한다.
   * 일반적인 자바 스크립트라면 의도된 결과를 얻지 않는 경우가 존재한다.
   * ```javascript
-    const getSum = (a,b) => a+b;
-    getSum('x','y');
-    //'xy'
+    const getSum = (a,b) => a+b;getSum('x','y');//'xy'
     ```
   * typescript 라면 충분히 정적타입을 통해 방지가 가능하다.
   * ```typescript
-    const sum = (a : number, b: number) => a+b;
-    getSum('x','y');
-    //error
+    const sum = (a : number, b: number) => a+b;getSum('x','y');//error
     ```
   * 컴파일 단계에서 타입체크, 변수와 함수의 타입추론이 가능하므로 안정성을 얻을 수 있다고 한다.
 * 진정한 객체지향에 한발 다가갈 수 있다고 한다.
@@ -103,87 +99,19 @@
 ### 예제코드
 
 ```javascript
-const {log, clear} = console;
-
-const imgs = [
-  { name: "HEART", url: "https://s3.marpple.co/files/m2/t3/colored_images/45_1115570_1162087_150x0.png" },
-  { name: "6", url: "https://s3.marpple.co/f1/2018/1/1054966_1516076919028_64501_150x0.png"},
-  { name: "하트", url: "https://s3.marpple.co/f1/2019/1/1235206_1548918825999_78819_150x0.png" },
-  { name: "도넛", url:"https://s3.marpple.co/f1/2019/1/1235206_1548918758054_55883_150x0.png"},
-];
-
-const imgs2 = [
-  { name: "HEART", url: "https://s3.marpple.co/files/m2/t3/colored_images/45_1115570_1162087_150x0.png" },
-  { name: "6", url: "https://s3.marpple.co/f1/2018/1/1054966_1516076919028_64501_150x0.jpg"},
-  { name: "하트", url: "https://s3.marpple.co/f1/2019/1/1235206_1548918825999_78819_150x0.png" },
-  { name: "도넛", url:"https://s3.marpple.co/f1/2019/1/1235206_1548918758054_55883_150x0.png"},
-];
-
-const loadImage = url => new Promise((resolve, reject) => {
-  let img = new Image();
-  img.src = url;
-  // log('이미지로드: ', url);
-  img.onload = function() {
-    resolve(img);
-  };
-  img.onerror = function(e) {
-    reject(e);
-  };
-  return img;
-});
-
-// loadImage(imgs[0].url).then(img => log(img.height));
+const {log, clear} = console;const imgs = [  { name: "HEART", url: "https://s3.marpple.co/files/m2/t3/colored_images/45_1115570_1162087_150x0.png" },  { name: "6", url: "https://s3.marpple.co/f1/2018/1/1054966_1516076919028_64501_150x0.png"},  { name: "하트", url: "https://s3.marpple.co/f1/2019/1/1235206_1548918825999_78819_150x0.png" },  { name: "도넛", url:"https://s3.marpple.co/f1/2019/1/1235206_1548918758054_55883_150x0.png"},];const imgs2 = [  { name: "HEART", url: "https://s3.marpple.co/files/m2/t3/colored_images/45_1115570_1162087_150x0.png" },  { name: "6", url: "https://s3.marpple.co/f1/2018/1/1054966_1516076919028_64501_150x0.jpg"},  { name: "하트", url: "https://s3.marpple.co/f1/2019/1/1235206_1548918825999_78819_150x0.png" },  { name: "도넛", url:"https://s3.marpple.co/f1/2019/1/1235206_1548918758054_55883_150x0.png"},];const loadImage = url => new Promise((resolve, reject) => {  let img = new Image();  img.src = url;  // log('이미지로드: ', url);  img.onload = function() {    resolve(img);  };  img.onerror = function(e) {    reject(e);  };  return img;});// loadImage(imgs[0].url).then(img => log(img.height));
 ```
 
 ### 실전 - 이미지의 모든 높이를 더하기
 
 ```javascript
-async function f1() {
-  try {
-    let error = null;
-    const total = await imgs2
-      .map(async ({url}) => {
-        if (error) return;
-        try {
-          const img = await loadImage(url);
-          return img.height;
-        } catch (e) {
-          log(e);
-          throw e;
-        }
-      })
-      .reduce(async (total, height) => await total + await height, 0);
-
-    log(total);
-  } catch (e) {
-    log(0);
-  }
-}
-// f1();
+async function f1() {  try {    let error = null;    const total = await imgs2      .map(async ({url}) => {        if (error) return;        try {          const img = await loadImage(url);          return img.height;        } catch (e) {          log(e);          throw e;        }      })      .reduce(async (total, height) => await total + await height, 0);    log(total);  } catch (e) {    log(0);  }}// f1();
 ```
 
 ### 해결 방안 제시
 
 ```javascript
-function* map(f, iter) {
-  for (const a of iter) {
-    yield a instanceof Promise ? a.then(f) : f(a);
-  }
-}
-async function reduceAsync(f, acc, iter) {
-  for await (const a of iter) {
-    acc = f(acc, a);
-  }
-  return acc;
-}
-
-const f2 = imgs =>
-  reduceAsync((a, b) => a + b, 0,
-    map(img => img.height,
-      map(({url}) => loadImage(url), imgs)));
-
-// f2(imgs).catch(_ => 0).then(log);
-f2(imgs2).catch(_ => 0).then(log);
+function* map(f, iter) {  for (const a of iter) {    yield a instanceof Promise ? a.then(f) : f(a);  }}async function reduceAsync(f, acc, iter) {  for await (const a of iter) {    acc = f(acc, a);  }  return acc;}const f2 = imgs =>  reduceAsync((a, b) => a + b, 0,    map(img => img.height,      map(({url}) => loadImage(url), imgs)));// f2(imgs).catch(_ => 0).then(log);f2(imgs2).catch(_ => 0).then(log);
 ```
 
 * 불러온 이미지들의 height 값을 합산한 값을 구하는 라이브 코딩이었다.
@@ -313,27 +241,7 @@ f2(imgs2).catch(_ => 0).then(log);
 ### 핵심 역할 인터페이스 명
 
 ```typescript
-export class Core {
-    public listeners: {       
-        request: Listeners<RequestListener>,       
-        action: Listeners<ActionListener>   
-    }
-    private createMessage(eventName: string, body: any): Message
-    private sendMessageToParent(message: Message): void
-    private sendMessageToChild(sid: string, message: Message): void
-    private onMessage(message: Message): void
-}
-
-class Listeners<T> {
-    getListener(name: string): T[]
-    ﬁre(name: string, body: any): Promise<void>
-    ﬁreOne(name: string, body: any): Promise<void>
-    register(name: string, listener: T): void
-    unregister(name?: string, listener?:T):void
-}
-
-type RequestListener = (…args: string[]) => any
-type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
+export class Core {    public listeners: {               request: Listeners<RequestListener>,               action: Listeners<ActionListener>       }    private createMessage(eventName: string, body: any): Message    private sendMessageToParent(message: Message): void    private sendMessageToChild(sid: string, message: Message): void    private onMessage(message: Message): void}class Listeners<T> {    getListener(name: string): T[]    ﬁre(name: string, body: any): Promise<void>    ﬁreOne(name: string, body: any): Promise<void>    register(name: string, listener: T): void    unregister(name?: string, listener?:T):void}type RequestListener = (…args: string[]) => anytype ActionListener = (react: (ret: any)=>void, …args: string[]) => void
 ```
 
 * 해당 코어의 기능은 다음과 같다.
@@ -512,40 +420,11 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 * 기존 DOM 요소 제어 방식
   * ```javascript
-    // 네이티브 자바스크립트
-    document.querySelector('#app');
-    // 제이쿼리 라이브러리
-    $('#app');
-
-    // 버튼 요소 검색
-    var btn = document.querySelector('#btn');
-    btn.addEventListener('click', function(event) {  
-        event.target.closest('.tag1').remove(); 
-    });
+    // 네이티브 자바스크립트document.querySelector('#app');// 제이쿼리 라이브러리$('#app');// 버튼 요소 검색var btn = document.querySelector('#btn');btn.addEventListener('click', function(event) {      event.target.closest('.tag1').remove(); });
     ```
 * Vue.js DOM 요소 제어 방식
   * ```javascript
-    <!-- HTML 태그에 ref 속성 추가 --> 
-    <div ref="hello">Hello Ref</div> // 인스턴스에서 접근 가능한 ref 속성 
-    this.$refs.hello; // div 엘리먼트 정보
-
-    <!-- 뷰 디렉티브에서 제공되는 정보를 활용 -->
-    <ul>  
-        <li v-for="(item, index) in items">    
-            <span v-bind:id="index">{{ item }}</span>  
-        </li>
-    </ul>
-
-    <ul>
-        <li @click="removeItem">
-            <span>메뉴 1</span>    
-            <div class="child hide">메뉴 설명</div>  
-        </li>  
-        <li @click="removeItem">
-            <span>메뉴 2</span>
-                <div class="child hide">메뉴 설명</div>  
-        /li>  ...
-    </ul>
+    <!-- HTML 태그에 ref 속성 추가 --> <div ref="hello">Hello Ref</div> // 인스턴스에서 접근 가능한 ref 속성 this.$refs.hello; // div 엘리먼트 정보<!-- 뷰 디렉티브에서 제공되는 정보를 활용 --><ul>      <li v-for="(item, index) in items">            <span v-bind:id="index">{{ item }}</span>      </li></ul><ul>    <li @click="removeItem">        <span>메뉴 1</span>            <div class="child hide">메뉴 설명</div>      </li>      <li @click="removeItem">        <span>메뉴 2</span>            <div class="child hide">메뉴 설명</div>      /li>  ...</ul>
     ```
 
 ### 라이프 사이클 - 나는 인스턴스를 얼마나 파악하나
@@ -555,22 +434,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 #### 뷰의 템플릿 속성
 
 ```javascript
-// 인스턴스 옵션 속성 
-new Vue({
-    data: {str: 'Hello World'}, 
-    template: '<div>{{ str }}</div>'}
-); 
-<!-- 싱글 파일 컴포넌트 -->
-<template>
-    <div>{{str}}</div>
-</template>
-
-// 싱글 파일 컴포넌트의 라이브러리 내부적으로 변환한 모습 
-function render() {
-  with(this) {
-       return _c('div', [_v(_s(str))]);
-  } 
-}  
+// 인스턴스 옵션 속성 new Vue({    data: {str: 'Hello World'},     template: '<div>{{ str }}</div>'}); <!-- 싱글 파일 컴포넌트 --><template>    <div>{{str}}</div></template>// 싱글 파일 컴포넌트의 라이브러리 내부적으로 변환한 모습 function render() {  with(this) {       return _c('div', [_v(_s(str))]);  } }  
 ```
 
 * 뷰의 인스턴스 컴포넌트의 표현부를 정의하는 속
@@ -579,26 +443,7 @@ function render() {
 * **인스턴스가 실제로 화면에 mounted\(부착\) 된 이후부터 유효하다.**
 * 실제로 이 사실을 알고 가지 않는다면 다음과 같은 경우를 겪을 수 있다.
   * ```javascript
-    <!-- 템플릿 속성 -->
-    <template>
-      <canvas id="myChart"></canvas>
-    </template>
-
-    // 인스턴스 옵션 
-    new Vue({
-      created: function() {
-          var ctx = document.querySelector('#myChart'); // null
-          new Chart(ctx, chartOptions);
-      }
-    });
-
-    // 인스턴스 옵션 
-    new Vue({
-      mounted: function() {
-          var ctx = document.querySelector('#myChart'); // <canvas>
-          new Chart(ctx, chartOptions);
-      }
-    });
+    <!-- 템플릿 속성 --><template>  <canvas id="myChart"></canvas></template>// 인스턴스 옵션 new Vue({  created: function() {      var ctx = document.querySelector('#myChart'); // null      new Chart(ctx, chartOptions);  }});// 인스턴스 옵션 new Vue({  mounted: function() {      var ctx = document.querySelector('#myChart'); // <canvas>      new Chart(ctx, chartOptions);  }});
     ```
 
 ### ref attribute - 만들다만 ref 속성
@@ -614,49 +459,7 @@ function render() {
 
 * 간결하고 직관적인 템플릿 표현식을위해 뷰에서 제공하는 속성
   * ```javascript
-    <p>{{ 'hello' + str + '!!' }}</p> <!-- 템플릿 표현식만 이용하는 경우 --> 
-    <p>{{ greetingStr }}</p> <!-- computed 속성을 활용하는 경우 -->
-    new Vue({
-      data: { str: 'world' },
-      computed: {    
-        greetingStr: function() {
-          return 'hello' + this.str + '!!';    
-        }
-      }
-    });
-
-    // 조건에 따른 클래스의 추가 및 변경
-    <li v-bind:class="{ disabled: isLastPage }"></li>
-
-    computed: {
-      isLastPage: function() {
-          var lastPageCondition =
-            this.paginationInfo.current_page >= this.paginationInfo.last_page;
-          var nothingFetched = Object.keys(this.paginationInfo).length === 0;
-          return lastPageCondition || nothingFetched;  
-    }
-
-    //뷰엑스의 state 값을 접근할 때
-    <div>
-      <p>{{ this.$store.state.module1.str }}</p>
-      <p>{{ module1Str }}</p>
-    </div>
-    new Vue({
-      computed: {
-          module1Str: function() {
-                return this.$store.state.module1.str;
-          }
-      }
-    });
-
-    //Vue i18n 다국어 라이브러리에 활
-    <p>{{ 'userPage.common.filter.input.label' }}</p> 
-    <p>{{ inputLabel }}</p>
-    computed: {  
-      inputLabel: function() {    
-        return $t('userPage.common.filter.input.label');
-      }
-    }
+    <p>{{ 'hello' + str + '!!' }}</p> <!-- 템플릿 표현식만 이용하는 경우 --> <p>{{ greetingStr }}</p> <!-- computed 속성을 활용하는 경우 -->new Vue({  data: { str: 'world' },  computed: {        greetingStr: function() {      return 'hello' + this.str + '!!';        }  }});// 조건에 따른 클래스의 추가 및 변경<li v-bind:class="{ disabled: isLastPage }"></li>computed: {  isLastPage: function() {      var lastPageCondition =        this.paginationInfo.current_page >= this.paginationInfo.last_page;      var nothingFetched = Object.keys(this.paginationInfo).length === 0;      return lastPageCondition || nothingFetched;  }//뷰엑스의 state 값을 접근할 때<div>  <p>{{ this.$store.state.module1.str }}</p>  <p>{{ module1Str }}</p></div>new Vue({  computed: {      module1Str: function() {            return this.$store.state.module1.str;      }  }});//Vue i18n 다국어 라이브러리에 활<p>{{ 'userPage.common.filter.input.label' }}</p> <p>{{ inputLabel }}</p>computed: {    inputLabel: function() {        return $t('userPage.common.filter.input.label');  }}
     ```
 
 ### Vue.js 3.0 소식

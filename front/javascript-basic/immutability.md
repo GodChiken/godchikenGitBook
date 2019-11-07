@@ -19,37 +19,13 @@ description: 객체의 변경 불가성에 대해서 정리를 해본다.
   * 아래의 경우에 myName 에 user.name 을 참조 시켰고 이후 변경을 가미했다. 한번 해당 객체를 참조하는 것이 아니라, 원시타입 String 'kim' 을 참조하는 사실을 알도록 하자.
 
   ```javascript
-      var user = {
-          name: 'kim',
-          address: {
-              city: 'Seoul'
-          }
-      };
-
-      var myName = user.name; // myName : kim
-
-      user.name = 'Lee';
-      console.log(myName); // kim
-
-      myName = user.name;  // myName : Lee
-      console.log(myName); // Lee
+      var user = {        name: 'kim',        address: {            city: 'Seoul'        }    };    var myName = user.name; // myName : kim    user.name = 'Lee';    console.log(myName); // kim    myName = user.name;  // myName : Lee    console.log(myName); // Lee
   ```
 
   * 아래의 경우에는 별도로 새로운 메모리에 할당 되는 것이 아니라 같은 곳을 바라보기 때문에 동시에 변경되고 의도된 코딩이 아니라면 막아야한다.
 
   ```javascript
-      var user = {
-          name: 'kim',
-          address: {
-              city: 'Seoul'
-          }
-      };
-
-      var user2 = user; 
-      user.name = 'Lee';
-
-      console.log(user.name); // Lee
-      console.log(user2.name); // Lee
+      var user = {        name: 'kim',        address: {            city: 'Seoul'        }    };    var user2 = user;     user.name = 'Lee';    console.log(user.name); // Lee    console.log(user2.name); // Lee
   ```
 
 * 불변 데이터 패턴\(immutable data pattern\)

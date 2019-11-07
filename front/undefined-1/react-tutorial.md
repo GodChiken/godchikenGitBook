@@ -11,7 +11,7 @@ description: 튜토리얼
 
 ### 리액트는 어쩌다가 만들어졌을까? 
 
-```markup
+```javascript
 <h2 id="number">0</h2>
 <div>
   <button id="increase">+1</button>
@@ -366,7 +366,7 @@ export default function InputSample() {
 * 리액트에서는 다음과 같은 연관배열이나 프로퍼티를 통해직접적인 수정을 하면 안된다.
   * `inputs[name] = value`
 * 대신에 새로운 객체를 생성하여 새 객체에 변화를 주고 이것을 상태로 사용해야 한다.
-  * ```javascript
+  * ```
     setInputs({
         ...inputs, 
         [name]: value
@@ -876,7 +876,204 @@ export default function UserList({ users, onRemove }) {
 {% endtab %}
 {% endtabs %}
 
-### 배열에 항목 수정하
+### 배열에 항목 수정하기
+
+#### 간단한 색상 수정기능 
+
+{% tabs %}
+{% tab title="User에 active 속성 추가" %}
+```javascript
+const [users,setUsers] = useState([
+    {
+        id: 1,
+        username: 'godchiken',
+        email: 'godchiken@naver.com',
+        active : true
+    },
+    {
+        id: 2,
+        username: 'tester',
+        email: 'tester@example.com',
+        active : false
+    },
+    {
+        id: 3,
+        username: 'liz',
+        email: 'liz@example.com',
+        active : false
+    }
+]);
+```
+{% endtab %}
+
+{% tab title="onToggle 이벤트 구현" %}
+```javascript
+const onToggle = id => {
+    setUsers(users.map(user =>
+            user.id === id
+            ? {...user, active: !user.active}
+            : user
+        )
+    )
+};
+```
+{% endtab %}
+
+{% tab title="UserList 컴포넌트에 이벤트 전달" %}
+```javascript
+<UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
+```
+{% endtab %}
+
+{% tab title="App.js 전체 코드" %}
+```javascript
+import React,{useRef, useState} from 'react';
+import UserList from "./UserList";
+import CreateUser from "./CreateUser";
+
+export default function App() {
+    const [inputs,setInputs] = useState({
+        username: '',
+        email: ''
+    });
+    const {username, email} = inputs;
+    const onChange = e => {
+        const {value,name} = e.target;
+        setInputs({
+            ...inputs,
+            [name] : value
+        })
+    };
+    const [users,setUsers] = useState([
+        {
+            id: 1,
+            username: 'godchiken',
+            email: 'godchiken@naver.com',
+            active : true
+        },
+        {
+            id: 2,
+            username: 'tester',
+            email: 'tester@example.com',
+            active : false
+        },
+        {
+            id: 3,
+            username: 'liz',
+            email: 'liz@example.com',
+            active : false
+        }
+    ]);
+
+    const nextId = useRef(4);
+    const onCreate = () => {
+        const user = {
+            id : nextId.current,
+            username,
+            email
+        };
+        setUsers([...users,user]);
+        setInputs({ username : '', email: '' });
+        nextId.current += 1;
+    };
+    const onRemove = id => {
+        setUsers(users.filter(user => user.id !== id))
+    };
+    const onToggle = id => {
+        setUsers(users.map(user =>
+                user.id === id
+                ? {...user, active: !user.active}
+                : user
+            )
+        )
+    };
+
+    return (
+        <>
+            <CreateUser
+                username={username}
+                email={email}
+                onChange={onChange}
+                onCreate={onCreate}
+            />
+            <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
+        </>
+    );
+}
+```
+{% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="User toggle 이벤트 구성" %}
+```jsx
+function User({ user, onRemove, onToggle}) {
+    return (
+        <div>
+            <b
+                style={{
+                    cursor: 'pointer',
+                    color: user.active ? 'green' : 'black'
+                }}
+                onClick={() => onToggle(user.id)}
+            >
+                {user.username}
+            </b>
+            &nbsp;
+            <span>({user.email})</span>
+            <button onClick={() => onRemove(user.id)}>삭제하기</button>
+        </div>
+    );
+}
+```
+{% endtab %}
+
+{% tab title="UserList " %}
+```jsx
+export default function UserList({ users, onRemove, onToggle }) {
+    return (
+        <div>
+            {users.map(user => (
+                <User user={user} key={user.id} onRemove={onRemove} onToggle={onToggle}/>
+            ))}
+        </div>
+    );
+}
+```
+{% endtab %}
+
+{% tab title="UserList.js 전체 코드" %}
+```javascript
+    return (
+        <div>
+            <b
+                style={{
+                    cursor: 'pointer',
+                    color: user.active ? 'green' : 'black'
+                }}
+                onClick={() => onToggle(user.id)}
+            >
+                {user.username}
+            </b>
+            &nbsp;
+            <span>({user.email})</span>
+            <button onClick={() => onRemove(user.id)}>삭제하기</button>
+        </div>
+    );
+}
+
+export default function UserList({ users, onRemove, onToggle }) {
+    return (
+        <div>
+            {users.map(user => (
+                <User user={user} key={user.id} onRemove={onRemove} onToggle={onToggle}/>
+            ))}
+        </div>
+    );
+}
+```
+{% endtab %}
+{% endtabs %}
 
 ### useEffect를 사용하여 마운트/언마운트/업데이트시 할 작업 설정하기 
 

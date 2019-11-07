@@ -18,16 +18,7 @@ description: 자바스크립트 완벽가이드 클래스와 모듈을 학습한
   * "\(정의한 객체명\).prototype" 프로퍼티를 통해 상속 시키고자 하는 코드를 작성한다.
 
     ```javascript
-      function Range(from, to){
-          this.from = from;
-          this.to = to;
-      }
-      Range.prototype = {
-          include : function(){
-              //something
-          }
-          // 배열처럼 상속시키고자 하는 함수를 위와 동일하게 작성해나간다.            
-      }
+      function Range(from, to){      this.from = from;      this.to = to;  }  Range.prototype = {      include : function(){          //something      }      // 배열처럼 상속시키고자 하는 함수를 위와 동일하게 작성해나간다.              }
     ```
 
   * new 키워드로 생성자 함수를 호출하며 일반 함수와 차이점은 대문자로 시작해준다가 관례이나 누가 지킬까 싶기도 하다.
@@ -46,10 +37,7 @@ description: 자바스크립트 완벽가이드 클래스와 모듈을 학습한
   * 참 설명이.. 알아먹기 힘들다.
 
     ```javascript
-       var someFunction = function() {};
-       var protoTypeInSomeFunction = someFunction.prototype;
-       var constructorInProtoTypeInSomeFunction = protoTypeInSomeFunction.constructor;
-       console.log(someFunction == constructorInProtoTypeInSomeFunction) // true
+       var someFunction = function() {};   var protoTypeInSomeFunction = someFunction.prototype;   var constructorInProtoTypeInSomeFunction = protoTypeInSomeFunction.constructor;   console.log(someFunction == constructorInProtoTypeInSomeFunction) // true
     ```
 
   * 어떤 객체에 프로토타입 객체에 constructor property 가 있다는 것은   
@@ -61,18 +49,13 @@ description: 자바스크립트 완벽가이드 클래스와 모듈을 학습한
   * 별도로 정의하는 프로토타입 객체에는 constructor 가 자동으로 생기진 않는다. 이럴경우 명시적으로 설정하여 해결이 가능한다.
 
     ```javascript
-      Range.prototype = {
-          constructor : Range, //이런 식으로 명시적으로 역참조를 위해 설정할 수 있다.
-          //etc...
-      }
+      Range.prototype = {      constructor : Range, //이런 식으로 명시적으로 역참조를 위해 설정할 수 있다.      //etc...  }
     ```
 
     * 혹은 이럴 필요가 없이 미리 정의된 프로토타입 객체를 확장해 나가는 식으로 진행하는 것도 하나의 방법이다.
 
       ```javascript
-        Range.prototype.etc1 = function(){ //something }
-        Range.prototype.etc2 = function(){ //something }
-        Range.prototype.etc3 = function(){ //something }
+        Range.prototype.etc1 = function(){ //something }  Range.prototype.etc2 = function(){ //something }  Range.prototype.etc3 = function(){ //something }
       ```
 * 자바 스타일 클래스
   * 궁금했던 정보이기는 하다. 뭔 차이가 있는지 알아보려고 한다.
@@ -146,23 +129,7 @@ description: 자바스크립트 완벽가이드 클래스와 모듈을 학습한
       * 덕 타이핑을 위한 예시 함수
 
         ```javascript
-              function duckTyping(object){
-                  for(var i = 1; i < arguments.length; i++){                 //object 의 각각의 인수에 대하여
-                      var arg = arguments[i];
-                      switch(typeof arg) {
-                          case 'string':
-                              if(typeof o[arg] !== "function") return false;  // 접근된 요소가 문자열일 경우 메서드의 이름을 확인한다.
-                              continue;
-                          case 'function' :
-                              arg = arg.prototype;                            // 접근된 요소가 함수라면 프로토타입을 사용하게 한다.
-                          case 'object' :
-                              for(var m in arg) {                             // 객체라면 모든 프로퍼티에 대해서 검사를 해야한다. 
-                                  if (typeof arg[m] !== "function") { continue; }     //객체의 각 프로퍼티에 대해서 검사                                         
-                                  if (typeof o[m] !== "function") { return false; }   // 메서드가 아니라면 건너뛴다.                                    
-                              }                                        
-                      }
-                  }
-              }
+              function duckTyping(object){          for(var i = 1; i < arguments.length; i++){                 //object 의 각각의 인수에 대하여              var arg = arguments[i];              switch(typeof arg) {                  case 'string':                      if(typeof o[arg] !== "function") return false;  // 접근된 요소가 문자열일 경우 메서드의 이름을 확인한다.                      continue;                  case 'function' :                      arg = arg.prototype;                            // 접근된 요소가 함수라면 프로토타입을 사용하게 한다.                  case 'object' :                      for(var m in arg) {                             // 객체라면 모든 프로퍼티에 대해서 검사를 해야한다.                           if (typeof arg[m] !== "function") { continue; }     //객체의 각 프로퍼티에 대해서 검사                                                                   if (typeof o[m] !== "function") { return false; }   // 메서드가 아니라면 건너뛴다.                                                          }                                                      }          }      }
         ```
 
       * 위 함수는 객체의 특정 이름의 함수 프로퍼티가 있는지 검증만 한다.

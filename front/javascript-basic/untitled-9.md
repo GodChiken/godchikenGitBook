@@ -32,24 +32,7 @@
   * 코드를 통해 어떻게 작동할 지 예측해보자
 
     ```javascript
-          function func1() {
-            console.log('func1');
-            func2();
-          }
-
-          function func2() {
-            setTimeout(function () {
-              console.log('func2');
-            }, 0);
-
-            func3();
-          }
-
-          function func3() {
-            console.log('func3');
-          }
-
-          func1();
+          function func1() {        console.log('func1');        func2();      }      function func2() {        setTimeout(function () {          console.log('func2');        }, 0);        func3();      }      function func3() {        console.log('func3');      }      func1();
     ```
 
     * 별도의 특별한 함수가 없다면 순서대로 실행이 되겠지만 그렇지가 않다.
@@ -75,26 +58,7 @@
 
 
       ```javascript
-      <script>
-          var btn = document.querySelector('.btn');        
-    
-          btn.onclick = function () {
-            alert('나는 아래 함수로 재선언 되기 때문에 등록이 안되');
-          };
-
-          // 두번째 바인딩된 이벤트 핸들러
-          btn.onclick = function () {
-            alert('윗놈의 자리를 내가 차지했다.');
-          };
-
-          btn.addEventListener('click', function () {
-            alert('아우 먼저');
-          });
-            
-          btn.addEventListener('click', function () {
-            alert('형님 먼저');
-          });
-      </script> 
+      <script>    var btn = document.querySelector('.btn');                btn.onclick = function () {      alert('나는 아래 함수로 재선언 되기 때문에 등록이 안되');    };    // 두번째 바인딩된 이벤트 핸들러    btn.onclick = function () {      alert('윗놈의 자리를 내가 차지했다.');    };    btn.addEventListener('click', function () {      alert('아우 먼저');    });                btn.addEventListener('click', function () {      alert('형님 먼저');    });</script> 
       ```
 
 
@@ -111,35 +75,7 @@
   * 버튼을 클릭했다고 했을 때 다음 코드의 결과를 예상해보자.
 
     ```markup
-      <html>
-      <head>
-        <style>
-          html, body { height: 100%; }
-        </style>
-      <body>
-        <p>버블링과 캡처링 이벤트 <button>버튼</button></p>
-        <script>
-          const body = document.querySelector('body');
-          const para = document.querySelector('p');
-          const button = document.querySelector('button');
-
-          // 버블링
-          body.addEventListener('click', function () {
-            console.log('Handler for body.');
-          });
-
-          // 캡처링
-          para.addEventListener('click', function () {
-            console.log('Handler for paragraph.');
-          }, true);
-
-          // 버블링
-          button.addEventListener('click', function () {
-            console.log('Handler for button.');
-          });
-        </script>
-      </body>
-      </html>
+      <html>  <head>    <style>      html, body { height: 100%; }    </style>  <body>    <p>버블링과 캡처링 이벤트 <button>버튼</button></p>    <script>      const body = document.querySelector('body');      const para = document.querySelector('p');      const button = document.querySelector('button');      // 버블링      body.addEventListener('click', function () {        console.log('Handler for body.');      });      // 캡처링      para.addEventListener('click', function () {        console.log('Handler for paragraph.');      }, true);      // 버블링      button.addEventListener('click', function () {        console.log('Handler for button.');      });    </script>  </body>  </html>
     ```
 
   * body, button 요소는 버블링 이벤트 흐름만을 캐치하고 p 요소는 캡처링 이벤트 흐름만을 캐치한다. 따라서 button 에서 이벤트가 발생하면 먼저 캡처링이 발생하므로 p 요소의 이벤트 핸들러가 동작하고 그후 버블링이 발생하여 button, body 요소의 이벤트 핸들러가 동작한다.
@@ -153,26 +89,13 @@
     * ajax 통신
 
       ```javascript
-            function getData() {
-                var tableData;
-                $.get('https://domain.com/products/1', function (response) {
-                    tableData = response;
-                });
-                return tableData;
-            }            
-            console.log(getData());
+            function getData() {          var tableData;          $.get('https://domain.com/products/1', function (response) {              tableData = response;          });          return tableData;      }                  console.log(getData());
       ```
 
     * setTimeout
 
       ```javascript
-        console.log('Hello');
-
-        setTimeout(function () {
-            console.log('Bye');
-        }, 3000);
-
-        console.log('Hello Again');
+        console.log('Hello');  setTimeout(function () {      console.log('Bye');  }, 3000);  console.log('Hello Again');
       ```
   * 위 코드의 결과는 undefined 가 된다. 그 이유는 특정 로직의 실행이 끝날 때까지 기다려주지 않고 나머지 코드를 먼저 실행이 됬기 때문이다.
   * 해당 코드들을 해결하기위해 위와 같은 비동기 작업의 실행 이후 다음 실행해야 할 함수를 아규먼트로 쥐어주는데 이것이 바로 콜백 함수이다.
