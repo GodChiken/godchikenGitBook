@@ -1532,170 +1532,57 @@ export default function App() {
 {% endtab %}
 {% endtabs %}
 
-{% tabs %}
-{% tab title="CreateUser" %}
-```jsx
-import React from 'react';
-
-const CreateUser = ({ username, email, onChange, onCreate}) => {
-    console.log("createUser");
-    return (
-        <div>
-            <input
-                name="username"
-                placeholder="계정명"
-                onChange={onChange}
-                value={username}
-            />
-            <input
-                name="email"
-                placeholder="이메일"
-                onChange={onChange}
-                value={email}
-            />
-            <button onClick={onCreate}>등록</button>
-        </div>
-    );
-};
-
-export default React.memo(CreateUser);
-```
-{% endtab %}
-
-{% tab title="UserList" %}
-```jsx
-import React from 'react';
-
-const User = React.memo(function User({ user, onRemove, onToggle }) {
-    console.log("User Rendering");
-    return (
-        <div>
-            <b
-                style={{
-                    cursor: 'pointer',
-                    color: user.active ? 'green' : 'black'
-                }}
-                onClick={() => onToggle(user.id)}
-            >
-                {user.username}
-            </b>
-            &nbsp;
-            <span>({user.email})</span>
-            <button onClick={() => onRemove(user.id)}>삭제</button>
-        </div>
-    );
-});
-
-function UserList({ users, onRemove, onToggle }) {
-    console.log("UserList Rendering");
-    return (
-        <div>
-            {users.map(user => (
-                <User
-                    user={user}
-                    key={user.id}
-                    onRemove={onRemove}
-                    onToggle={onToggle}
-                />
-            ))}
-        </div>
-    );
-}
-
-export default React.memo(
-    UserList,
-    (prevProps, nextProps) => nextProps.users === prevProps.users
-);
-```
-{% endtab %}
-
-{% tab title="App" %}
-```jsx
-import React,{useRef, useState, useMemo, useCallback} from 'react';
-import UserList from "./UserList";
-import CreateUser from "./CreateUser";
-
-export default function App() {
-    const [inputs,setInputs] = useState({
-        username: '',
-        email: ''
-    });
-    const {username, email} = inputs;
-    const onChange = useCallback(e => {
-        const {value,name} = e.target;
-        setInputs(inputs => ({
-            ...inputs,
-            [name] : value
-        }))
-    },[]);
-    const [users,setUsers] = useState([
-        {
-            id: 1,
-            username: 'godchiken',
-            email: 'godchiken@naver.com',
-            active : true
-        },
-        {
-            id: 2,
-            username: 'tester',
-            email: 'tester@example.com',
-            active : false
-        },
-        {
-            id: 3,
-            username: 'liz',
-            email: 'liz@example.com',
-            active : false
-        }
-    ]);
-
-    const nextId = useRef(4);
-    const onCreate = useCallback(() => {
-        const user = {
-            id : nextId.current,
-            username,
-            email
-        };
-        setUsers(users => [...users,user]);
-        setInputs({ username : '', email: '' });
-        nextId.current += 1;
-    },[username,email]);
-    const onRemove = useCallback(id => {
-        setUsers(users => users.filter(user => user.id !== id))
-    },[]);
-    const onToggle = useCallback(id => {
-        setUsers(users => users.map(
-            user => user.id === id
-            ? {...user, active: !user.active}
-            : user
-        ));
-    },[]);
-    const count = useMemo( () => {
-        const activeUser = users.filter(user => user.active).length;
-        console.log('활성 사용자 수를 세는중...');
-        return activeUser;
-    },[users]);
-    return (
-        <>
-            <CreateUser
-                username={username}
-                email={email}
-                onChange={onChange}
-                onCreate={onCreate}
-            />
-            <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
-            <div>활성사용자 수 : {count}</div>
-        </>
-    );
-}
-```
-{% endtab %}
-{% endtabs %}
-
 * `React.memo` 의 활용안은 기존 컴포넌트를 담을 수 있게 변수로 할당하고_\(할필요는 없지만 가독성을 위해서\)_ 해당 변수를 `React.memo`에 인자값으로 설정해준다.
-* 다른 컴포넌트도 동일하게 적용을 해나갈 수도 있지만 User의 경우에 한개만 건드려도 모든 User, CreateUser까지 리렌더링 되는 현상이 있다.
+* 다른 컴포넌트도 동일하게 적용을 해나갈 수도 있지만 `User`의 경우에 한개만 건드려도 모든 `User`, `CreateUser`까지 리렌더링 되는 현상이 있다.
 * 몇가지 점검을 해야 올바르게 작동한다.
-  * users 배열이 변경시 의존하
+  * `App`에서 `users`배열을 변경시  의존하는 함수들의 `deps`에 대해서 `useState`로 관리하는 `users`의 정보를 함수형으로 업데이트를 하는 구조로 변경이 필요하다.
+  * 이러한 이유는 `users`가 변경시 함수가 재 선언되며, 이를 활용하는 컴포넌트들은 리렌더링 과정을 수행하기 때문이다.
+  * 방법은 `deps`에 위치한 `users` 를 지우고, `setUsers`에 등록하는 콜백함수의 파라미터에 최신 `users`를 참조하게 변경하면 `deps`에 `users`가 존재하지 않더라도 된다.
+* onChange의 경우엔 함수형 업데이트를 해도 영향이 가지 않는다고 한다.
+
+#### 완벽하지 않은 React DevTool V4.2
+
+* hightlight update 기능이 아직 완벽하게 픽스 된것 같지는 않다. \(2019.11.08 기준\)
+* 개발툴에 의존해서 확인하는 것 보다 각 컴포넌트에서 직접 확인해서 체크하는 것도 하나의 방법이다.
+
+#### useMemo의 구성
+
+```javascript
+function useMemo(nextCreate, deps) {
+  currentlyRenderingComponent = resolveCurrentlyRenderingComponent();
+  workInProgressHook = createWorkInProgressHook();
+  var nextDeps = deps === undefined ? null : deps;
+
+  if (workInProgressHook !== null) {
+    var prevState = workInProgressHook.memoizedState;
+
+    if (prevState !== null) {
+      if (nextDeps !== null) {
+        var prevDeps = prevState[1];
+
+        if (areHookInputsEqual(nextDeps, prevDeps)) {
+          return prevState[0];
+        }
+      }
+    }
+  }
+
+  {
+    isInHookUserCodeInDev = true;
+  }
+
+  var nextValue = nextCreate();
+
+  {
+    isInHookUserCodeInDev = false;
+  }
+
+  workInProgressHook.memoizedState = [nextValue, nextDeps];
+  return nextValue;
+}
+```
+
+* 사실 이해하기엔 아직 아는게 없지만, 이런 식으로 구성을 한번 살펴보는거도 공부가 될 것이라고 생각한다.
 
 ### useReducer 를 사용하여 상태 업데이트 로직 분리하기 
 
