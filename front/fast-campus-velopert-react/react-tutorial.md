@@ -1373,7 +1373,7 @@ const onToggle = useMemo(
 ### React.memo 를 사용한 컴포넌트 리렌더링 방지 
 
 {% tabs %}
-{% tab title="First Tab" %}
+{% tab title="App" %}
 ```jsx
 import React,{useRef, useState, useMemo, useCallback} from 'react';
 import UserList from "./UserList";
@@ -1455,7 +1455,7 @@ export default function App() {
 ```
 {% endtab %}
 
-{% tab title="Second Tab" %}
+{% tab title="UserList" %}
 ```jsx
 import React from 'react';
 
@@ -1502,7 +1502,7 @@ export default React.memo(
 ```
 {% endtab %}
 
-{% tab title="" %}
+{% tab title="CreateUser" %}
 ```jsx
 import React from 'react';
 
