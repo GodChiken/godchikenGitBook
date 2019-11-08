@@ -1373,6 +1373,82 @@ const onToggle = useMemo(
 ### React.memo 를 사용한 컴포넌트 리렌더링 방지 
 
 {% tabs %}
+{% tab title="CreateUser" %}
+```jsx
+import React from 'react';
+
+const CreateUser = ({ username, email, onChange, onCreate}) => {
+    console.log("createUser");
+    return (
+        <div>
+            <input
+                name="username"
+                placeholder="계정명"
+                onChange={onChange}
+                value={username}
+            />
+            <input
+                name="email"
+                placeholder="이메일"
+                onChange={onChange}
+                value={email}
+            />
+            <button onClick={onCreate}>등록</button>
+        </div>
+    );
+};
+
+export default React.memo(CreateUser);
+```
+{% endtab %}
+
+{% tab title="UserList" %}
+```jsx
+import React from 'react';
+
+const User = React.memo(function User({ user, onRemove, onToggle }) {
+    console.log("User Rendering");
+    return (
+        <div>
+            <b
+                style={{
+                    cursor: 'pointer',
+                    color: user.active ? 'green' : 'black'
+                }}
+                onClick={() => onToggle(user.id)}
+            >
+                {user.username}
+            </b>
+            &nbsp;
+            <span>({user.email})</span>
+            <button onClick={() => onRemove(user.id)}>삭제</button>
+        </div>
+    );
+});
+
+function UserList({ users, onRemove, onToggle }) {
+    console.log("UserList Rendering");
+    return (
+        <div>
+            {users.map(user => (
+                <User
+                    user={user}
+                    key={user.id}
+                    onRemove={onRemove}
+                    onToggle={onToggle}
+                />
+            ))}
+        </div>
+    );
+}
+
+export default React.memo(
+    UserList,
+    (prevProps, nextProps) => nextProps.users === prevProps.users
+);
+```
+{% endtab %}
+
 {% tab title="App" %}
 ```jsx
 import React,{useRef, useState, useMemo, useCallback} from 'react';
@@ -1454,6 +1530,37 @@ export default function App() {
 }
 ```
 {% endtab %}
+{% endtabs %}
+
+{% tabs %}
+{% tab title="CreateUser" %}
+```jsx
+import React from 'react';
+
+const CreateUser = ({ username, email, onChange, onCreate}) => {
+    console.log("createUser");
+    return (
+        <div>
+            <input
+                name="username"
+                placeholder="계정명"
+                onChange={onChange}
+                value={username}
+            />
+            <input
+                name="email"
+                placeholder="이메일"
+                onChange={onChange}
+                value={email}
+            />
+            <button onClick={onCreate}>등록</button>
+        </div>
+    );
+};
+
+export default React.memo(CreateUser);
+```
+{% endtab %}
 
 {% tab title="UserList" %}
 ```jsx
@@ -1502,35 +1609,93 @@ export default React.memo(
 ```
 {% endtab %}
 
-{% tab title="CreateUser" %}
+{% tab title="App" %}
 ```jsx
-import React from 'react';
+import React,{useRef, useState, useMemo, useCallback} from 'react';
+import UserList from "./UserList";
+import CreateUser from "./CreateUser";
 
-const CreateUser = ({ username, email, onChange, onCreate}) => {
-    console.log("createUser");
+export default function App() {
+    const [inputs,setInputs] = useState({
+        username: '',
+        email: ''
+    });
+    const {username, email} = inputs;
+    const onChange = useCallback(e => {
+        const {value,name} = e.target;
+        setInputs(inputs => ({
+            ...inputs,
+            [name] : value
+        }))
+    },[]);
+    const [users,setUsers] = useState([
+        {
+            id: 1,
+            username: 'godchiken',
+            email: 'godchiken@naver.com',
+            active : true
+        },
+        {
+            id: 2,
+            username: 'tester',
+            email: 'tester@example.com',
+            active : false
+        },
+        {
+            id: 3,
+            username: 'liz',
+            email: 'liz@example.com',
+            active : false
+        }
+    ]);
+
+    const nextId = useRef(4);
+    const onCreate = useCallback(() => {
+        const user = {
+            id : nextId.current,
+            username,
+            email
+        };
+        setUsers(users => [...users,user]);
+        setInputs({ username : '', email: '' });
+        nextId.current += 1;
+    },[username,email]);
+    const onRemove = useCallback(id => {
+        setUsers(users => users.filter(user => user.id !== id))
+    },[]);
+    const onToggle = useCallback(id => {
+        setUsers(users => users.map(
+            user => user.id === id
+            ? {...user, active: !user.active}
+            : user
+        ));
+    },[]);
+    const count = useMemo( () => {
+        const activeUser = users.filter(user => user.active).length;
+        console.log('활성 사용자 수를 세는중...');
+        return activeUser;
+    },[users]);
     return (
-        <div>
-            <input
-                name="username"
-                placeholder="계정명"
+        <>
+            <CreateUser
+                username={username}
+                email={email}
                 onChange={onChange}
-                value={username}
+                onCreate={onCreate}
             />
-            <input
-                name="email"
-                placeholder="이메일"
-                onChange={onChange}
-                value={email}
-            />
-            <button onClick={onCreate}>등록</button>
-        </div>
+            <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
+            <div>활성사용자 수 : {count}</div>
+        </>
     );
-};
-
-export default React.memo(CreateUser);
+}
 ```
 {% endtab %}
 {% endtabs %}
+
+* `React.memo` 의 활용안은 기존 컴포넌트를 담을 수 있게 변수로 할당하고_\(할필요는 없지만 가독성을 위해서\)_ 해당 변수를 `React.memo`에 인자값으로 설정해준다.
+* 다른 컴포넌트도 동일하게 적용을 해나갈 수도 있지만 User의 경우에 한개만 건드려도 모든 User, CreateUser까지 리렌더링 되는 현상이 있다.
+* 몇가지 점검을 해야 올바르게 작동한다.
+  * users 배열이 변경시 의존하
 
 ### useReducer 를 사용하여 상태 업데이트 로직 분리하기 
 
