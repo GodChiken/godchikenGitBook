@@ -18,7 +18,13 @@
     > 제네릭을 활용하지 않고 사용하는 경우, 객체를 읽고 쓰는 과정에서 캐스팅 과정이 필요로 한다.\`
 
     ```java
-    List list = new ArrayList(); list.add("hello"); String str = (String) List.get(0);List list = new ArrayList;list.add("hello"); String str = list.get(0);
+    List list = new ArrayList(); 
+    list.add("hello"); 
+    String str = (String) List.get(0);
+
+    List list = new ArrayList;
+    list.add("hello"); 
+    String str = list.get(0);
     ```
 * 제네릭 타입
   * class, interface 과 같은 타입\(T\)을 파라미터로 가지는 클래스와 인터페이스를 의미한다.
@@ -26,27 +32,58 @@
     하길래 무슨 소릴 하는건지 보아하니 다음을 의미 하는 것 같다.
 
     ```java
-    public class 클래스명<T>public interface 인터페이스명<T>public class 클래스명<AnyThingVariableNaming>           ----> 변수명 쓰듯 쓰는게 가능public interface 인터페이스명<AnyThingVariableNaming>    ----> 마찬가지
+    public class 클래스명<T>
+    public interface 인터페이스명<T>
+
+    public class 클래스명<AnyThingVariableNaming>           ----> 변수명 쓰듯 쓰는게 가능
+    public interface 인터페이스명<AnyThingVariableNaming>    ----> 마찬가지
     ```
 
     > "&lt;&gt;" 안에는 자바에서 변수명 규칙과 동일하게 정할 수 있다. 하지만 통상 대문자 한 글자로 정하는 편이다.  
     > 위와같은 이유는 타입 파라미터를 일반 클래스 및 인터페이스와 구분하기 어렵기 떄문이다. 그리고 통상 타입 파라미터의 정의로 쓰는 것은 다음과 같다.
 
     ```text
-    E - Element (used extensively by the Java Collections Framework)K - KeyN - NumberT - TypeV - ValueS,U,V etc. - 2nd, 3rd, 4th types
+    E - Element (used extensively by the Java Collections Framework)
+    K - Key
+    N - Number
+    T - Type
+    V - Value
+    S,U,V etc. - 2nd, 3rd, 4th types
     ```
 
   * 제네릭 타입을 쓰는 이유는 제네릭 타입을 쓰지 않고 모든 타입을 저장하려는 경우 Object 를 사용할 수 있으나 이럴 경우 Casting 과정을 겪기 때문이다.  
     성능상 좋지 못한 결과가 나오기 때문에 제네릭 타입은 좋은 해결책이 되어준다.
 
     ```java
-    public class Box<T> {    private T t;    public T get() {        return t;    }    public void set(T t) {        this.t = t;    }}
+    public class Box<T> {
+        private T t;
+
+        public T get() {
+            return t;
+        }
+
+        public void set(T t) {
+            this.t = t;
+        }
+    }
     ```
 
   * 위와 같이 클래스를 제네릭 타입으로 구성 후 자신이 사용하고자 하는 클래스를 제네릭 타입으로 지정하여 사용하면 내부적으로 자동으로 재구성 된다고 한다.
 
     ```java
-    Box<String> box = new Box<String>;public class Box<String> {    private String t;    public String get() {        return t;    }    public void set(String t) {        this.t = t;    }}
+    Box<String> box = new Box<String>;
+
+    public class Box<String> {
+        private String t;
+
+        public String get() {
+            return t;
+        }
+
+        public void set(String t) {
+            this.t = t;
+        }
+    }
     ```
 
   * 결론적으로, **실제 클래스가 사용될 때 구체적인 타입을 지정하여 타입변환을 최소화 하기 위한 목적으로 활용**한다.
@@ -54,13 +91,24 @@
   * 제네릭 타입에는 원천 타입\(Raw Type\) 이 존재한다.
 
     ```java
-    List<String> list; ----> 일반적인 제네릭타입 형식의 컬렉션List list2          ----> Raw Type
+    List<String> list; ----> 일반적인 제네릭타입 형식의 컬렉션
+    List list2          ----> Raw Type
     ```
 
   * 위와 같을 경우 list2 같은 경우 문제가 발생한다. 그에 대한 예제는 다음과 같다.
 
     ```java
-    public class RawType<T> {  public List<String> getStrs() {      return Arrays.asList("str");  }  public static void main(String[] args) {      RawType t = new RawType();          ---->> Raw Type      for (String str : t.getStrs()) {    ---->> compile error          System.out.println(str);      }  }}
+    public class RawType<T> {
+      public List<String> getStrs() {
+          return Arrays.asList("str");
+      }
+      public static void main(String[] args) {
+          RawType t = new RawType();          ---->> Raw Type
+          for (String str : t.getStrs()) {    ---->> compile error
+              System.out.println(str);
+          }
+      }
+    }
     ```
 
   * 컴파일 에러내용은 incompatible types: Object cannot be converted to String 이고,   
@@ -75,14 +123,19 @@
   * 제네릭 메소드는 파라미터 타입, 리턴 타입으로 타입 파라미터를 갖는 메소드를 의미한다
 
     ```java
-    public <타입파라미터,...> 리턴타입 메소드명(매개변수,...) {...}public <T> Box<T> boxing(T t) {...}
+    public <타입파라미터,...> 리턴타입 메소드명(매개변수,...) {...}
+    public <T> Box<T> boxing(T t) {...}
     ```
 
   * 두가지 방식으로 호출할 수 있다. 코드에서 타입 파라미터의 구체적인 타입을 명시적으로 지정하거나  
     컴파일러가 매개값의 타입을 보고 구체적인 타입을 추정하도록 하는 방법이 있다.
 
     ```java
-    리턴타입 변수 = <구체적인 타입> 메소드명(매개값);리턴타입 변수 = 메소드명(매개값);Box<Integer> box = <Integer>boxing(100);Box<Integer> box = boxing(100);
+    리턴타입 변수 = <구체적인 타입> 메소드명(매개값);
+    리턴타입 변수 = 메소드명(매개값);
+
+    Box<Integer> box = <Integer>boxing(100);
+    Box<Integer> box = boxing(100);
     ```
 
   * 결론적으로 리턴 타입 앞에오는 제네릭스로 표현된 타입 파라미터를 매개변수에도 동일하게 표현하여 사용하면 된다.
@@ -102,7 +155,9 @@
   * 제네릭 타입도 다른 타입의 부모 클래스가 될 수 있다.
 
     ```java
-    public class Product<T> {...}   public class ChildProduct<T,M> extends Project<T> {...}public class EtcProduct<T,M,C> extends ChildProduct<T,M> {...}
+    public class Product<T> {...}   
+    public class ChildProduct<T,M> extends Project<T> {...}
+    public class EtcProduct<T,M,C> extends ChildProduct<T,M> {...}
     ```
 
   * 이렇게 늘려갈 수도 있겠지만, 애초에 설계시 이런 식으로 확장해 나가는 방식을 고수하진 않을 것 같다.

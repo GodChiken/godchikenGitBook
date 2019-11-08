@@ -26,19 +26,55 @@ description: 'let, const, BlockLevel Scope 공부'
   * 클로저로 예를 살펴보자. [이유는 이곳에서 확인하자](https://github.com/GodChiken/StudyES5/blame/master/src/main/resources/markdown/scope/scope.md#L41-L61)
 
     ```javascript
-      var myArray = [];  // 함수의 배열을 생성하는 for 루프의 i는 전역 변수다.  for (var i = 0; i < 3; i++) {    myArray.push(function () {       console.log(i);     });  }  // 배열에서 함수를 꺼내어 호출한다.  for (var j = 0; j < 3; j++) {    myArray[j]();  }  // 3이 3번 출력된다.
+      var myArray = [];
+
+      // 함수의 배열을 생성하는 for 루프의 i는 전역 변수다.
+      for (var i = 0; i < 3; i++) {
+        myArray.push(function () { 
+          console.log(i); 
+        });
+      }
+
+      // 배열에서 함수를 꺼내어 호출한다.
+      for (var j = 0; j < 3; j++) {
+        myArray[j]();
+      }
+
+      // 3이 3번 출력된다.
     ```
 
   * 위 코드를 0,1,2 순으로 올바르게 작동 시키려면 다음과 같다.
 
     ```javascript
-      var myArray = [];  // 함수의 배열을 생성하는 for 루프의 i는 전역 변수다.  for (var i = 0; i < 3; i++) {    (function (index) {       myArray.push(function () { console.log(index); });    }(i));  }  // 배열에서 함수를 꺼내어 호출한다  for (var j = 0; j < 3; j++) {    myArray[j]();  }
+      var myArray = [];
+
+      // 함수의 배열을 생성하는 for 루프의 i는 전역 변수다.
+      for (var i = 0; i < 3; i++) {
+        (function (index) { 
+          myArray.push(function () { console.log(index); });
+        }(i));
+      }
+
+      // 배열에서 함수를 꺼내어 호출한다
+      for (var j = 0; j < 3; j++) {
+        myArray[j]();
+      }
     ```
 
   * let 키워드를 사용하면 이러한 클로저를 작성 안해도 동일한 효과를 가져갈 수 있다.
 
     ```javascript
-      var myArray = [];  // i 는 루프의 코드 블록에서만 유효한 지역 변수이면서 자유 변수이다.  for (let i = 0; i < 3; i++) {    myArray.push(function () { console.log(i); });  }         for (var j = 0; j < 3; j++) {    console.dir(myArray[j]);    myArray[j]();  }
+      var myArray = [];
+
+      // i 는 루프의 코드 블록에서만 유효한 지역 변수이면서 자유 변수이다.
+      for (let i = 0; i < 3; i++) {
+        myArray.push(function () { console.log(i); });
+      }       
+
+      for (var j = 0; j < 3; j++) {
+        console.dir(myArray[j]);
+        myArray[j]();
+      }
     ```
 * const keyword
   * let 과 다르게 재할당을 금지할 때 사용하는 키워드이다.

@@ -18,7 +18,23 @@ description: 이터레이션 프로토콜에 대해서 공부해보자.
   * 배열은 기본적으로 Symbol.iterator 메소드를 소유하므로, 이터러블 프로토콜을 준수한다.
 
     ```javascript
-    const array = [1,2,3];console.log(Symbol.iterator in array);for (const item of array){  console.log(item);}/*   일반 객체는 이터레이션 프로토콜을 준수하지 않는다.  Symbol.iterator 를 직접 메소드를 커스텀구현하면 일반 객체도 가능은 하다.*/const objectLiteral = { a: 10, b: 20};console.log(Symbol.iterator in objectLiteral); // falsefor(const oL of objectLiteral){  console.log(p);}
+    const array = [1,2,3];
+    console.log(Symbol.iterator in array);
+
+    for (const item of array){
+      console.log(item);
+    }
+
+    /* 
+      일반 객체는 이터레이션 프로토콜을 준수하지 않는다.
+      Symbol.iterator 를 직접 메소드를 커스텀구현하면 일반 객체도 가능은 하다.
+    */
+    const objectLiteral = { a: 10, b: 20};
+    console.log(Symbol.iterator in objectLiteral); // false
+
+    for(const oL of objectLiteral){
+      console.log(p);
+    }
     ```
 
   * 빌트인 이터러블
@@ -36,19 +52,107 @@ description: 이터레이션 프로토콜에 대해서 공부해보자.
   * 예시 코드를 보며 살펴보면 다음과 같다.
 
     ```javascript
-      /*      Symbol.iterator 의 내부 변수는 외부로 전달이 불가능하다.      이 특성을 이용하여 다양한 구현이 가능하다.      Symbol.iterator 메소드는 next 메소드를 소유한 이터레이터를 반환해야 한다.      next 메소드는 이터레이터 리절트 객체를 반환하며 순회시 마다 호출이 된다.  */      const fibonacci = {          [Symbol.iterator]() {      let [pre, cur] = [0, 1];              const max = 10;              //return iterator        return {                  next() {          [pre, cur] = [cur, pre + cur];          return {            value: cur,            done: cur >= max          };        }      };    }  };     // 반복문 에서의 사용          for (const num of fibonacci) {          console.log(num);   }  // spread 문법  const arr = [...fibonacci];  console.log(arr); // [ 1, 2, 3, 5, 8 ]  // destructuring  const [first, second, ...rest] = fibonacci;  console.log(first, second, rest); // 1 2 [ 3, 5, 8 ]
+      /*
+          Symbol.iterator 의 내부 변수는 외부로 전달이 불가능하다.
+          이 특성을 이용하여 다양한 구현이 가능하다.
+          Symbol.iterator 메소드는 next 메소드를 소유한 이터레이터를 반환해야 한다.
+          next 메소드는 이터레이터 리절트 객체를 반환하며 순회시 마다 호출이 된다.
+      */    
+      const fibonacci = {      
+        [Symbol.iterator]() {
+          let [pre, cur] = [0, 1];        
+          const max = 10;        
+
+          //return iterator  
+          return {          
+            next() {
+              [pre, cur] = [cur, pre + cur];
+              return {
+                value: cur,
+                done: cur >= max
+              };
+            }
+          };
+        }
+      };   
+      // 반복문 에서의 사용        
+      for (const num of fibonacci) {      
+        console.log(num); 
+      }
+      // spread 문법
+      const arr = [...fibonacci];
+      console.log(arr); // [ 1, 2, 3, 5, 8 ]
+      // destructuring
+      const [first, second, ...rest] = fibonacci;
+      console.log(first, second, rest); // 1 2 [ 3, 5, 8 ]
     ```
 
   * 위 예제의 피보나치 이터러블에는 외부에서 값을 전달할 방법이 없다는 점이 있으나, 다음과 같이 하면 이터러블을 반환하는 구조를 취하면 특정한 값을 외부에 전달할 수 있다.
 
     ```javascript
-      const fibonacciFunc = function (max) {    let [pre, cur] = [0, 1];    return {                  [Symbol.iterator]() {                      return {                          next() {            [pre, cur] = [cur, pre + cur];            return {              value: cur,              done: cur >= max            };          }        };      }    };  };  for (const num of fibonacciFunc(10)) {      console.log(num);  }
+      const fibonacciFunc = function (max) {
+        let [pre, cur] = [0, 1];
+
+        return {            
+          [Symbol.iterator]() {              
+            return {                
+              next() {
+                [pre, cur] = [cur, pre + cur];
+                return {
+                  value: cur,
+                  done: cur >= max
+                };
+              }
+            };
+          }
+        };
+      };
+      for (const num of fibonacciFunc(10)) {
+          console.log(num);
+      }
     ```
 
   * 이터레이터를 생성하려면 이터러블의 Symbol.iterator 메소드를 호출해야 한다. 이터러블이면서 이터레이터인 객체를 생성하면 Symbol.iterator 메소드를 호출하지 않아도 된다.
 
     ```javascript
-      const fibonacciFunc = function (max) {    let [pre, cur] = [0, 1];    /*      Symbol.iterator 메소드와 next 메소드를 소유한 이터러블이면서 이터레이터인 객체를 반환      하려면 위 예지와 다르게 감싸는 구조가 아닌 별도의 프로퍼티로 구성하면 된다.     */    return {                  [Symbol.iterator]() {        return this;      },                  next() {        [pre, cur] = [cur, pre + cur];        return {          value: cur,          done: cur >= max        };      }    };  };          let iter = fibonacciFunc(10);  // 이터레이터로 활용되는 코드  console.log(iter.next()); // {value: 1, done: false}  console.log(iter.next()); // {value: 2, done: false}  console.log(iter.next()); // {value: 3, done: false}  console.log(iter.next()); // {value: 5, done: false}  console.log(iter.next()); // {value: 8, done: false}  console.log(iter.next()); // {value: 13, done: true}  iter = fibonacciFunc(10);  // 이터러블로 활용되는 코드  for (const num of iter) {    console.log(num);  }
+      const fibonacciFunc = function (max) {
+        let [pre, cur] = [0, 1];
+
+        /*
+          Symbol.iterator 메소드와 next 메소드를 소유한 이터러블이면서 이터레이터인 객체를 반환
+          하려면 위 예지와 다르게 감싸는 구조가 아닌 별도의 프로퍼티로 구성하면 된다. 
+        */
+
+        return {            
+          [Symbol.iterator]() {
+            return this;
+          },            
+          next() {
+            [pre, cur] = [cur, pre + cur];
+            return {
+              value: cur,
+              done: cur >= max
+            };
+          }
+        };
+      };        
+
+      let iter = fibonacciFunc(10);
+
+      // 이터레이터로 활용되는 코드
+      console.log(iter.next()); // {value: 1, done: false}
+      console.log(iter.next()); // {value: 2, done: false}
+      console.log(iter.next()); // {value: 3, done: false}
+      console.log(iter.next()); // {value: 5, done: false}
+      console.log(iter.next()); // {value: 8, done: false}
+      console.log(iter.next()); // {value: 13, done: true}
+
+      iter = fibonacciFunc(10);
+
+      // 이터러블로 활용되는 코드
+      for (const num of iter) {
+        console.log(num);
+      }
     ```
 
   * 무한 이터러블, 지연평가\(Lazy evaluation\) 를 통한 활용법
@@ -58,6 +162,28 @@ description: 이터레이션 프로토콜에 대해서 공부해보자.
     * 지연평가는 데이터를 소비하거나, 디스트럭처링 할당이 되기 이전까지 데이터를 생성하지 않는다.
 
       ```javascript
-        const fibonacciFunc = function () {    let [pre, cur] = [0, 1];    return {      [Symbol.iterator]() {        return this;      },      next() {        [pre, cur] = [cur, pre + cur];                          return { value: cur };      }    };  };              // 제약을 걸지 않으면 무한히 생성된다.  for (const num of fibonacciFunc()) {    if (num > 10000) break;    console.log(num);  }  // 원하는 값만 취득하는 방식  const [f1, f2, f3] = fibonacciFunc();  console.log(f1, f2, f3); // 1 2 3
+        const fibonacciFunc = function () {
+          let [pre, cur] = [0, 1];
+
+          return {
+            [Symbol.iterator]() {
+              return this;
+            },
+            next() {
+              [pre, cur] = [cur, pre + cur];                  
+              return { value: cur };
+            }
+          };
+        };            
+
+        // 제약을 걸지 않으면 무한히 생성된다.
+        for (const num of fibonacciFunc()) {
+          if (num > 10000) break;
+          console.log(num);
+        }
+
+        // 원하는 값만 취득하는 방식
+        const [f1, f2, f3] = fibonacciFunc();
+        console.log(f1, f2, f3); // 1 2 3
       ```
 

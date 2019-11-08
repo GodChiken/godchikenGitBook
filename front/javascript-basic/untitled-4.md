@@ -24,7 +24,28 @@ description: 클로저에 대해 정리하기전 목차를 정하고 정리한�
   * 그래서 함수 내부에 지역변수를 활용하여 초기화를 하는 식의 방지를 추구할 수 있으나, 변경사항에 대한 대처는 불가하므로 원하는 로직의 수행이 불가능하다.
 
     ```markup
-          <!DOCTYPE html>      <html>      <body>        <p>지역 변수를 사용한 Counting</p>        <button id="inclease">+</button>        <p id="count">0</p>        <script>          var incleaseBtn = document.getElementById('inclease');          var count = document.getElementById('count');          function increase() {            // 카운트 상태를 유지하기 위한 지역 변수            var counter = 0;            return ++counter;          }          incleaseBtn.onclick = function () {            count.innerHTML = increase();          };        </script>      </body>      </html>
+          <!DOCTYPE html>
+          <html>
+          <body>
+            <p>지역 변수를 사용한 Counting</p>
+            <button id="inclease">+</button>
+            <p id="count">0</p>
+            <script>
+              var incleaseBtn = document.getElementById('inclease');
+              var count = document.getElementById('count');
+
+              function increase() {
+                // 카운트 상태를 유지하기 위한 지역 변수
+                var counter = 0;
+                return ++counter;
+              }
+
+              incleaseBtn.onclick = function () {
+                count.innerHTML = increase();
+              };
+            </script>
+          </body>
+          </html>
     ```
 
   * 이전에 정리했전 즉시실행함수\(IIFE\)\(참고 : \#4 이슈\)도 일종의 클로저이다.
@@ -32,7 +53,24 @@ description: 클로저에 대해 정리하기전 목차를 정하고 정리한�
     > 이 즉시실행함수를 클로저로 선언하여 사용히면 호이스팅에도 영향을 받지 않고 변경된 정보를 유지하는 모듈 패턴을 만드는 구성요소가 된다.
 
     ```javascript
-      function Counter() {     // 카운트를 유지하기 위한 자유 변수     var counter = 0;        // 클로저    this.increase = function () {      return ++counter;    };    // 클로저    this.decrease = function () {      return --counter;    };  }  var counter = new Counter();  console.log(counter.increase()); // 1  console.log(counter.decrease()); // 0        
+      function Counter() { 
+        // 카운트를 유지하기 위한 자유 변수 
+        var counter = 0;    
+        // 클로저
+        this.increase = function () {
+          return ++counter;
+        };
+
+        // 클로저
+        this.decrease = function () {
+          return --counter;
+        };
+      }
+
+      var counter = new Counter();
+
+      console.log(counter.increase()); // 1
+      console.log(counter.decrease()); // 0        
     ```
 
     \`\`\`

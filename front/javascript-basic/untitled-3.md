@@ -38,7 +38,10 @@ description: 자바스크립트 스코프에 대하여 정리한다.
   * 코드를 보자
 
     ```javascript
-      if(true){      var a = "am alive";  }  console.log(a);             //am alive
+      if(true){
+          var a = "am alive";
+      }
+      console.log(a);             //am alive
     ```
 
   * 위와 같은 이유는 함수 밖에서 선언된 변수는 '{}'\(brace\)내에 있을 지라도 전역 변수와 동급으로 취급되기 때문이다.   
@@ -54,7 +57,12 @@ description: 자바스크립트 스코프에 대하여 정리한다.
   * 코드를 보자
 
     ```javascript
-      function foo() {      x = 10;         // 여기를 주목하라 'var'로 선언이 안되어있다.  }  foo();  console.log(x); // ?
+      function foo() {
+          x = 10;         // 여기를 주목하라 'var'로 선언이 안되어있다.
+      }
+
+      foo();
+      console.log(x); // ?
     ```
 
   * 몰랐을 경우에는 왜인지 'undefined' 가 나올 것으로 예상되나 결과는 10이다.

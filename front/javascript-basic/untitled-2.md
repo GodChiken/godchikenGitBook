@@ -39,7 +39,8 @@ description: 자바스크립트 변수에 대해서 알아보자
   * 문자열 리터럴은 객체가 아니지만 내부적으로 객체로 변환되기 때문에 해당 객체에 정의된 문자열과 관련된 요소를 참조할 수 있다.
 
     ```javascript
-         var s = "hello word";     s.substring(3,4);
+         var s = "hello word";
+         s.substring(3,4);
     ```
 
   * 숫자와, 불리언도 위와 비슷한 이유로 필요한 메서드를 별도의 선언없이 참조할 수 있다.
@@ -87,13 +88,15 @@ description: 자바스크립트 변수에 대해서 알아보자
   * 객체 리터럴을 통한 방식
 
     ```javascript
-    var myObject = {};var myObject2 = {kbh : 32};
+    var myObject = {};
+    var myObject2 = {kbh : 32};
     ```
 
   * new 키워드 활용    
 
     ```javascript
-    var myObjectCreateByConstructor = new Object();var myObjectCreateByConstructor = new RegExp("js");
+    var myObjectCreateByConstructor = new Object();
+    var myObjectCreateByConstructor = new RegExp("js");
     ```
 
   * Object.create\(\)
@@ -113,14 +116,17 @@ description: 자바스크립트 변수에 대해서 알아보자
       연산자 조차 사용이 불가능하다.
 
       ```javascript
-         var myObjectCreateByInjectPrototypeArgument       = Object.create({1},{2});
+         var myObjectCreateByInjectPrototypeArgument 
+            = Object.create({1},{2});
       ```
 
     * 특정한 프로토타입을 상속 받도록 메서드를 통해 금지 시킬 수 있으나, 내 개발 업무 내의 ES5 기준으로 이런 코드를 작성할 일이 없기 때문에, 생략한다.
     * Object의 프로퍼티에 접근하는 방법은 다음 두가지
 
       ```javascript
-        var myObject = {x : 1};  console.log(myObject['x']);  console.log(myObject.x);
+        var myObject = {x : 1};
+        console.log(myObject['x']);
+        console.log(myObject.x);
       ```
 
       * 두 표현식은 동일하다. 위의 배열 형식으로 접근하기 위해 기술된 배열을 **연관 배열\(associate array\)** 이라 명명되기도 하고 hash, map, dictionary 라고도 한다. 모든 오브젝트는 연관 배열이다.   
@@ -129,7 +135,13 @@ description: 자바스크립트 변수에 대해서 알아보자
       * 하지만 연관 배열을 사용해 객체의 프로퍼티에 접근시에는 식별자가 문자열이기 떄문에 프로그램 실행 도중 생성하고 접근이 가능하다. 무슨 소리이인지는 다음의 코드를 보면 알 수 있다.
 
         ```javascript
-        var addr = "";//가상의 customer 에 addr1, addr2 .... 등으로 이루어진 프로퍼티가 있다고 가정해보자for (i = 0; i < 4; i++){  addr += customer["addr" + i] // 와 같은 형식으로 유동적인 접근이 가능하다.}
+        var addr = "";
+
+        //가상의 customer 에 addr1, addr2 .... 등으로 이루어진 프로퍼티가 있다고 가정해보자
+
+        for (i = 0; i < 4; i++){
+          addr += customer["addr" + i] // 와 같은 형식으로 유동적인 접근이 가능하다.
+        }
         ```
 * 프로퍼티 삭제
   * delete 키워드를 사용하면 되며, 이때 대상 객체의 고유한 프로퍼티가 아니라고 하면 삭제하지 않기 때문에 주의한다.

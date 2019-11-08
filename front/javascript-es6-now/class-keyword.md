@@ -18,7 +18,18 @@ description: ECMAScript6 에 등장하는 class keyword
 * 클래스 이름은 성성자 함수와 마찬가지로 파스칼 케이스를 사용하는 것이 일반적이다. 파스칼 케이스를 사용하지 않아도 에러가 발생하지는 않는다.
 
   ```javascript
-  class Person {        constructor(name) {    this._name = name;  }      sayHi() {    console.log(`Hi! ${this._name}`);  }}const me = new Person('Lee');me.sayHi(); // Hi! Leeconsole.log(me instanceof Person); // true
+  class Person {      
+    constructor(name) {
+      this._name = name;
+    }    
+    sayHi() {
+      console.log(`Hi! ${this._name}`);
+    }
+  }
+  const me = new Person('Lee');
+  me.sayHi(); // Hi! Lee
+
+  console.log(me instanceof Person); // true
   ```
 
 * 클래스는 클래스 선언문 이전에 참조할 수 없지만, 호이스팅은 발생한다. 
@@ -26,7 +37,11 @@ description: ECMAScript6 에 등장하는 class keyword
   * 따라서 클래스 선언문 이전에 [TDZ](https://github.com/GodChiken/StudyES6toNew/blame/master/markdown/act-1/letAndConstAndBlockScope.md#L6-L15) 에 빠지기 때문에 호이스팅이 발생하지 않는 것처럼 동작한다.
 
     ```javascript
-    const Foo = '';        {              console.log(Foo);             class Foo {}  // ReferenceError: Cannot access 'Foo' before initialization}
+    const Foo = '';        
+    {          
+        console.log(Foo);         
+        class Foo {}  // ReferenceError: Cannot access 'Foo' before initialization
+    }
     ```
 
 ### 생성자를 통한 인스턴스 생성해보기
@@ -35,7 +50,9 @@ description: ECMAScript6 에 등장하는 class keyword
 * new 연산자를 사용하지 않고 constructor 를 호출하면 타입 에러\(TypeError\)가 발생한다. constructor 는 new 연산자 없이 호출할 수 없다.
 
   ```javascript
-  class Foo {}const foo = Foo(); // TypeError: Class constructor Foo cannot be invoked without 'new'
+  class Foo {}
+
+  const foo = Foo(); // TypeError: Class constructor Foo cannot be invoked without 'new'
   ```
 
 ### 생성자\(constructor\)
@@ -44,7 +61,14 @@ description: ECMAScript6 에 등장하는 class keyword
 * 자바스크립트의 생성자 함수에서 this 에 추가한 프로퍼티를 클래스 기반 객체지향 언어에서는 클래스 필드라고 부른다.
 
   ```javascript
-  class Person {      constructor(name) {              this._name = name; // class field}}// 인자값을 전달하여 클래스 필드 값을 설정이 가능하다.const me = new Person('Lee');console.log(me); // Person {_name: "Lee"}
+  class Person {      
+  constructor(name) {            
+    this._name = name; // class field
+  }
+  }
+  // 인자값을 전달하여 클래스 필드 값을 설정이 가능하다.
+  const me = new Person('Lee');
+  console.log(me); // Person {_name: "Lee"}
   ```
 
 * constructor 는 생략하면 클래스에 constructor\(\) {}를 포함한 것과 동일하게 동작한다. 즉, 빈 객체를 생성한다. 따라서 인스턴스에 프로퍼티를 추가하려면 인스턴스를 생성한 이후, 프로퍼티를 동적으로 추가해야 한다.
@@ -63,7 +87,22 @@ description: ECMAScript6 에 등장하는 class keyword
 * `set` 키워드를 사용해서 클래스 필드를 조작하는 용도이다. 프로퍼티처럼 값을 할당하는 방식으로 사용하면된다.
 
   ```javascript
-  class Foo{  constructor(arr = []){      this._arr = arr;  }  get firstMethod(){      return this._arr.length ? this._arr[0] : null;  }  set firstMethod(value){      this._arr = value;  }}const foo = new Foo([1,2]);foo.firstMethod(); // 함수 호출하듯 하면 안된다.foo.firstMethod; // getter, 결과값 1foo.firstMethod = [4,3,2,1]; // setterfoo.firstMethod; // 결과값 4
+  class Foo{
+    constructor(arr = []){
+        this._arr = arr;
+    }
+    get firstMethod(){
+        return this._arr.length ? this._arr[0] : null;
+    }
+    set firstMethod(value){
+        this._arr = value;
+    }
+  }
+  const foo = new Foo([1,2]);
+  foo.firstMethod(); // 함수 호출하듯 하면 안된다.
+  foo.firstMethod; // getter, 결과값 1
+  foo.firstMethod = [4,3,2,1]; // setter
+  foo.firstMethod; // 결과값 4
   ```
 
 ### 정적 메서드 \(static method\)
@@ -76,13 +115,41 @@ description: ECMAScript6 에 등장하는 class keyword
   > 이말은 곧 `this`를 사용할 수 없다는 것을 의미한다. 정적 메서드의 용도는 전역적을 사용하는 유틸성 함수를 생성할 때 추로 사용한다.
 
   ```javascript
-  class Foo{ constructor(props) {     this.props = props;}static staticMethod() {     console.log("인스턴스 선언 안해도 되앳!"); } prototypeMethod(){     return this.props; } } Foo.staticMethod();
+  class Foo{ constructor(props) { 
+      this.props = props;
+  }
+  static staticMethod() { 
+      console.log("인스턴스 선언 안해도 되앳!"); 
+  } 
+  prototypeMethod(){ 
+      return this.props; } 
+  } 
+
+  Foo.staticMethod();
   ```
 
 * ES5 방식으로 클래스를 표현해보고 구조를 비교하여보자
 
   ```javascript
-  var Foo = (function (){      function Foo(prop) {          this.prop = prop;      }      Foo.staticMethod = function() {          return "인스턴스 선언따위 안해도 되앳";                };      Foo.prototype.prototypeMethod = function() {          return this.prop;      };      return Foo;})();var foo = new Foo(123);console.log(Foo.prototype === foo.__proto__); //trueconsole.log(Foo.prototype.constructor === Foo); //true console.log(foo.prototypeMethod());console.log(Foo.staticMethod());console.log(foo.staticMethod()); // Uncaught TypeError
+  var Foo = (function (){
+        function Foo(prop) {
+            this.prop = prop;
+        }
+        Foo.staticMethod = function() {
+            return "인스턴스 선언따위 안해도 되앳";          
+        };
+
+        Foo.prototype.prototypeMethod = function() {
+            return this.prop;
+        };
+        return Foo;
+  })();
+  var foo = new Foo(123);
+  console.log(Foo.prototype === foo.__proto__); //true
+  console.log(Foo.prototype.constructor === Foo); //true 
+  console.log(foo.prototypeMethod());
+  console.log(Foo.staticMethod());
+  console.log(foo.staticMethod()); // Uncaught TypeError
   ```
 
 * 해당 객체의 `prototype property` 는 객체가 생성자로 사용될 때, 이 함수를 통해 생성된 객체의 부모역활을 하는 프로토타입을 가르킨다. Foo 는 생성자 함수이며 이 함수의 `prototype property` 가 가르키는 프로토타입 객체는 생성자 함수 Foo 를 통해서 생성되는 foo 인스턴스의 부모역활을 한다.       

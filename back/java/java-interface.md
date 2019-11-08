@@ -17,7 +17,16 @@
   * 자바 8버전 부터 디폴트 메서드와 정적 메소드를 선언이 가능해졌다.
 
     ```java
-    interface 인터페이스명 {  //상수  타입 상수명 = 값;  //추상메서드  타입 메소드명(매개변수,...);  //디폴트메서드  default 타입 메소드명(매개변수,...) {...}  //정적 메소드  static 타입 메소드명(매개변수) {...}}
+    interface 인터페이스명 {
+      //상수
+      타입 상수명 = 값;
+      //추상메서드
+      타입 메소드명(매개변수,...);
+      //디폴트메서드
+      default 타입 메소드명(매개변수,...) {...}
+      //정적 메소드
+      static 타입 메소드명(매개변수) {...}
+    }
     ```
 
     * 상수 필드
@@ -31,7 +40,10 @@
         > > 이때 상수명은 대문자와 스네이크 케이스 명명식으로 구성하는게 관례이다.
         > >
         > > ```java
-        > > public interface RemoteControl {  public static final int MAX_VOLUME = 10;  public static final int MIN_VOLUME = 0;}
+        > > public interface RemoteControl {
+        > >   public static final int MAX_VOLUME = 10;
+        > >   public static final int MIN_VOLUME = 0;
+        > > }
         > > ```
     * 추상 메소드
       * 객체가 가지고 있는 메소드를 설명하는 것으로 호출할 때 어떤 매개값과 리턴 타입을 가지고 있는지 설명한다.
@@ -41,7 +53,11 @@
         > \[public abstract\] 리턴타입 메소드명\(매개변수,...\);
         >
         > ```java
-        > public interface RemoteControl {public abstract void turnOn();public abstract void turnOff();public abstract void setVolume(int volume);}
+        > public interface RemoteControl {
+        > public abstract void turnOn();
+        > public abstract void turnOff();
+        > public abstract void setVolume(int volume);
+        > }
         > ```
     * 디폴트 메소드
       * 인터페이스에 선언되는 메소드지만, 구현 객체가 가지고 있는 인스턴스 메소드라고 생각해야한다.
@@ -51,7 +67,12 @@
         > \[public\] default 리턴타입 메소드명\(매개변수,...\) {...};
         >
         > ```java
-        > public interface RemoteControl {public default void setMute(boolean mute){  if(mute) {...}  else {...}}}
+        > public interface RemoteControl {
+        > public default void setMute(boolean mute){
+        >   if(mute) {...}
+        >   else {...}
+        > }
+        > }
         > ```
     * 정적 메소드
       * 디폴트 메서드와 다르게 객체가 없어도 인터페이스 만으로도 호출이 가능한 메서드이다.
@@ -60,7 +81,11 @@
         > \[public\] static 리턴타입 메소드명\(매개변수,...\) {...};
         >
         > ```java
-        > public interface RemoteControl {public static void changeBattery(){  //...}}
+        > public interface RemoteControl {
+        > public static void changeBattery(){
+        >   //...
+        > }
+        > }
         > ```
     * 각각의 요소가 컴파일시 자동으로 키워드가 붙는 이유는 다음 링크에 있다.
       * [왜 public과 public final 키워드를 제거하는게 맞나요?](https://stackoverflow.com/questions/17011374/are-public-and-public-final-redundant-for-interface-methods)
@@ -82,7 +107,9 @@
   * 다음과 같은 형태를 지닌다.
 
     ```java
-    public class 구현클래스명 implements 인터페이스명 {//...}
+    public class 구현클래스명 implements 인터페이스명 {
+    //...
+    }
     ```
 
   * 기본적으로 인터페이스의 모든 메서드의 접근자는 public 이므로 더 접근범위가 낮은 키워드를 대체할 수 없다.
@@ -97,13 +124,25 @@
     * 생성자 또는 메서드의 로컬 변수
 
       ```java
-      public class PersonalRemoteControl {RemoteControl remoteControl = new Television();PersonalRemoteControl(RemoteControl remoteControl){  this.remoteControl = remoteControl;}void changeAudioControl(){  RemoteControl rc = new Audio();}}
+      public class PersonalRemoteControl {
+      RemoteControl remoteControl = new Television();
+
+      PersonalRemoteControl(RemoteControl remoteControl){
+        this.remoteControl = remoteControl;
+      }
+
+      void changeAudioControl(){
+        RemoteControl rc = new Audio();
+      }
+      }
       ```
   * 추상 메서드의 사용
     * 구현 객체가 인터페이스 타입에 대입되면 인터페이스에 선언된 추상메서드를 개발 코드에서 호출이 가능해진다.
 
       ```java
-      RemoteControl rc = new Television();rc.turnOn();rc.turnOff();
+      RemoteControl rc = new Television();
+      rc.turnOn();
+      rc.turnOff();
       ```
   * 디폴트 메서드의 사용
     * 인터페이스에서 선언되나 바로 사용이 불가하다.

@@ -40,7 +40,17 @@ description: 프로토타입에 대해서 공부해보자
   * 기초적인 프로토타입 객체를 확장시키는 코드를 살펴보자
 
     ```javascript
-      function Person(name) {    this.name = name;  }  var foo = new Person('Lee');  Person.prototype.sayHello = function(){    console.log('Hi! my name is ' + this.name);  };  foo.sayHello();
+      function Person(name) {
+        this.name = name;
+      }
+
+      var foo = new Person('Lee');
+
+      Person.prototype.sayHello = function(){
+        console.log('Hi! my name is ' + this.name);
+      };
+
+      foo.sayHello();
     ```
 
 ![image](https://user-images.githubusercontent.com/16012504/65509000-68a8b800-df0c-11e9-8460-3de60d7cfd17.png)

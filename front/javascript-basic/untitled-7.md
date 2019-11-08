@@ -47,7 +47,9 @@ description: 실행 컨텍스트에 대한 목차를 정하고 정리
           * 해당되는 컨텍스트 바인딩 하는 역활만 한다.
 
           ```javascript
-              ObjectEnvironmentRecord = {        bindObject: [object]    }
+              ObjectEnvironmentRecord = {
+                  bindObject: [object]
+              }
           ```
 
         * Declarative environment Record \(선언적 환경 레코드\)
@@ -58,7 +60,10 @@ description: 실행 컨텍스트에 대한 목차를 정하고 정리
           * 다음의 코드와 같이 와 Object 안에 실제 값들이 저장되어 있는 형태를 취한다.
 
           ```javascript
-              DeclarativeEnvironmentRecord = {        a: 33,        b: 'Hello World'    }
+              DeclarativeEnvironmentRecord = {
+                  a: 33,
+                  b: 'Hello World'
+              }
           ```
       * 환경 레코드는 위 설명과 같이 목적에 의해 두개로 나뉘어진 \(구채적인\)서브 클래스로 이루어진 추상 클래스다.
       * 콘크리드 구조의 추상 메서드는 별도로 조사하진 않고 종류만 알아두고 넘어간다.
@@ -79,7 +84,11 @@ description: 실행 컨텍스트에 대한 목차를 정하고 정리
   * Global Code 를 살펴보면 다음과 같다.
 
     ```javascript
-        Global Execution Context {        LexicalEnvironment: GlobalEnv,        VariableLexicalEnvironment: GlobalEnv,        ThisBinding: window    }
+        Global Execution Context {
+            LexicalEnvironment: GlobalEnv,
+            VariableLexicalEnvironment: GlobalEnv,
+            ThisBinding: window
+        }
     ```
 
   * 전역 실행 컨텍스트의 Lexical Environment 와 VariableLexical Environment 는 같은 GlobaleEnv 를 참조하고 있다.
@@ -88,7 +97,12 @@ description: 실행 컨텍스트에 대한 목차를 정하고 정리
   * 전역 실행 컨텍스트의 렉시컬 환경이 참조하는 GlobalEnv 는 다음과 같다.
 
     ```javascript
-    GlobalEnv {  ObjectLexicalRecord: {    ObjectBinding: Window,  },  OuterEnvironmentReference: null,}
+    GlobalEnv {
+      ObjectLexicalRecord: {
+        ObjectBinding: Window,
+      },
+      OuterEnvironmentReference: null,
+    }
     ```
 
   * 위와 같이 되어 있는데 객체 렉시컬 환경의 ObjectBinding 프로퍼티가 Window 를 보고있는데 GlobalEC의 ThisBinding도 Window를 보고 있다.
@@ -102,7 +116,17 @@ description: 실행 컨텍스트에 대한 목차를 정하고 정리
   * 함수 코드의 실행 컨텍스트가 만들어 질때는 실행 컨텍스트 스택에 전역 실행 컨텍스트가 생성되어 있다.
 
     ```javascript
-        function sum(x, y) {        var result = x + y;        var etc = function() {            console.log('good');        }            function msg() {            return result;        }    }    sum(10, 20);
+        function sum(x, y) {
+            var result = x + y;
+            var etc = function() {
+                console.log('good');
+            }
+    
+            function msg() {
+                return result;
+            }
+        }
+        sum(10, 20);
     ```
 
   * 자바스크립트 엔진이 sum\(10, 20\)을 만나면 함수에 대한 EC를 생성하게 된다.
@@ -115,31 +139,65 @@ description: 실행 컨텍스트에 대한 목차를 정하고 정리
   * sum 의 렉시컬 환경은
 
     ```javascript
-      {    DeclarativeEnvironmentRecord: { },    OuterEnvironmentReference: null  }          
+      {
+        DeclarativeEnvironmentRecord: { },
+        OuterEnvironmentReference: null
+      }          
     ```
 
   * 위와 같이 구성되는데 첫번째로 파라미터로 들어오는 x와 y가 저 곳에 들어가게 된다.
 
     ```javascript
-        {        DeclarativeEnvironmentRecord: {            x: 10,            y: 20        },        OuterEnvironmentReference: null    }
+        {
+            DeclarativeEnvironmentRecord: {
+                x: 10,
+                y: 20
+            },
+            OuterEnvironmentReference: null
+        }
     ```
 
   * 와 같은 형태가 될 것이고 그 다음으로는 함수 내부에 선언된 것들을 가져오는데, 처음으로는 함수선언을 먼저 가져온다.
 
     ```javascript
-        {        DeclarativeEnvironmentRecord: {            x: 10,            y: 20,            msg: Function Reference        },        OuterEnvironmentReference: null    }
+        {
+            DeclarativeEnvironmentRecord: {
+                x: 10,
+                y: 20,
+                msg: Function Reference
+            },
+            OuterEnvironmentReference: null
+        }
     ```
 
   * 그리고 함수 내부에서 사용할 수 있는 arguments 를 세팅한다.
 
     ```javascript
-    {    DeclarativeEnvironmentRecord: {        x: 10,        y: 20,        msg: Function Reference,        arguments: Arguments Object,    },    OuterEnvironmentReference: null,};
+    {
+        DeclarativeEnvironmentRecord: {
+            x: 10,
+            y: 20,
+            msg: Function Reference,
+            arguments: Arguments Object,
+        },
+        OuterEnvironmentReference: null,
+    };
     ```
 
   * 그리고 선언된 변수들을 가져오게 된다. 함수 내부에서 사용할 수 있는 arguments 를 세팅한다.
 
     ```javascript
-    {    DeclarativeEnvironmentRecord: {        x: 10,        y: 20,        msg: Function Reference,        arguments: Arguments Object,        result: undefined,        etc: undefined,    },    OuterEnvironmentReference: null,}
+    {
+        DeclarativeEnvironmentRecord: {
+            x: 10,
+            y: 20,
+            msg: Function Reference,
+            arguments: Arguments Object,
+            result: undefined,
+            etc: undefined,
+        },
+        OuterEnvironmentReference: null,
+    }
     ```
 
   * 이렇게 되는데 undefined 이고 msg 는 Function Reference 를 참조하는 이유는 함수 선언식과 함수 표현식에 대한 차이이다.
@@ -149,19 +207,49 @@ description: 실행 컨텍스트에 대한 목차를 정하고 정리
   * OuterEnvironmentReference 는 스팩을 보면 가까운 상위 EC를 참조한다고 되어있는데 현재의 경우에서는 상위 EC가 Global EC 이다.
 
     ```javascript
-        {        DeclarativeEnvironmentRecord: {            x: 10,            y: 20,            msg: Function Reference,            arguments: Arguments Object,            result: undefined,            etc: undefined,        },        OuterEnvironmentReference: GloabalEC,    }
+        {
+            DeclarativeEnvironmentRecord: {
+                x: 10,
+                y: 20,
+                msg: Function Reference,
+                arguments: Arguments Object,
+                result: undefined,
+                etc: undefined,
+            },
+            OuterEnvironmentReference: GloabalEC,
+        }
     ```
 
     * var result = x + y;를 만나서 계산한 후에 result 가 갱신된다.
 
       ```javascript
-      {    DeclarativeEnvironmentRecord: {        x: 10,        y: 20,        msg: Function Reference,        arguments: Arguments Object,        result: 30,        etc: undefined,    },    OuterEnvironmentReference: GloabalEC,}
+      {
+          DeclarativeEnvironmentRecord: {
+              x: 10,
+              y: 20,
+              msg: Function Reference,
+              arguments: Arguments Object,
+              result: 30,
+              etc: undefined,
+          },
+          OuterEnvironmentReference: GloabalEC,
+      }
       ```
 
     * var etc에 선언된 함수를 접근하여 다음과 같이 채워진다.
 
       ```javascript
-          {        DeclarativeEnvironmentRecord: {          x: 10,          y: 20,          msg: Function Reference,          arguments: Arguments Object,          result: 30,          etc: Function Reference,        },        OuterEnvironmentReference: GloabalEC,    }
+          {
+              DeclarativeEnvironmentRecord: {
+                x: 10,
+                y: 20,
+                msg: Function Reference,
+                arguments: Arguments Object,
+                result: 30,
+                etc: Function Reference,
+              },
+              OuterEnvironmentReference: GloabalEC,
+          }
       ```
 
     * 함수를 실행할때 EC가 생성되는 과정을 보았다.

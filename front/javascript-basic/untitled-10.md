@@ -22,7 +22,19 @@ description: this keyword에 대해 알아보자
   * inner function 및 callback function 는 외부 함수를 바라보지 않으며, 전역 객체에 바인딩 된다.
 
     ```javascript
-      var globalVar = 'something';  console.log(globalVar);  console.log(window.ga);  function foo(){      console.log('invoke');      function inFoo(){          console.log(this);      //window      }  }  window.foo();
+      var globalVar = 'something';
+
+      console.log(globalVar);
+      console.log(window.ga);
+
+      function foo(){
+          console.log('invoke');
+          function inFoo(){
+              console.log(this);      //window
+          }
+      }
+
+      window.foo();
     ```
 
   * 결론적으로는 함수 자체가 별도의 처리가 없으면 항상 this binding 은 전역객체를 바인딩 한다. [왜 그런가?](https://github.com/GodChiken/StudyES5/blame/master/src/main/resources/markdown/context/executionContext.md#L117-L122)
@@ -33,7 +45,19 @@ description: this keyword에 대해 알아보자
   * 프로토타입 객체도 메소드를 가질 수 있다. 프로토타입 객체 메소드 내부에서 사용된 this 도 일반 메소드 방식과 마찬가지로 해당 메소드를 호출한 객체에 바인딩된다.
 
     ```javascript
-      function Person(name) {    this.name = name;  }  Person.prototype.getName = function() {    return this.name;  }  var me = new Person('Lee');  console.log(me.getName());  Person.prototype.name = 'Kim';  console.log(Person.prototype.getName());
+      function Person(name) {
+        this.name = name;
+      }
+
+      Person.prototype.getName = function() {
+        return this.name;
+      }
+
+      var me = new Person('Lee');
+      console.log(me.getName());
+
+      Person.prototype.name = 'Kim';
+      console.log(Person.prototype.getName());
     ```
 * 생성자 함수 호출
   * 뭐라고 선언하든지 간에 기존 함수 new 키워드를 붙여 호출하면 생성자 함수가 된다.
@@ -59,7 +83,25 @@ description: this keyword에 대해 알아보자
       * 생성자 함수 방식의 경우, 생성된 객체의 프로토타입 객체는 Person.prototype 이다.
 
         ```javascript
-        // 객체 리터럴 방식var foo = {name: 'foo',gender: 'male'}console.dir(foo);// 생성자 함수 방식function Person(name, gender) {this.name = name;this.gender = gender;}var me  = new Person('Lee', 'male');console.dir(me);var you = new Person('Kim', 'female');console.dir(you);
+        // 객체 리터럴 방식
+        var foo = {
+        name: 'foo',
+        gender: 'male'
+        }
+
+        console.dir(foo);
+
+        // 생성자 함수 방식
+        function Person(name, gender) {
+        this.name = name;
+        this.gender = gender;
+        }
+
+        var me  = new Person('Lee', 'male');
+        console.dir(me);
+
+        var you = new Person('Kim', 'female');
+        console.dir(you);
         ```
 * 생성자 함수에 new 키워드를 붙이지 않을 경우
   * 결론적으론 생성자 함수는 특별히 자바스크립트에서 제제하는 부분이 없고 의미상 목적을 가지고 첫 글자를 대문자로 써서 활용한다 하였따.
@@ -69,13 +111,38 @@ description: this keyword에 대해 알아보자
     * new 키워드를 사용하여 생성자 함수를 호출하면 암묵적으로 생성된 빈 객체가 바인딩 된다.
 
       ```javascript
-        function Person(name) {                  this.name = name; // new 없이 호출하는 경우, 함수의 프로퍼티는 전역객체에 추가된다.  };  // 일반 함수로서 호출되었기 때문에 객체를 암묵적으로 생성하여 반환하지 않는다.              var me = Person('Kim');  console.log(me); // undefined  console.log(window.name); // Kim, node.js인 경우에는 global.name
+        function Person(name) {              
+          this.name = name; // new 없이 호출하는 경우, 함수의 프로퍼티는 전역객체에 추가된다.
+        };
+
+        // 일반 함수로서 호출되었기 때문에 객체를 암묵적으로 생성하여 반환하지 않는다.            
+        var me = Person('Kim');
+
+        console.log(me); // undefined
+        console.log(window.name); // Kim, node.js인 경우에는 global.name
       ```
   * 이러한 실수를 방지하기 위하여 Scope-Safe Constructor 패턴이라는 것이 존재한다. \(라이브러리에 적극 사용되는 패턴\)
   * 대부분의 빌트인 생성자\(내장 함수\)는 new 연산자의 유무를 따져서 적합한 값을 반환한다.
 
     ```javascript
-          function ScopeSafeConstructorPattern(arg) {          // 생성자 함수가 new 연산자와 함께 호출되면 함수의 선두에서 빈객체를 생성하고 this에 바인딩한다.          // this가 호출된 함수(arguments.callee, 본 예제의 경우 A)의 인스턴스가 아니면 new 연산자를 사용하지 않은 것이므로 이 경우 new와 함께 생성자 함수를 호출하여 인스턴스를 반환한다.          // arguments.callee는 호출된 함수의 이름을 나타낸다. 이 예제의 경우 A로 표기하여도 문제없이 동작하지만 특정함수의 이름과 의존성을 없애기 위해서 arguments.callee를 사용하는 것이 좋다.          if (!(this instanceof arguments.callee)) {              return new arguments.callee(arg);          }          // 프로퍼티 생성과 값의 할당          this.value = arg ? arg : 0;      }      var a = new A(100);      var b = A(10);      console.log(a.value);      console.log(b.value);
+          function ScopeSafeConstructorPattern(arg) {
+              // 생성자 함수가 new 연산자와 함께 호출되면 함수의 선두에서 빈객체를 생성하고 this에 바인딩한다.
+              // this가 호출된 함수(arguments.callee, 본 예제의 경우 A)의 인스턴스가 아니면 new 연산자를 사용하지 않은 것이므로 이 경우 new와 함께 생성자 함수를 호출하여 인스턴스를 반환한다.
+              // arguments.callee는 호출된 함수의 이름을 나타낸다. 이 예제의 경우 A로 표기하여도 문제없이 동작하지만 특정함수의 이름과 의존성을 없애기 위해서 arguments.callee를 사용하는 것이 좋다.
+
+              if (!(this instanceof arguments.callee)) {
+                  return new arguments.callee(arg);
+              }
+
+              // 프로퍼티 생성과 값의 할당
+              this.value = arg ? arg : 0;
+          }
+
+          var a = new A(100);
+          var b = A(10);
+
+          console.log(a.value);
+          console.log(b.value);
     ```
 * apply, call, bind 호출
   * Function prototype 에 있는 메소드를 이용하여 명시적으로 this 를 바인딩 하는 방식이다.         
