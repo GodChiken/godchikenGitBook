@@ -36,6 +36,8 @@
   * [Redux](front/fast-campus-velopert-react/redux.md)
   * [Redux Middleware](front/fast-campus-velopert-react/redux-middleware.md)
   * [React & TypeScript](front/fast-campus-velopert-react/react-and-typescript.md)
+* [HTML](front/html.md)
+* [CSS](front/css.md)
 
 ## Back
 
