@@ -1366,7 +1366,7 @@ const onToggle = useMemo(
 
 ![hightlight update](../../.gitbook/assets/captured-2.gif)
 
-* v4 버전으로 업그레이드 되면서 hightlight update 기능이 보이지 않았다.
+* v4 버전으로 업그레이드 되면서 _**hightlight update**_ 기능이 보이지 않았다.
 * [https://blog.woolta.com/categories/1/posts/159](https://blog.woolta.com/categories/1/posts/159) 에서 그에 대한 대처법을 블로그했다.
 * 하지만 4.2버전부터는 원활하게 잘된다.
 
@@ -1534,15 +1534,15 @@ export default function App() {
 
 * `React.memo` 의 활용안은 기존 컴포넌트를 담을 수 있게 변수로 할당하고_\(할필요는 없지만 가독성을 위해서\)_ 해당 변수를 `React.memo`에 인자값으로 설정해준다.
 * 다른 컴포넌트도 동일하게 적용을 해나갈 수도 있지만 `User`의 경우에 한개만 건드려도 모든 `User`, `CreateUser`까지 리렌더링 되는 현상이 있다.
-* 몇가지 점검을 해야 올바르게 작동한다.
+* 몇 가지 점검을 해야 올바르게 작동한다.
   * `App`에서 `users`배열을 변경시  의존하는 함수들의 `deps`에 대해서 `useState`로 관리하는 `users`의 정보를 함수형으로 업데이트를 하는 구조로 변경이 필요하다.
   * 이러한 이유는 `users`가 변경시 함수가 재 선언되며, 이를 활용하는 컴포넌트들은 리렌더링 과정을 수행하기 때문이다.
   * 방법은 `deps`에 위치한 `users` 를 지우고, `setUsers`에 등록하는 콜백함수의 파라미터에 최신 `users`를 참조하게 변경하면 `deps`에 `users`가 존재하지 않더라도 된다.
-* onChange의 경우엔 함수형 업데이트를 해도 영향이 가지 않는다고 한다.
+* `onChange`의 경우엔 함수형 업데이트를 해도 영향이 가지 않는다고 한다.
 
 #### 완벽하지 않은 React DevTool V4.2
 
-* hightlight update 기능이 아직 완벽하게 픽스 된것 같지는 않다. \(2019.11.08 기준\)
+* _**hightlight update**_ 기능이 아직 완벽하게 픽스 된것 같지는 않다. \(2019.11.08 기준\)
 * 개발툴에 의존해서 확인하는 것 보다 각 컴포넌트에서 직접 확인해서 체크하는 것도 하나의 방법이다.
 
 #### useMemo의 구성
