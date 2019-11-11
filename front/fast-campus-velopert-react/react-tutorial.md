@@ -1588,12 +1588,163 @@ function useMemo(nextCreate, deps) {
 
 #### `useReducer`는 무엇인가?
 
-* 이전까지 상태를 업데이트시 useState를 활용했지만 또다른 방법이다.
+* 이전까지 상태를 업데이트시 `useState`를 활용했지만 또다른 방법이다.
 * 상태관리 + 상태 업데이트 로직 분리가 가능하다.
 
 #### `useReducer`를 활용한 `Counter` 컴포넌트 구현
 
+{% tabs %}
+{% tab title="useState & Counter Component" %}
+```jsx
+import React, {useState} from 'react';
+
+export default function Counter() {
+    const [number, setNumber] = useState(0);
+
+    const onIncrease = () => {
+        setNumber(prevNumber => prevNumber + 1);
+    };
+    const onDecrease = () => {
+        setNumber(prevNumber => prevNumber - 1);
+    };
+
+    return (
+        <div>
+            <h1>{number}</h1>
+            <button onClick={onIncrease}>+</button>
+            <button onClick={onDecrease}>-</button>
+        </div>
+    );
+}
+```
+{% endtab %}
+
+{% tab title="useReducer & Counter Component" %}
+```jsx
+import React, {useReducer} from 'react';
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'INCREMENT' :
+            return state + 1;
+        case 'DECREMENT' :
+            return state - 1;
+        default :
+            return state;
+    }
+}
+
+export default function Counter() {
+    const [number, dispatch] = useReducer(reducer,0);
+
+    const onIncrease = () => { dispatch({type:'INCREMENT'}); };
+    const onDecrease = () => { dispatch({type:'DECREMENT'}); };
+
+    return (
+        <div>
+            <h1>{number}</h1>
+            <button onClick={onIncrease}>+</button>
+            <button onClick={onDecrease}>-</button>
+        </div>
+    );
+}
+```
+{% endtab %}
+{% endtabs %}
+
+* "함수만 분리했는데 무엇이 따로 관리하는 것인가" 라는 의문이 들수도 있다.
+* 중요한 포인트는 ****`useReducer`_**의**_ `reducer`_**를 다른 파일에 작성해도 무방**_하다.
+* 상태관련 업데이트를 따로 분리가 가능하다는 점이다.
+
 #### `useReducer`를 활용한 `App` 컴포넌트 재구성
+
+{% tabs %}
+{% tab title="useState & App" %}
+```jsx
+import React,{useRef, useState, useMemo, useCallback} from 'react';
+import UserList from "./UserList";
+import CreateUser from "./CreateUser";
+
+export default function App() {
+    const [inputs,setInputs] = useState({
+        username: '',
+        email: ''
+    });
+    const {username, email} = inputs;
+    const onChange = useCallback(e => {
+        const {value,name} = e.target;
+        setInputs(inputs => ({
+            ...inputs,
+            [name] : value
+        }))
+    },[]);
+    const [users,setUsers] = useState([
+        {
+            id: 1,
+            username: 'godchiken',
+            email: 'godchiken@naver.com',
+            active : true
+        },
+        {
+            id: 2,
+            username: 'tester',
+            email: 'tester@example.com',
+            active : false
+        },
+        {
+            id: 3,
+            username: 'liz',
+            email: 'liz@example.com',
+            active : false
+        }
+    ]);
+
+    const nextId = useRef(4);
+    const onCreate = useCallback(() => {
+        const user = {
+            id : nextId.current,
+            username,
+            email
+        };
+        setUsers(users => [...users,user]);
+        setInputs({ username : '', email: '' });
+        nextId.current += 1;
+    },[username,email]);
+    const onRemove = useCallback(id => {
+        setUsers(users => users.filter(user => user.id !== id))
+    },[]);
+    const onToggle = useCallback(id => {
+        setUsers(users => users.map(
+            user => user.id === id
+            ? {...user, active: !user.active}
+            : user
+        ));
+    },[]);
+    const count = useMemo( () => {
+        const activeUser = users.filter(user => user.active).length;
+        console.log('활성 사용자 수를 세는중...');
+        return activeUser;
+    },[users]);
+    return (
+        <>
+            <CreateUser
+                username={username}
+                email={email}
+                onChange={onChange}
+                onCreate={onCreate}
+            />
+            <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
+            <div>활성사용자 수 : {count}</div>
+        </>
+    );
+}
+```
+{% endtab %}
+
+{% tab title="useReducer & App" %}
+
+{% endtab %}
+{% endtabs %}
 
 #### 그래서 `useState`, `useReducer`는 언제 구분해서 활용하는가?
 
