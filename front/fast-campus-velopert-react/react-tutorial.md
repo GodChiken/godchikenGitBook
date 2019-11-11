@@ -1584,9 +1584,18 @@ function useMemo(nextCreate, deps) {
 
 * 사실 이해하기엔 아직 아는게 없지만, 이런 식으로 구성을 한번 살펴보는거도 공부가 될 것이라고 생각한다.
 
-### useReducer 를 사용하여 상태 업데이트 로직 분리하기 
+### `useReducer` 를 사용하여 상태 업데이트 로직 분리하기 
 
+#### `useReducer`는 무엇인가?
 
+* 이전까지 상태를 업데이트시 useState를 활용했지만 또다른 방법이다.
+* 상태관리 + 상태 업데이트 로직 분리가 가능하다.
+
+#### `useReducer`를 활용한 `Counter` 컴포넌트 구현
+
+#### `useReducer`를 활용한 `App` 컴포넌트 재구성
+
+#### 그래서 `useState`, `useReducer`는 언제 구분해서 활용하는가?
 
 ### 커스텀 Hooks 만들기 
 
