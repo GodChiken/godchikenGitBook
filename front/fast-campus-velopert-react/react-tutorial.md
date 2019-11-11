@@ -1666,10 +1666,7 @@ import UserList from "./UserList";
 import CreateUser from "./CreateUser";
 
 export default function App() {
-    const [inputs,setInputs] = useState({
-        username: '',
-        email: ''
-    });
+    const [inputs,setInputs] = useState({ username: '', email: '' });
     const {username, email} = inputs;
     const onChange = useCallback(e => {
         const {value,name} = e.target;
@@ -1679,24 +1676,9 @@ export default function App() {
         }))
     },[]);
     const [users,setUsers] = useState([
-        {
-            id: 1,
-            username: 'godchiken',
-            email: 'godchiken@naver.com',
-            active : true
-        },
-        {
-            id: 2,
-            username: 'tester',
-            email: 'tester@example.com',
-            active : false
-        },
-        {
-            id: 3,
-            username: 'liz',
-            email: 'liz@example.com',
-            active : false
-        }
+        { id: 1, username: 'godchiken', email: 'godchiken@naver.com', active : true },
+        { id: 2, username: 'tester', email: 'tester@example.com', active : false },
+        { id: 3, username: 'liz', email: 'liz@example.com', active : false }
     ]);
 
     const nextId = useRef(4);
@@ -1716,8 +1698,8 @@ export default function App() {
     const onToggle = useCallback(id => {
         setUsers(users => users.map(
             user => user.id === id
-            ? {...user, active: !user.active}
-            : user
+                ? {...user, active: !user.active}
+                : user
         ));
     },[]);
     const count = useMemo( () => {
@@ -1742,11 +1724,129 @@ export default function App() {
 {% endtab %}
 
 {% tab title="useReducer & App" %}
+```jsx
+import React, {useRef, useReducer, useMemo, useCallback} from 'react';
+import UserList from "./UserList";
+import CreateUser from "./CreateUser";
 
+const initialState = {
+    inputs: {username: '', email: ''},
+    users: [
+        {id: 1, username: 'godchiken', email: 'godchiken@naver.com', active: true},
+        {id: 2, username: 'tester', email: 'tester@example.com', active: false},
+        {id: 3, username: 'liz', email: 'liz@example.com', active: false}
+    ]
+};
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'CHANGE_INPUT' :
+            return {
+                ...state,
+                inputs: {
+                    ...state.inputs,
+                    [action.name]: action.value
+                }
+            };
+        case 'CREATE_USER' :
+            return {
+                inputs: initialState.inputs,
+                users: state.users.concat(action.user)
+            };
+        case 'TOGGLE_USER':
+            return {
+                ...state,
+                users: state.users.map(user =>
+                    user.id === action.id ? {...user, active: !user.active} : user
+                )
+            };
+        case 'REMOVE_USER':
+            return {
+                ...state,
+                users: state.users.filter(user => user.id !== action.id)
+            };
+        default :
+            return state;
+    }
+}
+
+export default function App() {
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const {users} = state;
+    const {username, email} = state.inputs;
+    const nextId = useRef(4);
+
+    const onChange = useCallback(e => {
+        const {value, name} = e.target;
+        dispatch({
+            type: 'CHANGE_INPUT',
+            name,
+            value
+        });
+    }, []);
+
+    const onCreate = useCallback(() => {
+        dispatch({
+            type: 'CREATE_USER',
+            user: {
+                id: nextId.current,
+                username,
+                email
+            }
+        });
+        nextId.current++;
+    }, [username, email]);
+
+    const onToggle = useCallback(id => {
+        dispatch({
+            type: 'TOGGLE_USER',
+            id
+        })
+    }, []);
+
+    const onRemove = useCallback(id => {
+        dispatch({
+            type: 'REMOVE_USER',
+            id
+        })
+    }, []);
+    const count = useMemo(() => users.filter(user => user.active).length, [users]);
+
+    return (
+        <>
+            <CreateUser
+                username={username}
+                email={email}
+                onChange={onChange}
+                onCreate={onCreate}
+            />
+            <UserList users={users} onToggle={onToggle} onRemove={onRemove}/>
+            <div>활성사용자 수 : {count}</div>
+        </>
+    );
+}
+```
 {% endtab %}
 {% endtabs %}
 
+* 조금 더 많은 기능이 존재하는 `App`의 `useState` -&gt;`useReducer`변환 코드.
+* 개인적으론 상태관리를 신경쓰는 **관심사**가 분리되어 더욱 가독성이 좋아진 것 같다.
+* `switch~case` 분기를 위해 작성한 값은 `typeScript`를 도입해서 `enum`으로 대체하고 싶다.
+
 #### 그래서 `useState`, `useReducer`는 언제 구분해서 활용하는가?
+
+* 정답은 없다고 한다.
+* 상태관리를 함에 있어서 두가지 관점으로 보자면 다음과 같다.
+  1. 내가 관리하는 상태 값이 한개 인가?
+  2. 내가 관리하는 상태 값이 1~n 개 인가?
+  3. 혹은 현재는 단일 상태 값만 관리하지만 유동적일 가능성이 있는가?
+* 1번 이라면 `useState`를 권장한다.
+* 2,3번 이라면 `useReducer`를 권장한다.
+
+#### 그래서 본인은 `useState`  or `useReducer`?
+
+* 상태값이 몇개 인지에서 생각하는 관점이 아니라, 기능 상으로 동일하다면 해당 로직에 더욱 집중을 하도록 애초부터 분리를 하여 집중할 수 있도록 분리하는 `useReducer`를 택할 것이다.
+* 그런데 상태 관리에 관한 여러 기술들 `Context API`, `Redux`, `MobX`등이 있다곤 한다.
 
 ### 커스텀 Hooks 만들기 
 
