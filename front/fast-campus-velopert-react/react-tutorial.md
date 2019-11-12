@@ -2083,9 +2083,10 @@ export default function useInputs(initialForm) {
 {% endtab %}
 {% endtabs %}
 
-#### 본인은 어떤 식으로 전환했나요?
+#### 본인은 어떤 식으로 전환했나요
 
-#### 
+* 기존의 App Component에서 작성한 reducer 함수를 토대로 동일하게 작성을 시도했다.
+* 하지만 case 'FORM\_RESET' 에서 input 의 상태값을
 
 ### Context API 를 사용한 전역 값 관리 
 
