@@ -375,6 +375,12 @@ export default function InputSample() {
 * 위와 같이 기존 객체를 통해서 새로운 객체를 생성해 나가며 불변성을 지켜나가야만 리액트 컴포넌트에서 상태가 업데이트 됨을 감지하고 필요해 의하여 리렌더링이 진행된다.
 * 만약 직접 수정하는 경우 값이 바뀌어도 리렌더링이 되지 않는다.
 
+#### 코드에서 \[name\] : value, name:value 차이가 무엇인가요?
+
+![\[name\] , name &#xC758; &#xCC28;&#xC774;&#xC810;](../../.gitbook/assets/image%20%2825%29.png)
+
+* 궁금할때 직접 찍어보는 것도 하나의 답이 된다.
+
 ### useRef 로 특정 DOM 선택하기 
 
 #### DOM을 선택해야하는 상황과 리액트에서 처리하는 방향
@@ -2077,7 +2083,9 @@ export default function useInputs(initialForm) {
 {% endtab %}
 {% endtabs %}
 
+#### 본인은 어떤 식으로 전환했나요?
 
+#### 
 
 ### Context API 를 사용한 전역 값 관리 
 
