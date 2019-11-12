@@ -1969,7 +1969,7 @@ export default function App() {
 #### custom hooks : useState -&gt; useReducer 전환 연습하기
 
 {% tabs %}
-{% tab title="First Tab" %}
+{% tab title="초기 풀이" %}
 ```jsx
 import {useReducer, useCallback} from 'react';
 
@@ -2004,8 +2004,76 @@ export default function useInputs(initialForm) {
 ```
 {% endtab %}
 
-{% tab title="Second Tab" %}
+{% tab title="1차 개선\(for...in 활용\)" %}
+```jsx
+import {useReducer, useCallback} from 'react';
 
+function reducer(state, action) {
+    const { name, value } = action;
+    switch (action.type) {
+        case 'FORM_CHANGE':
+            return { ...state, [name] : value };
+        case 'FORM_RESET':
+            const resetObject = {...state};
+            for(const target in resetObject){
+                resetObject[target] = '';
+            }
+            return resetObject;
+        default : throw new Error("DO NOT ANYTHING");
+    }
+}
+
+export default function useInputs(initialForm) {
+    const [state, dispatch] = useReducer(reducer, initialForm);
+
+    const onChange = useCallback(e => {
+        const {name, value} = e.target;
+        dispatch({ type : 'FORM_CHANGE', name, value});
+    },[]);
+
+    const reset = useCallback(() => {
+        dispatch({ type : 'FORM_RESET'});
+    },[]);
+
+    return [state, onChange, reset];
+}
+```
+{% endtab %}
+
+{% tab title="2차 개선\(reduce\(\) 활용\)" %}
+```jsx
+import {useReducer, useCallback} from 'react';
+
+function reducer(state, action) {
+    const { name, value } = action;
+    switch (action.type) {
+        case 'FORM_CHANGE':
+            return { ...state, [name] : value };
+        case 'FORM_RESET':
+            return Object.keys(state).reduce((accumulator, currentValue) => {
+                    accumulator[currentValue] = '';
+                    return accumulator;
+            }, {});
+        default : throw new Error("DO NOT ANYTHING");
+    }
+}
+
+export default function useInputs(initialForm) {
+    const [state, dispatch] = useReducer(reducer, initialForm);
+
+    const onChange = useCallback(e => {
+        const {name, value} = e.target;
+        dispatch({ type : 'FORM_CHANGE', name, value});
+    },[]);
+
+    const reset = useCallback(() => {
+        dispatch({ type : 'FORM_RESET'});
+    },[]);
+
+    return [state, onChange, reset];
+}
+
+```
 {% endtab %}
 {% endtabs %}
 
