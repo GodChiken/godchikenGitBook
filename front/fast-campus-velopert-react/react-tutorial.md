@@ -1850,7 +1850,164 @@ export default function App() {
 
 ### 커스텀 Hooks 만들기 
 
+#### 공통되는 로직을 관리해보자.
 
+{% tabs %}
+{% tab title="useState & useInputs\(custom\)" %}
+```jsx
+import { useState, useCallback } from 'react';
+
+function useInputs(initialForm) {
+  const [form, setForm] = useState(initialForm);
+  // change
+  const onChange = useCallback(e => {
+    const { name, value } = e.target;
+    setForm(form => ({ ...form, [name]: value }));
+  }, []);
+  const reset = useCallback(() => setForm(initialForm), [initialForm]);
+  return [form, onChange, reset];
+}
+
+export default useInputs;
+```
+{% endtab %}
+
+{% tab title="App" %}
+```jsx
+import React, {useRef, useReducer, useMemo, useCallback} from 'react';
+import UserList from "./UserList";
+import CreateUser from "./CreateUser";
+import useInputs from "../hooks/useInputs";
+
+const initialState = {
+    inputs: {username: '', email: ''},
+    users: [
+        {id: 1, username: 'godchiken', email: 'godchiken@naver.com', active: true},
+        {id: 2, username: 'tester', email: 'tester@example.com', active: false},
+        {id: 3, username: 'liz', email: 'liz@example.com', active: false}
+    ]
+};
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'CREATE_USER' :
+            return {
+                inputs: initialState.inputs,
+                users: state.users.concat(action.user)
+            };
+        case 'TOGGLE_USER':
+            return {
+                ...state,
+                users: state.users.map(user =>
+                    user.id === action.id ? {...user, active: !user.active} : user
+                )
+            };
+        case 'REMOVE_USER':
+            return {
+                ...state,
+                users: state.users.filter(user => user.id !== action.id)
+            };
+        default :
+            return state;
+    }
+}
+
+export default function App() {
+    const [{username, email}, onChange, reset] = useInputs(initialState.inputs);
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const nextId = useRef(4);
+    const {users} = state;
+
+    const onToggle = useCallback(id => {
+        dispatch({
+            type: 'TOGGLE_USER',
+            id
+        });
+    }, []);
+
+    const onCreate = useCallback(() => {
+        dispatch({
+            type: 'CREATE_USER',
+            user: {
+                id: nextId.current,
+                username,
+                email
+            }
+        });
+        reset();
+        nextId.current++;
+    }, [username, email, reset]);
+
+    const onRemove = useCallback(id => {
+        dispatch({
+            type: 'REMOVE_USER',
+            id
+        })
+    }, []);
+    const count = useMemo(() => users.filter(user => user.active).length, [users]);
+
+    return (
+        <>
+            <CreateUser
+                username={username}
+                email={email}
+                onChange={onChange}
+                onCreate={onCreate}
+            />
+            <UserList users={users} onToggle={onToggle} onRemove={onRemove}/>
+            <div>활성사용자 수 : {count}</div>
+        </>
+    );
+}
+```
+{% endtab %}
+{% endtabs %}
+
+* 컴포넌트를 생성하다보면, 공통적인 로직이 발생하기 마련이다.
+* custom Hooks 를 생성하여 재사용하는 방법에 대해서 실습했다. 
+
+#### custom hooks : useState -&gt; useReducer 전환 연습하기
+
+{% tabs %}
+{% tab title="First Tab" %}
+```jsx
+import {useReducer, useCallback} from 'react';
+
+function reducer(state, action) {
+    const { name, value } = action;
+    switch (action.type) {
+        case 'FORM_CHANGE':
+            return { ...state, [name] : value };
+        case 'FORM_RESET':
+            const resetObject = {...state};
+            resetObject.username = '';
+            resetObject.email = '';
+            return resetObject;
+        default : throw new Error("DO NOT ANYTHING");
+    }
+}
+
+export default function useInputs(initialForm) {
+    const [state, dispatch] = useReducer(reducer, initialForm);
+
+    const onChange = useCallback(e => {
+        const {name, value} = e.target;
+        dispatch({ type : 'FORM_CHANGE', name, value});
+    },[]);
+
+    const reset = useCallback(() => {
+        dispatch({ type : 'FORM_RESET'});
+    },[]);
+
+    return [state, onChange, reset];
+}
+```
+{% endtab %}
+
+{% tab title="Second Tab" %}
+
+{% endtab %}
+{% endtabs %}
 
 ### Context API 를 사용한 전역 값 관리 
 
