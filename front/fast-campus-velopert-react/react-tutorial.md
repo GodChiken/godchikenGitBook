@@ -1970,9 +1970,9 @@ export default function App() {
 {% endtabs %}
 
 * 컴포넌트를 생성하다보면, 공통적인 로직이 발생하기 마련이다.
-* custom Hooks 를 생성하여 재사용하는 방법에 대해서 실습했다. 
+* `custom Hooks` 를 생성하여 재사용하는 방법에 대해서 실습했다. 
 
-#### custom hooks : useState -&gt; useReducer 전환 연습하기
+#### custom hooks : `useState` -&gt; `useReducer` 전환 연습하기
 
 {% tabs %}
 {% tab title="초기 풀이" %}
@@ -2083,10 +2083,36 @@ export default function useInputs(initialForm) {
 {% endtab %}
 {% endtabs %}
 
-#### 본인은 어떤 식으로 전환했나요
+#### 본인은 어떤 식으로 전환했나요?
 
-* 기존의 App Component에서 작성한 reducer 함수를 토대로 동일하게 작성을 시도했다.
-* 하지만 case 'FORM\_RESET' 에서 input 의 상태값을
+* 기존의 `App Component`에서 작성한 `reducer` 함수를 토대로 동일하게 작성을 시도했다.
+* 하지만 `case 'FORM_RESET'` 에서 `input` 의 상태값을 초기화 함에 있어서 비슷한 구조의 코드가 반복되면 줄여나가야 한다고 파악하여 `for..in` 구문을 통해서 문제를 풀어나갔다.
+
+#### 벨로퍼트는 어떻게 전환했는가?
+
+* `Object.keys()`를 통해 `state`의 `key` 값을 추출
+* `reduce()`를 통해서 최초 초기값으로 객체 리터럴`{}` 에 초기화된 상태값을 연관배열을 통해 초기화하고 집계했다.
+
+#### 그래서 본인과 벨로퍼트의 전환 방식에 대해서 느낀 점은?
+
+* 취향 차이라고 볼수도 있으나 본인도 메서드 체이닝, 함수형 프로그래밍으로 풀어나가는 것을 더 선호하기에 `reduce()`에 대해서 더 공부하기로 마음먹었다.
+
+#### Array.prototype.reduce를 잠깐 짚고 넘어가자
+
+*  **`reduce()`** 메서드는 배열의 각 요소에 대해 주어진 **리듀서**\(reducer\) 함수를 실행하고, 하나의 결과값을 반환한다.
+* 크게 `callback`, `initialValue`로 나뉜다.
+* `callback` 
+  * 컬렉션의 각 요소에 대해 실행할 함수. 4개의 인수를 가지고 있다.
+    * 필수요소
+      * `accumulator` : 콜백의 반환값을 누적한다.. 콜백의 이전 반환값 또는, 콜백의 첫 번째 호출과정에서 `initialValue`를 제공한 경우에는 `initialValue`의 초기값 이다.
+      * `currentValue` : 처리할 현재 요소.
+    * 옵션
+      * `currentIndex`  : Optional처리할 현재 요소의 인덱스. `initialValue`를 제공한 경우 0, 아니면 1부터 시작합니다.
+      * `array` : Optional`reduce()`를 호출한 배열.
+* `initialValue` 
+  * Optional`callback`의 최초 호출에서 첫 번째 인수에 제공하는 값.
+  * 초기값을 제공하지 않으면 배열의 첫 번째 요소를 사용한다. 
+  * 빈 배열에서 초기값 없이 `reduce()`를 호출하면 오류가 발생한다.
 
 ### Context API 를 사용한 전역 값 관리 
 
