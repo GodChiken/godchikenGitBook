@@ -2116,7 +2116,334 @@ export default function useInputs(initialForm) {
 
 ### Context API 를 사용한 전역 값 관리 
 
+#### 부모에게서 자식으로 "값"을 전달할 경우 고찰..
 
+* 현재까지 실습을 한 컴포넌트의 구성을 살펴본다면 해당 컴포넌트에서 사용하지 않는데도 불구하고 다음 세대의  자식 컴포넌트에 전달하기위한 중간다리 역할을 하기위해 "값"을 전달하는 형태로 구현했다.
+* `one-depth` 의 구조의 컴포넌트면 신경을 안 쓸수도 있으나 우리가 앞으로 실무에서 구현해야 하는 컴포넌트는 그렇게 만만하지 않다.
+* 이전부터 누누히 언급했었던 상태관리에 대한 기술 중 하나읜 `Context API`를 해당 챕터에서 실습했다.
+
+#### Context API
+
+* `state` 뿐만 아니라 외부라이브러리 인스턴스, `DOM`이 될 수있다.
+* 전역적으로 프로젝트의 상태를 관리하는 용도로 사용된다.
+
+#### 기본 코드
+
+```jsx
+const UserDispatch = React.createContext(null);
+```
+
+* Context의 기본값을 설정할 수 있다.
+* 내부 컴포넌트로 `Provider` 라는 컴포넌트가 구성되어있고 `Context`의 값을 지정할 수 있다.
+  *  `attribute`로 `value`를 설정이 가능하다. 본 챕터에서는 `fragment` 대신 교체가 되고 `useReducer`에서 추출한 `dispatch`를 `value`로 설정했다.
+
+#### 실습코드
+
+{% tabs %}
+{% tab title="App" %}
+```jsx
+import React, {useRef, useReducer, useMemo, useCallback} from 'react';
+import UserList from "./UserList";
+import CreateUser from "./CreateUser";
+import useInputs from "../hooks/useInputs";
+
+const initialState = {
+    inputs: {username: '', email: ''},
+    users: [
+        {id: 1, username: 'godchiken', email: 'godchiken@naver.com', active: true},
+        {id: 2, username: 'tester', email: 'tester@example.com', active: false},
+        {id: 3, username: 'liz', email: 'liz@example.com', active: false}
+    ]
+};
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'CREATE_USER' :
+            return {
+                inputs: initialState.inputs,
+                users: state.users.concat(action.user)
+            };
+        case 'TOGGLE_USER':
+            return {
+                ...state,
+                users: state.users.map(user =>
+                    user.id === action.id ? {...user, active: !user.active} : user
+                )
+            };
+        case 'REMOVE_USER':
+            return {
+                ...state,
+                users: state.users.filter(user => user.id !== action.id)
+            };
+        default :
+            return state;
+    }
+}
+
+export const UserDispatch = React.createContext(null);
+
+export default function App() {
+    const [{username, email}, onChange, reset] = useInputs(initialState.inputs);
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const nextId = useRef(4);
+    const {users} = state;
+
+    const onCreate = useCallback(() => {
+        dispatch({
+            type: 'CREATE_USER',
+            user: {
+                id: nextId.current,
+                username,
+                email
+            }
+        });
+        reset();
+        nextId.current++;
+    }, [username, email, reset]);
+
+    const count = useMemo(() => users.filter(user => user.active).length, [users]);
+
+    return (
+        <UserDispatch.Provider value={dispatch}>
+            <CreateUser
+                username={username}
+                email={email}
+                onChange={onChange}
+                onCreate={onCreate}
+            />
+            <UserList users={users}/>
+            <div>활성사용자 수 : {count}</div>
+        </UserDispatch.Provider>
+    );
+}
+```
+{% endtab %}
+
+{% tab title="UserList" %}
+```jsx
+import React, {useContext} from 'react';
+import {UserDispatch} from "./App";
+
+const User = React.memo(function User({ user }) {
+    console.log("User Rendering");
+
+    const dispatch = useContext(UserDispatch);
+
+    return (
+        <div>
+            <b  style={{
+                    cursor: 'pointer',
+                    color: user.active ? 'green' : 'black'
+                }}
+                onClick={() => {
+                    dispatch({type: 'TOGGLE_USER' , id: user.id});
+                }}
+            >
+                {user.username}
+            </b>
+            &nbsp;
+            <span>({user.email})</span>
+            <button onClick={() => {
+                        dispatch({type:'REMOVE_USER', id: user.id });
+                    }}
+            >
+                삭제
+            </button>
+        </div>
+    );
+});
+
+function UserList({ users }) {
+    console.log("UserList Rendering");
+    return (
+        <div>
+            {users.map(user => (
+                <User user={user}
+                      key={user.id}
+                />
+            ))}
+        </div>
+    );
+}
+
+export default React.memo(
+    UserList,
+    (prevProps, nextProps) => nextProps.users === prevProps.users
+);
+```
+{% endtab %}
+{% endtabs %}
+
+* `App`
+  * onToggle, onRemove의 삭제.
+  * Context API 사용.
+  * fragment -&gt; Context 로 교체.
+* `UserList`
+  * App 에서 삭제된 onToggle, onRemove 구현.
+  * App 에서 선언한 Context 활
+  * 기존 User에 전달하기 위한 onToggle, onRemove props 제거.
+
+#### 벨로퍼트의 숙제 완료 코드\(숙제 그만 좀..\)
+
+* 요구사
+
+{% hint style="success" %}
+User 컴포넌트에게 따로 `onToggle` / `onRemove` 를 `props`로 전달하지 않고 바로 `dispatch` 를 사용했던 것 처럼, `CreateUser` 컴포넌트에서도 `dispatch` 를 직접 하도록 구현을 해보세요.
+
+* `CreateUser` 에게는 아무 `props` 도 전달하지 마세요.
+* `CreateUser` 컴포넌트 내부에서 `useInputs` 를 사용하세요.
+* `useRef` 를 사용한 `nextId` 값을 `CreateUser` 에서 관리하세요.
+{% endhint %}
+
+* 실습분
+
+{% tabs %}
+{% tab title="App" %}
+```jsx
+import React, {useReducer, useMemo} from 'react';
+import UserList from "./UserList";
+import CreateUser from "./CreateUser";
+
+const initialState = {
+    users: [
+        {id: 1, username: 'godchiken', email: 'godchiken@naver.com', active: true},
+        {id: 2, username: 'tester', email: 'tester@example.com', active: false},
+        {id: 3, username: 'liz', email: 'liz@example.com', active: false}
+    ]
+};
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'CREATE_USER' :
+            return {
+                inputs: initialState.inputs,
+                users: state.users.concat(action.user)
+            };
+        case 'TOGGLE_USER':
+            return {
+                ...state,
+                users: state.users.map(user =>
+                    user.id === action.id ? {...user, active: !user.active} : user
+                )
+            };
+        case 'REMOVE_USER':
+            return {
+                ...state,
+                users: state.users.filter(user => user.id !== action.id)
+            };
+        default :
+            return state;
+    }
+}
+
+export const UserDispatch = React.createContext(null);
+
+export default function App() {
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const {users} = state;
+
+    const count = useMemo(() => users.filter(user => user.active).length, [users]);
+
+    return (
+        <UserDispatch.Provider value={dispatch}>
+            <CreateUser/>
+            <UserList users={users}/>
+            <div>활성사용자 수 : {count}</div>
+        </UserDispatch.Provider>
+    );
+}
+```
+{% endtab %}
+
+{% tab title="CreateUser" %}
+```jsx
+import React, {useContext, useRef} from 'react';
+import {UserDispatch} from "./App";
+import useInputs from "../hooks/useInputs";
+
+const CreateUser = () => {
+    const [{username, email}, change, reset] = useInputs(initialState.inputs);
+    const dispatch = useContext(UserDispatch);
+    const nextId = useRef(4);
+    const onCreate = () => {
+        dispatch(createDispatcherProperty(nextId,username,email));
+        reset();
+        nextId.current++;
+    };
+
+    return (
+        <div>
+            <input name="username"  placeholder="계정명" onChange={change} value={username} />
+            <input name="email"     placeholder="이메일" onChange={change} value={email} />
+            <button onClick={onCreate}>등록</button>
+        </div>
+    );
+};
+
+export default React.memo(CreateUser);
+
+const initialState = { inputs: {username: '', email: ''} };
+const createDispatcherProperty = (nextId, username, email) => {
+    return {
+        type: 'CREATE_USER',
+        user: { id: nextId.current, username, email }
+    };
+};
+```
+{% endtab %}
+
+{% tab title="UserList" %}
+```jsx
+import React, {useContext} from 'react';
+import {UserDispatch} from "./App";
+
+const User = React.memo(function User({ user }) {
+    const dispatch = useContext(UserDispatch);
+    return (
+        <div>
+            <b  style={{
+                    cursor: 'pointer',
+                    color: user.active ? 'green' : 'black'
+                }}
+                onClick={() => {
+                    dispatch({type: 'TOGGLE_USER' , id: user.id});
+                }}
+            >
+                {user.username}
+            </b>
+            &nbsp;
+            <span>({user.email})</span>
+            <button onClick={() => {
+                        dispatch({type:'REMOVE_USER', id: user.id });
+                    }}
+            >
+                삭제
+            </button>
+        </div>
+    );
+});
+
+function UserList({ users }) {
+    return (
+        <div>
+            {users.map(user => (
+                <User user={user}
+                      key={user.id}
+                />
+            ))}
+        </div>
+    );
+}
+
+export default React.memo(
+    UserList,
+    (prevProps, nextProps) => nextProps.users === prevProps.users
+);
+```
+{% endtab %}
+{% endtabs %}
+
+* Context API 를 통해서 각 컴포넌트의 "값"의 변화는 필요한 컴포넌트에서 관리하게 되는 이점을 얻게 되었다. 
 
 ### Immer 를 사용한 더 쉬운 불변성 관리 
 
