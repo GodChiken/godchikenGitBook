@@ -377,7 +377,7 @@ export default function InputSample() {
 
 #### 코드에서 \[name\] : value, name:value 차이가 무엇인가요?
 
-![\[name\] , name &#xC758; &#xCC28;&#xC774;&#xC810;](../../.gitbook/assets/image%20%2825%29.png)
+![\[name\] , name &#xC758; &#xCC28;&#xC774;&#xC810;](../../.gitbook/assets/image%20%2826%29.png)
 
 * 궁금할때 직접 찍어보는 것도 하나의 답이 된다.
 
