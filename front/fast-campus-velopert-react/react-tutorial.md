@@ -2285,7 +2285,7 @@ export default React.memo(
 
 #### 벨로퍼트의 숙제 완료 코드\(숙제 그만 좀..\)
 
-* 요구사
+* 요구사항     
 
 {% hint style="success" %}
 User 컴포넌트에게 따로 `onToggle` / `onRemove` 를 `props`로 전달하지 않고 바로 `dispatch` 를 사용했던 것 처럼, `CreateUser` 컴포넌트에서도 `dispatch` 를 직접 하도록 구현을 해보세요.
@@ -2445,14 +2445,14 @@ export default React.memo(
 
 * Context API 를 통해서 각 컴포넌트의 "값"의 변화는 필요한 컴포넌트에서 관리하게 되는 이점을 얻게 되었다. 
 
-### Immer 를 사용한 더 쉬운 불변성 관리 
+### `Immer`를 사용한 더 쉬운 불변성 관리 
 
 #### 불변성의 중요성
 
 * 리액트로 함수형 스타일로 구현해 나가면서 데이터의 불변성을 지켜주는 것은 더욱 중요해졌다.
 * 불변성을 지키기 해서는 기존 데이터에서 변형이 필요할 때 수정이 아닌 새로 생성해 나가면 된다.
 
-#### 그러나 불변성을 쉽게 지켜나가게 도와주는 Immer
+#### 그러나 불변성을 쉽게 지켜나가게 도와주는 `Immer`
 
 {% tabs %}
 {% tab title="예시 데이터" %}
@@ -2521,7 +2521,7 @@ const nextState = produce(state, draft => {
 
 * 비교적 직관적으로 코드가 보인다. 
 
-#### Immer 설치
+#### `Immer` 설치
 
 ```lua
 yarn add immer
@@ -2531,7 +2531,7 @@ npm add immer
 
 * 둘 중 하나를 고르면 된다.
 
-#### produce\(\)
+#### `produce()`
 
 ```jsx
 produce(변경하고자하는 상태, 업데이트 하고자하는 함수)
@@ -2539,7 +2539,7 @@ produce(변경하고자하는 상태, 업데이트 하고자하는 함수)
 
 * 심플하게 해하고 넘어간다.
 
-#### 기존 예제의 Reducer 에서 활용해보기
+#### 기존 예제의 `Reducer`에서 활용해보기
 
 ```jsx
 import React, {useReducer, useMemo} from 'react';
@@ -2595,9 +2595,75 @@ export default function App() {
 }
 ```
 
+#### Immer와 함수형 업데이트
 
+{% tabs %}
+{% tab title="useState의 함수형 업데이트" %}
+```jsx
+const [todo, setTodo] = useState({
+  text: 'Hello',
+  done: false
+});
 
+const onClick = useCallback(() => {
+  setTodo(todo => ({
+    ...todo,
+    done: !todo.done
+  }));
+}, []);
+```
+{% endtab %}
 
+{% tab title="파라미터 1개의  produce 활용" %}
+```jsx
+const todo = {
+  text: 'Hello',
+  done: false
+};
+
+const updater = produce(draft => {
+  draft.done = !draft.done;
+});
+
+const nextTodo = updater(todo);
+
+console.log(nextTodo);
+// { text: 'Hello', done: true }
+```
+{% endtab %}
+
+{% tab title="응용을 해본다면" %}
+```jsx
+const [todo, setTodo] = useState({
+  text: 'Hello',
+  done: false
+});
+
+const onClick = useCallback(() => {
+  setTodo(
+    produce(draft => {
+      draft.done = !draft.done;
+    })
+  );
+}, []);
+```
+{% endtab %}
+{% endtabs %}
+
+* `useState`를 활용한 곳에서 우리 직접 업데이트하는 코드를 작성함으로 `deps`에 `todo`를 추가하지 않아도 었다. `produce`에서 한개의 인자값을 활용하면 반환 값은 새로운 상태가 아닌 상태를 업데이트 해주는 함수가 된다.
+
+#### 편하긴 하나 주의해야할 점
+
+* 성능
+  * 인간이 시각적으로 인지하는 기준은 13ms
+    *  `Immer`가 5만개의 원소중 5천개를 업데이트하는 속도는 약 31ms
+    * `Native Reducer`가 업데이트하는 속도는 약 6ms
+  * 성능적으로 Navtive Reducer 보다 좋지 않다. 
+  * 그러므로 데이터의 양이 적거나, 구조가 복잡할 때 복잡도를  방지하는 차원의 용도로 권장한다.
+  *  Immer 는 JavaScript 엔진의 [Proxy](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 라는 기능을 사용
+    * 구형 브라우저 및 react-native 같은 환경에서는 미지원
+      * 위 환경에서 ES5 fallback 을 사용하게 되고 191ms 정도로, 꽤나 느려지게 다.
+    * Proxy 처럼 작동하지만 Proxy는 아니다.
 
 ### 클래스형 컴포넌트 
 
