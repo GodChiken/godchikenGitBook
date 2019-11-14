@@ -2447,6 +2447,156 @@ export default React.memo(
 
 ### Immer 를 사용한 더 쉬운 불변성 관리 
 
+#### 불변성의 중요성
+
+* 리액트로 함수형 스타일로 구현해 나가면서 데이터의 불변성을 지켜주는 것은 더욱 중요해졌다.
+* 불변성을 지키기 해서는 기존 데이터에서 변형이 필요할 때 수정이 아닌 새로 생성해 나가면 된다.
+
+#### 그러나 불변성을 쉽게 지켜나가게 도와주는 Immer
+
+{% tabs %}
+{% tab title="예시 데이터" %}
+```jsx
+const state = {
+  posts: [
+    {
+      id: 1,
+      title: '제목입니다.',
+      body: '내용입니다.',
+      comments: [
+        {
+          id: 1,
+          text: '와 정말 잘 읽었습니다.'
+        }
+      ]
+    },
+    {
+      id: 2,
+      title: '제목입니다.',
+      body: '내용입니다.',
+      comments: [
+        {
+          id: 2,
+          text: '또 다른 댓글 어쩌고 저쩌고'
+        }
+      ]
+    }
+  ],
+  selectedId: 1
+};
+```
+{% endtab %}
+
+{% tab title="수정하기 위해서는?" %}
+```jsx
+const nextState = {
+  ...state,
+  posts: state.posts.map(post =>
+    post.id === 1
+      ? {
+          ...post,
+          comments: post.comments.concat({
+            id: 3,
+            text: '새로운 댓글'
+          })
+        }
+      : post
+  )
+};
+```
+{% endtab %}
+
+{% tab title="Immer를 사용해보자" %}
+```jsx
+const nextState = produce(state, draft => {
+  const post = draft.posts.find(post => post.id === 1);
+  post.comments.push({
+    id: 3,
+    text: '와 정말 쉽다!'
+  });
+});
+```
+{% endtab %}
+{% endtabs %}
+
+* 비교적 직관적으로 코드가 보인다. 
+
+#### Immer 설치
+
+```lua
+yarn add immer
+
+npm add immer
+```
+
+* 둘 중 하나를 고르면 된다.
+
+#### produce\(\)
+
+```jsx
+produce(변경하고자하는 상태, 업데이트 하고자하는 함수)
+```
+
+* 심플하게 해하고 넘어간다.
+
+#### 기존 예제의 Reducer 에서 활용해보기
+
+```jsx
+import React, {useReducer, useMemo} from 'react';
+import UserList from "./UserList";
+import CreateUser from "./CreateUser";
+import produce from 'immer';
+
+const initialState = {
+    users: [
+        {id: 1, username: 'godchiken', email: 'godchiken@naver.com', active: true},
+        {id: 2, username: 'tester', email: 'tester@example.com', active: false},
+        {id: 3, username: 'liz', email: 'liz@example.com', active: false}
+    ]
+};
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'CREATE_USER' :
+            return produce(state, draft => {
+               draft.users.push(action.user);
+            });
+        case 'TOGGLE_USER':
+            return produce(state, draft => {
+                const user = draft.users.find(user => user.id === action.id);
+                user.active = !user.active;
+            });
+        case 'REMOVE_USER':
+            return produce(state, draft => {
+                const removeIndex = draft.users.findIndex(user => user.id === action.id);
+                draft.users.splice(removeIndex,1);
+            });
+
+        default :
+            return state;
+    }
+}
+
+export const UserDispatch = React.createContext(null);
+
+export default function App() {
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const {users} = state;
+
+    const count = useMemo(() => users.filter(user => user.active).length, [users]);
+
+    return (
+        <UserDispatch.Provider value={dispatch}>
+            <CreateUser/>
+            <UserList users={users}/>
+            <div>활성사용자 수 : {count}</div>
+        </UserDispatch.Provider>
+    );
+}
+```
+
+
+
 
 
 ### 클래스형 컴포넌트 
