@@ -52,6 +52,7 @@
 * [Docker](devops/docker.md)
 * [AWS](devops/aws.md)
 * [SonaType](devops/sonatype.md)
+* [CI/CD](devops/ci-cd.md)
 
 ## Conference
 
