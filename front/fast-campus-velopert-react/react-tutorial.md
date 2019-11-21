@@ -83,7 +83,7 @@ export default Hello;
 
 * 부모에서 자식 컴포넌트로 값을 전달하는 용도로 사용한다.
 
-#### 번거로운 props 과정을 생략하는 비 구조화 할 
+#### 번거로운 props 과정을 생략하는 비 구조화 할당
 
 ```javascript
 import React from 'react';
@@ -108,7 +108,7 @@ function Hello({ color, name }) {
 export default Hello;
 ```
 
-#### defaultProps 로 기본값을 할당해보자
+#### `defaultProps`로 기본값을 할당해보자
 
 ```javascript
 import React from 'react';
@@ -126,7 +126,7 @@ export default Hello;
 
 * 다음과 같이  `Hello` 컴포넌트에 `defaultProps` 를 활용하는 법을 배웠다.
 
-#### `props.children` 로 컴포넌트 태그사이의 값 조회하
+#### `props.children` 로 컴포넌트 태그사이의 값 조회하기
 
 ```javascript
 import React from 'react';
@@ -189,7 +189,7 @@ export default Wrapper;
 
 ### 조건부 렌더링 
 
-#### isSpecial 사용자 정의 props 설정 및 활용해보기
+#### `isSpecial` 사용자 정의 `props` 설정 및 활용해보기
 
 ```javascript
 import React from 'react';
@@ -233,7 +233,7 @@ Hello.defaultProps = {
 
 * 우리가 단순히 보이고 안 보이고 수준의 표기용도이라면 `&&` 연산자를 고려해보는 것도 나쁘지 않다.
 
-### useState 를 통해 컴포넌트에서 바뀌는 값 관리하기 
+### `useState` 를 통해 컴포넌트에서 바뀌는 값 관리하기 
 
 #### 사용자 인터렉션에 변화에 따른 구현 방법
 
@@ -293,7 +293,7 @@ export default function Counter() {
 
 * 엘리먼트에 이벤트를 설정 시 `xxxMethod()`와 같은 형태 호출하여로 넣게되면 `DOM`이 렌더링 되기 전에 실행되버리므로 오류가 난다. 
 
-### input 상태 관리하기 
+### `input` 상태 관리하기 
 
 ```javascript
 import React,{useState} from 'react'
@@ -321,7 +321,7 @@ export default function InputSample() {
 }
 ```
 
-### 여러개의 input 상태 관리하기 
+### 여러개의 `input` 상태 관리하기 
 
 ```javascript
 import React,{useState} from 'react';
@@ -381,9 +381,9 @@ export default function InputSample() {
 
 * 궁금할때 직접 찍어보는 것도 하나의 답이 된다.
 
-### useRef 로 특정 DOM 선택하기 
+### `useRef` 로 특정 `DOM` 선택하기 
 
-#### DOM을 선택해야하는 상황과 리액트에서 처리하는 방향
+#### `DOM`을 선택해야하는 상황과 리액트에서 처리하는 방향
 
 * 리액트에서 직접적으로 `DOM`을 선택해야 하는 상황이 있다.
   * 엘리먼트의 크기, 위치, 포커스 설정
@@ -392,7 +392,7 @@ export default function InputSample() {
 * 함수형 컴포넌트의 경우 `Hook`의 `useRef` 함수를 사용.
 * 클래스형 컴포넌트의 경우 `React.createRef` 함수를 사용.
 
-#### 특정 DOM의 포커싱에 대해 처리해보자
+#### 특정 `DOM`의 포커싱에 대해 처리해보자
 
 ```javascript
 import React, {useState, useRef} from 'react'
@@ -2667,7 +2667,449 @@ const onClick = useCallback(() => {
 
 ### 클래스형 컴포넌트 
 
+#### 함수형 컴포넌트가 하지 못하는 작업을 처리하자
 
+* 클래스형 컴포넌트의 유지보수, 함수형 컴포넌트에서 아직까지 하지 못하는 2가지 작업에 대해서 클래스형 컴포넌트로 풀어나가는 과정을 학습한다.
+* 오래된 라이브러리일 경우 Hooks의 지원이 안된다.
+* react-native 관련 라우터 라이브러리 react-native-navigation도 클래스형 컴포넌트를 써야한다.
+
+{% tabs %}
+{% tab title="클래스형 컴포넌트의 기본 선언방식" %}
+```jsx
+import React, {Component} from 'react'
+
+export default class Hello extends Component {
+    render() {
+        const {color,name,isSpecial} = this.props;
+        return (
+            <div style={{color}}>
+                {isSpecial && <b>*</b>}
+                안녕하세요 {name}
+            </div>
+        )
+    }
+}
+Hello.defaultProps = {
+    name: '이름 없음'
+};
+```
+{% endtab %}
+
+{% tab title="static 을 활용한 defaultProps" %}
+```jsx
+import React, {Component} from 'react'
+
+export default class Hello extends Component {
+    static defaultProps = {
+        name : '이름없음'
+    };
+    render() {
+        const {color,name,isSpecial} = this.props;
+        return (
+            <div style={{color}}>
+                {isSpecial && <b>*</b>}
+                안녕하세요 {name}
+            </div>
+        )
+    }
+}
+```
+{% endtab %}
+{% endtabs %}
+
+* 클래스형 컴포넌트에서는 `render()` 메서드가 꼭 있어야 하고 렌더링하고 싶은 JSX 를 반환하시면 됩니다. 그리고, `props` 를 조회 해야 할 때에는 `this.props` 를 조회한다.
+* `defaultProps` 를 설정하는 것은 이전 함수형 컴포넌트에서 했을 때와 동일하나  클래스 내부에 `static` 키워드와 함께 선언하는 방법도 존재한다.
+
+#### 클래스형 컴포넌트의 다양한 상황 해결방법
+
+{% tabs %}
+{% tab title="컴포넌트의 인스턴스를 this가 가르키지 않는 상황" %}
+```jsx
+import React, {Component} from 'react'
+
+export default class Counter extends Component{
+    handleIncrease() {
+        console.log('increase');
+        console.log(this);                 // 컴포넌트 인스턴스를 가르키지 않음.
+    }
+
+    handleDecrease() {
+        console.log('decrease');
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>0</h1>
+                <button onClick={this.handleIncrease}>+1</button>
+                <button onClick={this.handleDecrease}>-1</button>
+            </div>
+        );
+    }
+}
+```
+{% endtab %}
+
+{% tab title="생성자 해결" %}
+```jsx
+import React, {Component} from 'react'
+
+export default class Counter extends Component{
+
+    constructor(props) {
+        super(props);
+        this.handleIncrease = this.handleIncrease.bind(this);
+        this.handleDecrease = this.handleDecrease.bind(this);
+    }
+
+    handleIncrease() {
+        console.log('increase');
+        console.log(this);                 // 컴포넌트 인스턴스를 가르키지 않음.
+    }
+
+    handleDecrease() {
+        console.log('decrease');
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>0</h1>
+                <button onClick={this.handleIncrease}>+1</button>
+                <button onClick={this.handleDecrease}>-1</button>
+            </div>
+        );
+    }
+}
+```
+{% endtab %}
+
+{% tab title="Arrow function 해결" %}
+```jsx
+import React, {Component} from 'react'
+
+export default class Counter extends Component{
+
+    handleIncrease = () => {
+        console.log('increase');
+        console.log(this);
+    };
+
+    handleDecrease = () => {
+        console.log('decrease');
+    };
+
+    render() {
+        return (
+            <div>
+                <h1>0</h1>
+                <button onClick={this.handleIncrease}>+1</button>
+                <button onClick={this.handleDecrease}>-1</button>
+            </div>
+        );
+    }
+}
+```
+{% endtab %}
+
+{% tab title="직접 함수 전달" %}
+```jsx
+import React, {Component} from 'react'
+
+export default class Counter extends Component{
+
+    handleIncrease() {
+        console.log('increase');
+        console.log(this);
+    }
+
+    handleDecrease() {
+        console.log('decrease');
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>0</h1>
+                <button onClick={() => this.handleIncrease()}>+1</button>
+                <button onClick={() => this.handleDecrease()}>-1</button>
+            </div>
+        );
+    }
+}
+```
+{% endtab %}
+{% endtabs %}
+
+* 클래스 컴포넌트에서 이벤트를 등록하는 과정에서 각 메서드와 컴포넌트 인스턴스의 관계가 바인딩이 되지 않는 상황이 존재한다.
+* 해결법은 생성자 바인, Arrow Function, 직접 함수를 전달하는 방식이 존재한다.
+* CRA\(Create-React-App\)으로 생성한 프로젝트에서 클래스 컴포넌트 내부에 Arrow Function 선언을 가능하게 해주는 class-properties 라는 문법을 사용이 가능하나 정식 자바스크립트 문법이 아니니 주의해야한다.
+* 직접 전달하는 법은 랜더링 때마다 함수도 새로 생성되기 때문에 컴포넌트 최적화를 위해선 배제해야한다.
+
+#### 상태 선언, 업데이트 하기
+
+{% tabs %}
+{% tab title="state 선언" %}
+```jsx
+import React, {Component} from 'react'
+
+export default class Counter extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            counter: 0
+        };
+    }
+    handleIncrease = () => {
+        console.log('increase');
+        console.log(this);
+    };
+
+    handleDecrease = () => {
+        console.log('decrease');
+    };
+
+    render() {
+        return (
+            <div>
+                <h1>{this.state.counter}</h1>
+                <button onClick={this.handleIncrease}>+1</button>
+                <button onClick={this.handleDecrease}>-1</button>
+            </div>
+        );
+    }
+}
+```
+{% endtab %}
+
+{% tab title="CRA에서의 상태 선언" %}
+```jsx
+import React, {Component} from 'react'
+
+export default class Counter extends Component {
+    state = {
+        counter: 0
+    };
+    handleIncrease = () => {
+        console.log('increase');
+        console.log(this);
+    };
+
+    handleDecrease = () => {
+        console.log('decrease');
+    };
+
+    render() {
+        return (
+            <div>
+                <h1>{this.state.counter}</h1>
+                <button onClick={this.handleIncrease}>+1</button>
+                <button onClick={this.handleDecrease}>-1</button>
+            </div>
+        );
+    }
+}
+```
+{% endtab %}
+
+{% tab title="state에 별도의 프로퍼티가 존재한다면?" %}
+```jsx
+import React, {Component} from 'react'
+
+export default class Counter extends Component {
+    state = {
+        counter: 0,
+        fixed: 1
+    };
+    handleIncrease = () => {
+        this.setState({
+            counter: this.state.counter + 1
+        });
+    };
+
+    handleDecrease = () => {
+        this.setState({
+            counter: this.state.counter - 1
+        });
+    };
+
+    render() {
+        return (
+            <div>
+                <h1>{this.state.counter}</h1>
+                <button onClick={this.handleIncrease}>+1</button>
+                <button onClick={this.handleDecrease}>-1</button>
+                <p>고정된 값: {this.state.fixed}</p>
+            </div>
+        );
+    }
+}
+```
+{% endtab %}
+{% endtabs %}
+
+* 클래스형 컴포넌트의 state는 객체형태여야 한다.
+* 특별히 관리하지 않는 프로퍼티도 값은 유지된다.  하지만, 클래스형 컴포넌트의 `state` 에서 객체 형태의 상태를 관리해야 한다면, 불변성을 관리해줘가면서 업데이트를 해야한다.
+
+#### setState의 함수형 업데이
+
+{% tabs %}
+{% tab title="setState 함수형 업데이트" %}
+```jsx
+import React, {Component} from 'react'
+
+export default class Counter extends Component {
+    state = {
+        counter: 0,
+        fixed: 1
+    };
+    handleIncrease = () => {
+        this.setState(state => ({
+            counter: state.counter + 1
+        }));
+    };
+
+    handleDecrease = () => {
+        this.setState(state => ({
+            counter: state.counter - 1
+        }));
+    };
+
+    render() {
+        return (
+            <div>
+                <h1>{this.state.counter}</h1>
+                <button onClick={this.handleIncrease}>+1</button>
+                <button onClick={this.handleDecrease}>-1</button>
+                <p>고정된 값: {this.state.fixed}</p>
+            </div>
+        );
+    }
+}
+```
+{% endtab %}
+
+{% tab title="2번 업데이트 되지 않는경우" %}
+```jsx
+import React, {Component} from 'react'
+
+export default class Counter extends Component {
+    state = {
+        counter: 0,
+        fixed: 1
+    };
+    handleIncrease = () => {
+        this.setState({
+            counter: this.state.counter + 1
+        });
+        this.setState({
+            counter: this.state.counter + 1
+        });
+    };
+
+    handleDecrease = () => {
+        this.setState(state => ({
+            counter: state.counter - 1
+        }));
+    };
+
+    render() {
+        return (
+            <div>
+                <h1>{this.state.counter}</h1>
+                <button onClick={this.handleIncrease}>+1</button>
+                <button onClick={this.handleDecrease}>-1</button>
+                <p>고정된 값: {this.state.fixed}</p>
+            </div>
+        );
+    }
+}
+```
+{% endtab %}
+
+{% tab title="2번되는 경우" %}
+```jsx
+import React, {Component} from 'react'
+
+export default class Counter extends Component {
+    state = {
+        counter: 0,
+        fixed: 1
+    };
+    handleIncrease = () => {
+        this.setState(state => ({
+            counter: state.counter + 1
+        }));
+        this.setState(state => ({
+            counter: state.counter + 1
+        }));
+    };
+
+    handleDecrease = () => {
+        this.setState(state => ({
+            counter: state.counter - 1
+        }));
+    };
+
+    render() {
+        return (
+            <div>
+                <h1>{this.state.counter}</h1>
+                <button onClick={this.handleIncrease}>+1</button>
+                <button onClick={this.handleDecrease}>-1</button>
+                <p>고정된 값: {this.state.fixed}</p>
+            </div>
+        );
+    }
+}
+```
+{% endtab %}
+
+{% tab title="콜백함수 적용" %}
+```jsx
+import React, {Component} from 'react'
+
+export default class Counter extends Component {
+    state = {
+        counter: 0,
+        fixed: 1
+    };
+    handleIncrease = () => {
+        this.setState(
+            {
+                counter: this.state.counter + 1
+            },
+            () => {
+                console.log(this.state.counter);
+            }
+        );
+    };
+
+    handleDecrease = () => {
+        this.setState(state => ({
+            counter: state.counter - 1
+        }));
+    };
+
+    render() {
+        return (
+            <div>
+                <h1>{this.state.counter}</h1>
+                <button onClick={this.handleIncrease}>+1</button>
+                <button onClick={this.handleDecrease}>-1</button>
+                <p>고정된 값: {this.state.fixed}</p>
+            </div>
+        );
+    }
+}
+```
+{% endtab %}
+{% endtabs %}
+
+* `setState` 를 한다고 해서 상태가 바로 바뀌지 않는다.
+* `setState` 는 단순히 상태를 바꾸는 함수가 아니라 상태로 바꿔달라고 요청해주는 함수이기 때문이다.[\(참고\)](https://ko.reactjs.org/docs/react-component.html#setstate)
+* 성능적인 이유 때문에 리액트에서는 상태가 바로 업데이트 되지 않고 비동기적으로 업데이트가 된다고 한다.
+* 만약에, 상태가 업데이트 되고 나서 어떤 작업을 하고 싶다면 다음과 같이 `setState` 의 두번째 파라미터에 콜백함수를 넣어 활용한다.        
 
 ### LifeCycle Method 
 
