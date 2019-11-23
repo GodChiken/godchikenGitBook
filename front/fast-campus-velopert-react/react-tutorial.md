@@ -3115,11 +3115,19 @@ export default class Counter extends Component {
 
 
 
-### componentDidCatch 로 에러 잡아내기 / Sentry 연동 
+### componentDidCatch 로 에러 잡아내기
+
+#### Sentry 연동 
 
 
 
-### 리액트 개발 할 때 사용하면 편리한 도구들 - Prettier, ESLint, Snippet 
+### 리액트 개발 할 때 사용하면 편리한 도구들
+
+#### Prettier
+
+#### ESLint
+
+#### Snippet 
 
 
 
