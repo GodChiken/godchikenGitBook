@@ -3113,7 +3113,7 @@ export default class Counter extends Component {
 
 ### LifeCycle Method 
 
-
+#### 무엇을 공부하든 중요한 생명주
 
 ### componentDidCatch 로 에러 잡아내기
 
