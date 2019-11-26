@@ -377,7 +377,7 @@ export default function InputSample() {
 
 #### 코드에서 \[name\] : value, name:value 차이가 무엇인가요?
 
-![\[name\] , name &#xC758; &#xCC28;&#xC774;&#xC810;](../../.gitbook/assets/image%20%2826%29.png)
+![\[name\] , name &#xC758; &#xCC28;&#xC774;&#xC810;](../../.gitbook/assets/image%20%2827%29.png)
 
 * 궁금할때 직접 찍어보는 것도 하나의 답이 된다.
 
@@ -3113,7 +3113,54 @@ export default class Counter extends Component {
 
 ### LifeCycle Method 
 
-#### 무엇을 공부하든 중요한 생명주
+#### 무엇을 공부하든 중요한 생명주기
+
+* 컴포넌트가 브라우저 상에서 흐르는 생명주기에 관련된 메서드는 매우 중요하다.
+* 클래스형 컴포넌트에서만 사용이 가능하다.
+* 깊게 공부하는 시간은 따로 개인적으로 준비를 한다.
+
+#### 생명주기 호출 과정
+
+![&#xC0DD;&#xBA85;&#xC8FC;&#xAE30; &#xBA54;&#xC11C;&#xB4DC; &#xD750;&#xB984;](../../.gitbook/assets/image%20%2823%29.png)
+
+#### 마운트
+
+* constructor : 컴포넌트의 생성자 역활
+
+```jsx
+constructor(props) {
+    super(props);
+    console.log("constructor");
+}
+```
+
+* getDerivedStateFromProps
+  * props 로 받아온 값을 state에서 관리하고자 할 때 사용
+  * 다른 생명주기와 달리 static 키워드가 필요하며, 내부에서 this를 조회하는 것은 불가능하다.
+  * 이 생명주기에서 별도의 특정 객체를 반환하면 해당 객체의 프로퍼티가 state에 설정이 된다.
+  * 반면 null 일 경우 아무런 변화가 없다.
+
+```jsx
+static getDerivedStateFromProps(nextProps, prevState) {
+    console.log("getDerivedStateFromProps");
+    if (nextProps.color !== prevState.color) {
+        return { color: nextProps.color };
+    }
+    return null;
+}
+```
+
+* render : 컴포넌트 렌더링을 당하는 메서드.
+* componentDidMount : 컴포넌트의 첫 렌더링 후 호출되는 메서드
+  * 외부 라이브러리, 컴포넌트에 필요한 데이터 요청, 직접적인 DOM의 속성을 파악 및 변경하는 용도로 사용된다.
+
+#### 업데이트
+
+#### 언마운트
+
+
+
+
 
 ### componentDidCatch 로 에러 잡아내기
 

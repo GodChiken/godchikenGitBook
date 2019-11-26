@@ -107,7 +107,7 @@ description: ECMAScript6 에 등장하는 class keyword
 
 ### 정적 메서드 \(static method\)
 
-![](../../.gitbook/assets/image%20%2827%29.png)
+![](../../.gitbook/assets/image%20%2828%29.png)
 
 * `static` 키워드를 사용하며, 클래스의 이름으로 호출하므로 별도의 인스턴스를 생성할 필요가 없다.
 * 또한 정적 메서드는 인스턴스에서 호출은 불가능하다.

@@ -496,14 +496,14 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 반응성 - 왜 내 화면은 다시 그려지지 않는 걸까?
 
-![](../.gitbook/assets/image%20%2825%29.png)
+![](../.gitbook/assets/image%20%2826%29.png)
 
 * 생성하는 시점에 객체에 없던 프로퍼티에 대하여 값의 변경을 요할 경우 반응을 하지 않는다.
 * 크게 다음과 같은 경우에 실수를 유발한다고 한다.
   * toggle 역할을 하는 ui를 다룰 경우
   * 서버에서 불러온 데이터에 임의의 값을 추가하여 사용하는 경
 
-![](../.gitbook/assets/image%20%2823%29.png)
+![](../.gitbook/assets/image%20%2824%29.png)
 
 * vuex의 state 도 동일하니 주의가 필요하다.
 * Vue 3.0에서는 Proxy를 기반으로 변화할 예정이므로 괜찮다고 한다.
