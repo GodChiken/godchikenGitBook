@@ -3156,6 +3156,48 @@ static getDerivedStateFromProps(nextProps, prevState) {
 
 #### 업데이트
 
+* getDerivedStateFromProps
+* shouldComponentUpdate
+  * 컴포넌트의 리렌더링 여부를 결정하는 메서
+  * 최적화 용도로 사용되며 React.memo와 그 기능이 유사하다.
+
+```jsx
+shouldComponentUpdate(nextProps, nextState) {
+    console.log("shouldComponentUpdate", nextProps, nextState);
+    // 숫자의 마지막 자리가 4면 리렌더링하지 않습니다
+    return nextState.number % 10 !== 4;
+}
+```
+
+* render
+* getSnapshotBeforeUpdate
+  * getSnapshotBeforeUpdate 는 컴포넌트에 변화 직전의 DOM 상태를 가져와서 특정 값을 반환하여 그 다음 발생하게 되는 componentDidUpdate 에서 받아와서 활용을 할 수 있습니다.
+
+```jsx
+getSnapshotBeforeUpdate(prevProps, prevState) {
+  console.log("getSnapshotBeforeUpdate");
+  if (prevProps.color !== this.props.color) {
+    return this.myRef.style.color;
+  }
+  return null;
+}
+```
+
+* componentDidUpdate
+  * componentDidUpdate 는 리렌더링 이후, 변화가 모두 반영되고 난 뒤 호출되는 메서드입니다. 
+  * 3번째 파라미터로 getSnapshotBeforeUpdate 에서 반환한 값을 조회가 가능하.
+
+```jsx
+componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log("componentDidUpdate", prevProps, prevState);
+    if (snapshot) {
+        console.log("업데이트 되기 직전 색상: ", snapshot);
+    }
+}
+```
+
+#### getSnapshotBeforeUpdate의 활용 예
+
 #### 언마운트
 
 
