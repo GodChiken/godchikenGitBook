@@ -3200,6 +3200,16 @@ componentDidUpdate(prevProps, prevState, snapshot) {
 
 #### 언마운트
 
+* componentWillAmount
+  * DOM 요소가 완전히 제거되기 직전에 발생되는 메서드로 언마운트 단계에서는 단 하나만 존재한다.
+  * 주로 해당 DOM 요소에 활용하였던 비동기 메서드 및 외부 라이브러리를 이곳에서 해제한다.
+
+```jsx
+componentWillUnmount() {
+    console.log("componentWillUnmount");
+}
+```
+
 
 
 
