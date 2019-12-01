@@ -49,7 +49,10 @@
 ## DevOps
 
 * [Jenkins](devops/jenkins.md)
-* [AWS](devops/aws.md)
+* [AWS](devops/aws/README.md)
+  * [Elastic BeanStalk](devops/aws/elastic-beanstalk.md)
+  * [Load Balancer](devops/aws/load-balancer.md)
+  * [SSL 인증서 발급](devops/aws/ssl.md)
 * [SonaType](devops/sonatype.md)
 * [CI/CD](devops/ci-cd.md)
 
