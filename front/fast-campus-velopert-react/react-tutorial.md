@@ -3274,7 +3274,7 @@ componentWillUnmount() {
 
 #### Sentry 연동 
 
-
+{% file src="../../.gitbook/assets/2019-12-03-8.48.36.mov" caption="센트리 따라해보기" %}
 
 ### 리액트 개발 할 때 사용하면 편리한 도구들
 
