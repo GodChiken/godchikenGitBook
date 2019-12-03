@@ -40,7 +40,7 @@ decrease.onclick = () => {
 * `react`는 대상이 되는 `component`를  특정한 규칙에 의해서 업데이트를 하는 것이 아닌, 새로 만드는 것에 대해서 사상을 가지고  있다.
 * 매번 복잡한 구조의 컴포넌트를 새로 만든다면 시간 낭비일 수 있으나, `virtual DOM` 이라는 것을 통해서 성능적인 이슈도 해결했다고 한다. 
 
-![&#xB9AC;&#xC561;&#xD2B8;&#xC758; DOM Rendering &#xACFC;&#xC815;](../../.gitbook/assets/image%20%286%29.png)
+![&#xB9AC;&#xC561;&#xD2B8;&#xC758; DOM Rendering &#xACFC;&#xC815;](../../.gitbook/assets/image%20%289%29.png)
 
 * `react`가 `DOM`을 `Rendering` 하는 과정
   * RealDOM &lt;--&gt; VirtualDOM 비교 과정
@@ -377,7 +377,7 @@ export default function InputSample() {
 
 #### 코드에서 \[name\] : value, name:value 차이가 무엇인가요?
 
-![\[name\] , name &#xC758; &#xCC28;&#xC774;&#xC810;](../../.gitbook/assets/image%20%2827%29.png)
+![\[name\] , name &#xC758; &#xCC28;&#xC774;&#xC810;](../../.gitbook/assets/image%20%2832%29.png)
 
 * 궁금할때 직접 찍어보는 것도 하나의 답이 된다.
 
@@ -581,7 +581,7 @@ export default function UserList() {
 
 #### key Props
 
-![key props &#xC124;&#xC815;&#xC744; &#xC548;&#xD55C; &#xACBD;&#xC6B0;](../../.gitbook/assets/image%20%283%29.png)
+![key props &#xC124;&#xC815;&#xC744; &#xC548;&#xD55C; &#xACBD;&#xC6B0;](../../.gitbook/assets/image%20%285%29.png)
 
 * 리액트에서 배열을 랜더링시 `key`라는 `props`를 설정해야 한다. 
 
@@ -1144,7 +1144,7 @@ useEffect(() => {
 
 * 이럴 경우 리렌더링 될때마다 호출이 된다.
 
-![&#xB9AC;&#xB79C;&#xB354;&#xB9C1;&#xB9C8;&#xB2E4; &#xD638;&#xCD9C;](../../.gitbook/assets/image%20%288%29.png)
+![&#xB9AC;&#xB79C;&#xB354;&#xB9C1;&#xB9C8;&#xB2E4; &#xD638;&#xCD9C;](../../.gitbook/assets/image%20%2811%29.png)
 
 * 리액트 컴포넌트는 부모가 리렌더링 되면 자식컴포넌트 또한 리렌더링이 수행된다.
 * 실제 `DOM`에 변화가 반영되는것은 바뀐 내용에 해당되는 컴포넌트만 되지만, `Virtual DOM`에서는 모든 `DOM`을 렌더링하므로 컴포넌트의 최적화하는 과정에서 이러한 불필요한 과정의 리소스를 절약하는 것이 가능하다.
@@ -3121,7 +3121,7 @@ export default class Counter extends Component {
 
 #### 생명주기 호출 과정
 
-![&#xC0DD;&#xBA85;&#xC8FC;&#xAE30; &#xBA54;&#xC11C;&#xB4DC; &#xD750;&#xB984;](../../.gitbook/assets/image%20%2823%29.png)
+![&#xC0DD;&#xBA85;&#xC8FC;&#xAE30; &#xBA54;&#xC11C;&#xB4DC; &#xD750;&#xB984;](../../.gitbook/assets/image%20%2828%29.png)
 
 #### 마운트
 
@@ -3274,7 +3274,42 @@ componentWillUnmount() {
 
 #### Sentry 연동 
 
+* 본인은 GitHub 계정을 통해서 [Sentry.io](https://sentry.io/) 에 방문하여 다음 동영상과 같이 시작 절차를 진행했다.
+
 {% file src="../../.gitbook/assets/2019-12-03-8.48.36.mov" caption="센트리 따라해보기" %}
+
+* npm 을 통한 sentry 설치 진행
+
+```bash
+$ npm install @sentry/browser
+```
+
+* Sentry에 SDK 연결을 수행해야 한다. Sentry에서 프로젝트 설정을 완료하면 Sentry는 _DSN_ 또는 _Data Source Name_ 이라는 값을 제공합니다 . 표준 URL과 비슷하지만 Sentry SDK에 필요한 구성을 나타내며 프로토콜, 공개 키, 서버 주소 및 프로젝트 식별자를 포함하여 몇 가지로 구성된다. 해당 스크린샷을 참조하여 index.js 를 수정하여 최종적인 센트리 등록을 마치자. 
+
+```jsx
+import React from "react";
+import "./css/styles.css";
+import * as Sentry from "@sentry/browser";
+
+Sentry.init({dsn: "https://ae06363733c640dfa0c19ef206eacba2@sentry.io/1842911"});
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+
+* 위 과정까지 마쳤다면 다음과 같이 시작하기 페이지가 변동이 되있다.
+
+{% tabs %}
+{% tab title="인증 전" %}
+![](../../.gitbook/assets/image%20%284%29.png)
+{% endtab %}
+
+{% tab title="인증 후" %}
+![](../../.gitbook/assets/image%20%281%29.png)
+{% endtab %}
+{% endtabs %}
+
+* 그 이후 다음과 같은 Sentry UI를 확인 할 수 있다.
+
+![](../../.gitbook/assets/image%20%2814%29.png)
 
 ### 리액트 개발 할 때 사용하면 편리한 도구들
 

@@ -285,7 +285,7 @@ f2(imgs2).catch(_ => 0).then(log);
 * 각 Message 마다 Unique한 ID를 생성합니다 \(UUID\)
 * 응답 메시지에 요청 메시지의 ID를 넣어 One-to-one 대응 관계를 만들어줍니다
 
-![action - reaction Interface](../.gitbook/assets/image%20%281%29.png)
+![action - reaction Interface](../.gitbook/assets/image%20%282%29.png)
 
 * 응답 메세지와 요청 메세지에 유니크한 id\(uuid\) 부여하여 관리
 * 응답 메시지에 요청 메시지의 ID를 넣어 One-to-many 대응 관계를 만들어줍니다
@@ -308,7 +308,7 @@ f2(imgs2).catch(_ => 0).then(log);
 
 ### 네가지 인터페이스 관리하기 위한 메세지 프로토콜 구성 
 
-![](../.gitbook/assets/image%20%2819%29.png)
+![](../.gitbook/assets/image%20%2824%29.png)
 
 ### 핵심 역할 인터페이스 명
 
@@ -347,7 +347,7 @@ type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
 
 ### 위 설계들을 통하여 취한 Isomorphic Implementation 개발
 
-![Server - Client\(Parent\) - Client\(iframe\)](../.gitbook/assets/image%20%2821%29.png)
+![Server - Client\(Parent\) - Client\(iframe\)](../.gitbook/assets/image%20%2826%29.png)
 
 * 이전 항목에서 언급한 core의 구현체를 서로 던져가며 이득을 취하는 것 같다.
 * MSA 기반 대규모 Front-end Application의 지향점
@@ -434,7 +434,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 하다보니 유튜버가 소개를 하기도..
 
-![DesignCourse](../.gitbook/assets/image%20%2815%29.png)
+![DesignCourse](../.gitbook/assets/image%20%2819%29.png)
 
 ## 글로벌 서비스를 하게 되면 겪게 될 폰트 렌더링 문제
 
@@ -453,7 +453,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 예측하기 어려운 폰트의 대응안
 
-![Redered Fonts &#xB97C; &#xCCB4;&#xD06C;&#xB97C; &#xD544;&#xD788; &#xD558;&#xC790;](../.gitbook/assets/image%20%285%29.png)
+![Redered Fonts &#xB97C; &#xCCB4;&#xD06C;&#xB97C; &#xD544;&#xD788; &#xD558;&#xC790;](../.gitbook/assets/image%20%288%29.png)
 
 * 폰트는 미리 예측하기 어렵다.
 * 크롬 디버그 툴을 이용하여 랜더링 폰트를 체크하면 내가 적용한 폰트가 잘 적용됬는지 확인이 가능하다. 
@@ -463,11 +463,11 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 다른 글로벌 서비스 사이트는 어떻게 대응하는가
 
-![&#xBC1C;&#xD45C;&#xC790;&#xAC00; &#xAC00;&#xC7A5; &#xCD94;&#xCC9C;&#xD558;&#xB294; &#xBC29;&#xC2DD;](../.gitbook/assets/image%20%2820%29.png)
+![&#xBC1C;&#xD45C;&#xC790;&#xAC00; &#xAC00;&#xC7A5; &#xCD94;&#xCC9C;&#xD558;&#xB294; &#xBC29;&#xC2DD;](../.gitbook/assets/image%20%2825%29.png)
 
 ### lang attribute
 
-![&#xC5B8;&#xC5B4;&#xB97C; &#xC9C0;&#xC815;&#xD558;&#xB294; &#xC804;&#xC5ED;&#xC18D;&#xC131;](../.gitbook/assets/image%20%287%29.png)
+![&#xC5B8;&#xC5B4;&#xB97C; &#xC9C0;&#xC815;&#xD558;&#xB294; &#xC804;&#xC5ED;&#xC18D;&#xC131;](../.gitbook/assets/image%20%2810%29.png)
 
 * 언어별 폰트셋을 사용
 * 언어별 CSS 스타일 적용
@@ -477,7 +477,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 말은 쉽지만 그 수많은 페이지를 어떻게 UI 테스트 합니까?
 
-![Cypress.io](../.gitbook/assets/image%20%2818%29.png)
+![Cypress.io](../.gitbook/assets/image%20%2822%29.png)
 
 * 다른 E2E 테스트를 시도하지 않았다곤 한다.
 * 크롬브라우저 위에서 Dom 기반으로 진행하는 테스트
@@ -496,14 +496,14 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 반응성 - 왜 내 화면은 다시 그려지지 않는 걸까?
 
-![](../.gitbook/assets/image%20%2826%29.png)
+![](../.gitbook/assets/image%20%2831%29.png)
 
 * 생성하는 시점에 객체에 없던 프로퍼티에 대하여 값의 변경을 요할 경우 반응을 하지 않는다.
 * 크게 다음과 같은 경우에 실수를 유발한다고 한다.
   * toggle 역할을 하는 ui를 다룰 경우
   * 서버에서 불러온 데이터에 임의의 값을 추가하여 사용하는 경
 
-![](../.gitbook/assets/image%20%2824%29.png)
+![](../.gitbook/assets/image%20%2829%29.png)
 
 * vuex의 state 도 동일하니 주의가 필요하다.
 * Vue 3.0에서는 Proxy를 기반으로 변화할 예정이므로 괜찮다고 한다.
@@ -550,7 +550,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 라이프 사이클 - 나는 인스턴스를 얼마나 파악하나
 
-![Vue Life Cycle](../.gitbook/assets/image%20%2817%29.png)
+![Vue Life Cycle](../.gitbook/assets/image%20%2821%29.png)
 
 #### 뷰의 템플릿 속성
 
