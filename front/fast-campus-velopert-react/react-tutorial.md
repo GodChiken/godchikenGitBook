@@ -3311,6 +3311,51 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ![](../../.gitbook/assets/image%20%2814%29.png)
 
+#### 그래서  실제로 프로덕션 환경에서 어떻게 활용하
+
+* 먼저 ErrorBoundary 클래스 컴포넌트를 만들어보자
+
+```jsx
+import React, { Component } from 'react';
+
+class ErrorBoundary extends Component {
+  state = {
+    error: false
+  };
+
+  componentDidCatch(error, info) {
+    console.log('에러가 발생했습니다.');
+    console.log({
+      error,
+      info
+    });
+    this.setState({
+      error: true
+    });
+  }
+
+  render() {
+    if (this.state.error) {
+      return <h1>에러 발생!</h1>;
+    }
+    return this.props.children;
+  }
+}
+
+export default ErrorBoundary;
+```
+
+* 주요적으로 보야하는 메서드는 `componentDidCatch` 이며 파라미터는 각각 에러의 내용과 위치 정보를 제공한다.
+* velopert 는 yarn 을 활용하여 production 환경에 대한 빌드를 진행했다. 그러나 필자는 npm 을 활용하여 설치를 진행했다.
+
+```bash
+$ npm run build
+$ npm install -g serve
+$ serve -s build
+```
+
+* 위 명령어를 통해 모든 과정을 마치면, **localhost:5000/** 에서도 정상적으로 센트리와 연동이 완료된다. 
+
 ### 리액트 개발 할 때 사용하면 편리한 도구들
 
 #### Prettier
