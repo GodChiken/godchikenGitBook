@@ -3385,18 +3385,77 @@ $ serve -s build
 * 변경 전과 후를 비교해본다.
 
 {% tabs %}
-{% tab title="First Tab" %}
+{% tab title="변경 전" %}
+```bash
+import React, {useReducer} from 'react';
 
+function reducer(state, action) {
+    switch (action.type) {
+        case 'INCREMENT' :
+            return state + 1;
+        case 'DECREMENT' :
+            return state - 1;
+        default :
+            return state;
+    }
+}
+
+export default function Counter() {
+    const [number, dispatch] = useReducer(reducer,0);
+
+    const onIncrease = () => { dispatch({type:'INCREMENT'}); };
+    const onDecrease = () => { dispatch({type:'DECREMENT'}); };
+
+    return (
+        <div>
+            <h1>{number}</h1>
+            <button onClick={onIncrease}>+</button>
+            <button onClick={onDecrease}>-</button>
+        </div>
+    );
+}
+```
 {% endtab %}
 
-{% tab title="Second Tab" %}
+{% tab title="변경 후" %}
+```bash
+import React, {useReducer} from 'react';
 
+function reducer(state, action) {
+    switch (action.type) {
+        case 'INCREMENT' :
+            return state + 1;
+        case 'DECREMENT' :
+            return state - 1;
+        default :
+            return state;
+    }
+}
+
+export default function Counter() {
+    const [number, dispatch] = useReducer(reducer,0);
+
+    const onIncrease = () => { dispatch({type:'INCREMENT'}); };
+    const onDecrease = () => { dispatch({type:'DECREMENT'}); };
+
+    return (
+        <div>
+            <h1>{number}</h1>
+            <button onClick={onIncrease}>+</button>
+            <button onClick={onDecrease}>-</button>
+        </div>
+    );
+}
+```
 {% endtab %}
 {% endtabs %}
 
 #### ESLint
 
+* create-react-app 으로 개발 시에는 미리 경험을 해본 관계로 생략한다.
+
 #### Snippet 
 
+* 
 
 
