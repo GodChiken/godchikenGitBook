@@ -3456,6 +3456,7 @@ export default function Counter() {
 
 #### Snippet 
 
-* 
+* 코드관련 템플릿에 관한 것이며, vscode 기준이기도 하며 다양한 플러그인을 intellij에서도 지원하니 취향거 선택하여 사한다.
+
 
 
