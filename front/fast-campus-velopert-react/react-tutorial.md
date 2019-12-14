@@ -377,7 +377,7 @@ export default function InputSample() {
 
 #### 코드에서 \[name\] : value, name:value 차이가 무엇인가요?
 
-![\[name\] , name &#xC758; &#xCC28;&#xC774;&#xC810;](../../.gitbook/assets/image%20%2838%29.png)
+![\[name\] , name &#xC758; &#xCC28;&#xC774;&#xC810;](../../.gitbook/assets/image%20%2839%29.png)
 
 * 궁금할때 직접 찍어보는 것도 하나의 답이 된다.
 
@@ -3121,7 +3121,7 @@ export default class Counter extends Component {
 
 #### 생명주기 호출 과정
 
-![&#xC0DD;&#xBA85;&#xC8FC;&#xAE30; &#xBA54;&#xC11C;&#xB4DC; &#xD750;&#xB984;](../../.gitbook/assets/image%20%2833%29.png)
+![&#xC0DD;&#xBA85;&#xC8FC;&#xAE30; &#xBA54;&#xC11C;&#xB4DC; &#xD750;&#xB984;](../../.gitbook/assets/image%20%2834%29.png)
 
 #### 마운트
 
@@ -3378,7 +3378,7 @@ $ serve -s build
 {% endtab %}
 
 {% tab title="최종적으로 To use it 따라하기" %}
-![](../../.gitbook/assets/image%20%2835%29.png)
+![](../../.gitbook/assets/image%20%2836%29.png)
 {% endtab %}
 {% endtabs %}
 
