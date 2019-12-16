@@ -40,7 +40,7 @@ decrease.onclick = () => {
 * `react`는 대상이 되는 `component`를  특정한 규칙에 의해서 업데이트를 하는 것이 아닌, 새로 만드는 것에 대해서 사상을 가지고  있다.
 * 매번 복잡한 구조의 컴포넌트를 새로 만든다면 시간 낭비일 수 있으나, `virtual DOM` 이라는 것을 통해서 성능적인 이슈도 해결했다고 한다. 
 
-![&#xB9AC;&#xC561;&#xD2B8;&#xC758; DOM Rendering &#xACFC;&#xC815;](../../.gitbook/assets/image%20%2812%29.png)
+![&#xB9AC;&#xC561;&#xD2B8;&#xC758; DOM Rendering &#xACFC;&#xC815;](../../.gitbook/assets/image%20%2818%29.png)
 
 * `react`가 `DOM`을 `Rendering` 하는 과정
   * RealDOM &lt;--&gt; VirtualDOM 비교 과정
@@ -377,7 +377,7 @@ export default function InputSample() {
 
 #### 코드에서 \[name\] : value, name:value 차이가 무엇인가요?
 
-![\[name\] , name &#xC758; &#xCC28;&#xC774;&#xC810;](../../.gitbook/assets/image%20%2839%29.png)
+![\[name\] , name &#xC758; &#xCC28;&#xC774;&#xC810;](../../.gitbook/assets/image%20%2850%29.png)
 
 * 궁금할때 직접 찍어보는 것도 하나의 답이 된다.
 
@@ -581,7 +581,7 @@ export default function UserList() {
 
 #### key Props
 
-![key props &#xC124;&#xC815;&#xC744; &#xC548;&#xD55C; &#xACBD;&#xC6B0;](../../.gitbook/assets/image%20%288%29.png)
+![key props &#xC124;&#xC815;&#xC744; &#xC548;&#xD55C; &#xACBD;&#xC6B0;](../../.gitbook/assets/image%20%2812%29.png)
 
 * 리액트에서 배열을 랜더링시 `key`라는 `props`를 설정해야 한다. 
 
@@ -1144,7 +1144,7 @@ useEffect(() => {
 
 * 이럴 경우 리렌더링 될때마다 호출이 된다.
 
-![&#xB9AC;&#xB79C;&#xB354;&#xB9C1;&#xB9C8;&#xB2E4; &#xD638;&#xCD9C;](../../.gitbook/assets/image%20%2814%29.png)
+![&#xB9AC;&#xB79C;&#xB354;&#xB9C1;&#xB9C8;&#xB2E4; &#xD638;&#xCD9C;](../../.gitbook/assets/image%20%2823%29.png)
 
 * 리액트 컴포넌트는 부모가 리렌더링 되면 자식컴포넌트 또한 리렌더링이 수행된다.
 * 실제 `DOM`에 변화가 반영되는것은 바뀐 내용에 해당되는 컴포넌트만 되지만, `Virtual DOM`에서는 모든 `DOM`을 렌더링하므로 컴포넌트의 최적화하는 과정에서 이러한 불필요한 과정의 리소스를 절약하는 것이 가능하다.
@@ -3121,7 +3121,7 @@ export default class Counter extends Component {
 
 #### 생명주기 호출 과정
 
-![&#xC0DD;&#xBA85;&#xC8FC;&#xAE30; &#xBA54;&#xC11C;&#xB4DC; &#xD750;&#xB984;](../../.gitbook/assets/image%20%2834%29.png)
+![&#xC0DD;&#xBA85;&#xC8FC;&#xAE30; &#xBA54;&#xC11C;&#xB4DC; &#xD750;&#xB984;](../../.gitbook/assets/image%20%2845%29.png)
 
 #### 마운트
 
@@ -3299,19 +3299,19 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 {% tabs %}
 {% tab title="인증 전" %}
-![](../../.gitbook/assets/image%20%287%29.png)
+![](../../.gitbook/assets/image%20%282%29.png)
 {% endtab %}
 
 {% tab title="인증 후" %}
-![](../../.gitbook/assets/image%20%283%29.png)
+![](../../.gitbook/assets/2019-12-03-9.09.19.png)
 {% endtab %}
 {% endtabs %}
 
 * 그 이후 다음과 같은 Sentry UI를 확인 할 수 있다.
 
-![](../../.gitbook/assets/image%20%2817%29.png)
+![](../../.gitbook/assets/image%20%286%29.png)
 
-#### 그래서  실제로 프로덕션 환경에서 어떻게 활용하
+#### 그래서  실제로 프로덕션 환경에서 어떻게 활용하는가.
 
 * 먼저 ErrorBoundary 클래스 컴포넌트를 만들어보자
 
@@ -3366,11 +3366,11 @@ $ serve -s build
 
 {% tabs %}
 {% tab title="plugin 설치" %}
-![](../../.gitbook/assets/image%20%2820%29.png)
+![](../../.gitbook/assets/2019-12-08-4.28.02.png)
 {% endtab %}
 
 {% tab title="prettier config 생성" %}
-![](../../.gitbook/assets/image%20%2818%29.png)
+![](../../.gitbook/assets/image%20%2827%29.png)
 {% endtab %}
 
 {% tab title="본인 취향의 문법 포맷 지정" %}
@@ -3378,7 +3378,7 @@ $ serve -s build
 {% endtab %}
 
 {% tab title="최종적으로 To use it 따라하기" %}
-![](../../.gitbook/assets/image%20%2836%29.png)
+![](../../.gitbook/assets/image%20%2839%29.png)
 {% endtab %}
 {% endtabs %}
 

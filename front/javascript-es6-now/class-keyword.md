@@ -107,7 +107,7 @@ description: ECMAScript6 에 등장하는 class keyword
 
 ### 정적 메서드 \(static method\)
 
-![](../../.gitbook/assets/image%20%2840%29.png)
+![](../../.gitbook/assets/image%20%2851%29.png)
 
 * `static` 키워드를 사용하며, 클래스의 이름으로 호출하므로 별도의 인스턴스를 생성할 필요가 없다.
 * 또한 정적 메서드는 인스턴스에서 호출은 불가능하다.
@@ -157,7 +157,7 @@ description: ECMAScript6 에 등장하는 class keyword
 
 ### `extends` 키워드를 활용한 다양한 상속 활용법
 
-![](../../.gitbook/assets/image%20%2823%29.png)
+![](../../.gitbook/assets/image%20%2832%29.png)
 
 * 타 객체 지향 언어와 거의 동일하게 상위 클래스의 구성물을 활용하고 오버로딩, 오버라이딩을 할수 있다는 점이 매력이 있다.
 * 그러나 현재 객체지향 언어도 상속보다는 constructor injection 을 통하여 필요한 내용을 조립하는 방식을 취하고 있기 때문에 자바스크립트에서도 이렇게 활용이 가능한지 조만간에 실습을 할 예정이다.
