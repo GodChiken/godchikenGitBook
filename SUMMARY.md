@@ -46,15 +46,16 @@
   * [Java - Inheritance\(상속\)](back/java/java-inheritance.md)
   * [Java - Interface](back/java/java-interface.md)
 
-## DevOps
+## Infra
 
-* [Jenkins](devops/jenkins.md)
-* [AWS](devops/aws/README.md)
-  * [Elastic BeanStalk](devops/aws/elastic-beanstalk.md)
-  * [Load Balancer](devops/aws/load-balancer.md)
-  * [SSL 인증서 발급](devops/aws/ssl.md)
-* [SonaType](devops/sonatype.md)
-* [CI/CD](devops/ci-cd.md)
+* [Jenkins](infra/jenkins.md)
+* [AWS](infra/aws/README.md)
+  * [Elastic BeanStalk](infra/aws/elastic-beanstalk.md)
+  * [Load Balancer](infra/aws/load-balancer.md)
+  * [SSL 인증서 발급](infra/aws/ssl.md)
+* [SonaType](infra/sonatype.md)
+* [CI/CD](infra/ci-cd.md)
+* [Apache 설정하기](infra/apache.md)
 
 ## Conference
 
