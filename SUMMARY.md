@@ -50,6 +50,7 @@
 
 * [Jenkins](infra/jenkins.md)
 * [AWS](infra/aws/README.md)
+  * [AMI](infra/aws/ami.md)
   * [Elastic BeanStalk](infra/aws/elastic-beanstalk.md)
   * [Load Balancer](infra/aws/load-balancer.md)
   * [SSL 인증서 발급](infra/aws/ssl.md)
