@@ -24,5 +24,6 @@ description: 관심분야를 공부하며 기억보단 기록을 하기위함
     * [https://github.com/nefe/You-Dont-Need-jQuery](https://github.com/nefe/You-Dont-Need-jQuery)
 * Back
 * Dev
-* Etc
+* Infra
+* Conference
 
