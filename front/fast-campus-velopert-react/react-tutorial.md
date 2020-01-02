@@ -2275,13 +2275,13 @@ export default React.memo(
 {% endtabs %}
 
 * `App`
-  * onToggle, onRemove의 삭제.
+  * `onToggle`, `onRemove`의 삭제.
   * Context API 사용.
   * fragment -&gt; Context 로 교체.
 * `UserList`
-  * App 에서 삭제된 onToggle, onRemove 구현.
-  * App 에서 선언한 Context 활
-  * 기존 User에 전달하기 위한 onToggle, onRemove props 제거.
+  * App 에서 삭제된 `onToggle`, `onRemove` 구현.
+  * App 에서 선언한 Context 활용.
+  * 기존 User에 전달하기 위한 `onToggle`, `onRemove` props 제거.
 
 #### 벨로퍼트의 숙제 완료 코드\(숙제 그만 좀..\)
 
