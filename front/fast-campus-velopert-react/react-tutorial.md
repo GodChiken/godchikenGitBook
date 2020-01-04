@@ -2948,7 +2948,7 @@ export default class Counter extends Component {
 {% endtab %}
 {% endtabs %}
 
-* 클래스형 컴포넌트의 state는 객체형태여야 한다.
+* 클래스형 컴포넌트의 `state`는 객체형태여야 한다.
 * 특별히 관리하지 않는 프로퍼티도 값은 유지된다.  하지만, 클래스형 컴포넌트의 `state` 에서 객체 형태의 상태를 관리해야 한다면, 불변성을 관리해줘가면서 업데이트를 해야한다.
 
 #### setState의 함수형 업데이
