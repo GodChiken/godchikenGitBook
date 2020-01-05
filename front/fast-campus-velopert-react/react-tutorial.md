@@ -377,7 +377,7 @@ export default function InputSample() {
 
 #### 코드에서 \[name\] : value, name:value 차이가 무엇인가요?
 
-![\[name\] , name &#xC758; &#xCC28;&#xC774;&#xC810;](../../.gitbook/assets/image%20%2852%29.png)
+![\[name\] , name &#xC758; &#xCC28;&#xC774;&#xC810;](../../.gitbook/assets/image%20%2857%29.png)
 
 * 궁금할때 직접 찍어보는 것도 하나의 답이 된다.
 
@@ -1144,7 +1144,7 @@ useEffect(() => {
 
 * 이럴 경우 리렌더링 될때마다 호출이 된다.
 
-![&#xB9AC;&#xB79C;&#xB354;&#xB9C1;&#xB9C8;&#xB2E4; &#xD638;&#xCD9C;](../../.gitbook/assets/image%20%2824%29.png)
+![&#xB9AC;&#xB79C;&#xB354;&#xB9C1;&#xB9C8;&#xB2E4; &#xD638;&#xCD9C;](../../.gitbook/assets/image%20%2825%29.png)
 
 * 리액트 컴포넌트는 부모가 리렌더링 되면 자식컴포넌트 또한 리렌더링이 수행된다.
 * 실제 `DOM`에 변화가 반영되는것은 바뀐 내용에 해당되는 컴포넌트만 되지만, `Virtual DOM`에서는 모든 `DOM`을 렌더링하므로 컴포넌트의 최적화하는 과정에서 이러한 불필요한 과정의 리소스를 절약하는 것이 가능하다.
@@ -3121,7 +3121,7 @@ export default class Counter extends Component {
 
 #### 생명주기 호출 과정
 
-![&#xC0DD;&#xBA85;&#xC8FC;&#xAE30; &#xBA54;&#xC11C;&#xB4DC; &#xD750;&#xB984;](../../.gitbook/assets/image%20%2847%29.png)
+![&#xC0DD;&#xBA85;&#xC8FC;&#xAE30; &#xBA54;&#xC11C;&#xB4DC; &#xD750;&#xB984;](../../.gitbook/assets/image%20%2851%29.png)
 
 #### 마운트
 
@@ -3370,7 +3370,7 @@ $ serve -s build
 {% endtab %}
 
 {% tab title="prettier config 생성" %}
-![](../../.gitbook/assets/image%20%2828%29.png)
+![](../../.gitbook/assets/image%20%2830%29.png)
 {% endtab %}
 
 {% tab title="본인 취향의 문법 포맷 지정" %}
@@ -3378,7 +3378,7 @@ $ serve -s build
 {% endtab %}
 
 {% tab title="최종적으로 To use it 따라하기" %}
-![](../../.gitbook/assets/image%20%2841%29.png)
+![](../../.gitbook/assets/image%20%2844%29.png)
 {% endtab %}
 {% endtabs %}
 
