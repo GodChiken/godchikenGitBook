@@ -3134,7 +3134,7 @@ constructor(props) {
 }
 ```
 
-* getDerivedStateFromProps
+* `getDerivedStateFromProps`
   * props 로 받아온 값을 state에서 관리하고자 할 때 사용
   * 다른 생명주기와 달리 static 키워드가 필요하며, 내부에서 this를 조회하는 것은 불가능하다.
   * 이 생명주기에서 별도의 특정 객체를 반환하면 해당 객체의 프로퍼티가 state에 설정이 된다.
@@ -3151,13 +3151,13 @@ static getDerivedStateFromProps(nextProps, prevState) {
 ```
 
 * render : 컴포넌트 렌더링을 당하는 메서드.
-* componentDidMount : 컴포넌트의 첫 렌더링 후 호출되는 메서드
+* `componentDidMount` : 컴포넌트의 첫 렌더링 후 호출되는 메서드
   * 외부 라이브러리, 컴포넌트에 필요한 데이터 요청, 직접적인 DOM의 속성을 파악 및 변경하는 용도로 사용된다.
 
 #### 업데이트
 
-* getDerivedStateFromProps
-* shouldComponentUpdate
+* `getDerivedStateFromProps`
+* `shouldComponentUpdate`
   * 컴포넌트의 리렌더링 여부를 결정하는 메서
   * 최적화 용도로 사용되며 React.memo와 그 기능이 유사하다.
 
@@ -3169,9 +3169,9 @@ shouldComponentUpdate(nextProps, nextState) {
 }
 ```
 
-* render
-* getSnapshotBeforeUpdate
-  * getSnapshotBeforeUpdate 는 컴포넌트에 변화 직전의 DOM 상태를 가져와서 특정 값을 반환하여 그 다음 발생하게 되는 componentDidUpdate 에서 받아와서 활용을 할 수 있습니다.
+* `render`
+* `getSnapshotBeforeUpdate`
+  * `getSnapshotBeforeUpdate` 는 컴포넌트에 변화 직전의 DOM 상태를 가져와서 특정 값을 반환하여 그 다음 발생하게 되는 `componentDidUpdate` 에서 받아와서 활용을 할 수 있습니다.
 
 ```jsx
 getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -3183,9 +3183,9 @@ getSnapshotBeforeUpdate(prevProps, prevState) {
 }
 ```
 
-* componentDidUpdate
-  * componentDidUpdate 는 리렌더링 이후, 변화가 모두 반영되고 난 뒤 호출되는 메서드입니다. 
-  * 3번째 파라미터로 getSnapshotBeforeUpdate 에서 반환한 값을 조회가 가능하.
+* `componentDidUpdate`
+  * `componentDidUpdate` 는 리렌더링 이후, 변화가 모두 반영되고 난 뒤 호출되는 메서드입니다. 
+  * 3번째 파라미터로 `getSnapshotBeforeUpdate` 에서 반환한 값을 조회가 가능하.
 
 ```jsx
 componentDidUpdate(prevProps, prevState, snapshot) {
@@ -3260,7 +3260,7 @@ export default ScrollBox;
 
 #### 언마운트
 
-* componentWillAmount
+* `componentWillAmount`
   * DOM 요소가 완전히 제거되기 직전에 발생되는 메서드로 언마운트 단계에서는 단 하나만 존재한다.
   * 주로 해당 DOM 요소에 활용하였던 비동기 메서드 및 외부 라이브러리를 이곳에서 해제한다.
 
