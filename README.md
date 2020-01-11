@@ -4,7 +4,9 @@ description: 관심분야를 공부하며 기억보단 기록을 하기위함
 
 # 게시물 출처
 
+잘못 정리된 자료가 있는경우 이메일로 연락주세요
 
+godchiken@naver.com
 
 * Front
   * 출처 사이트 목록
