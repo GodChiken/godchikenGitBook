@@ -72,5 +72,5 @@
 
 ## Domain Driven Design\(DDD\)
 
-* [도메인 주도 설계 핵심](domain-driven-design-ddd/undefined.md)
+* [도메인 주도 설계 핵심](domain-driven-design-ddd/domain-driven-design-distilled.md)
 
