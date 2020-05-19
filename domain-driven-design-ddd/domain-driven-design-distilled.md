@@ -2,6 +2,7 @@
 
 ## 출처
 
+* 선수 지식 : [https://www.youtube.com/watch?v=YlZ-NtEIsP8](https://www.youtube.com/watch?v=YlZ-NtEIsP8)
 * 반 버논의 도메인 주도 설계 핵심
 * 반 버논의 Implementing Domain Driven Design
 
