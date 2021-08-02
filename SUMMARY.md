@@ -6,6 +6,8 @@
 ## Current Interests
 
 * [PHP 세팅 이슈](current-interests/php.md)
+* [Kotlin](current-interests/kotlin.md)
+* [SSH KeyGen](current-interests/ssh-keygen.md)
 * [카테고리 설명](current-interests/undefined.md)
 
 ## Front
@@ -49,7 +51,6 @@
   * [Java - Generic](back/java/untitled-1.md)
   * [Java - Inheritance\(상속\)](back/java/java-inheritance.md)
   * [Java - Interface](back/java/java-interface.md)
-* [Kotlin](back/kotlin.md)
 
 ## Infra
 
