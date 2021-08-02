@@ -3,6 +3,11 @@
 * [게시물 출처](README.md)
 * [소개](developer.md)
 
+## Current Interests
+
+* [PHP 세팅 이슈](current-interests/php.md)
+* [카테고리 설명](current-interests/undefined.md)
+
 ## Front
 
 * [JavaScript \(Basic\)](front/javascript-basic/README.md)
@@ -36,7 +41,6 @@
   * [Redux](front/fast-campus-velopert-react/redux.md)
   * [Redux Middleware](front/fast-campus-velopert-react/redux-middleware.md)
   * [React & TypeScript](front/fast-campus-velopert-react/react-and-typescript.md)
-* [HTML](front/html.md)
 * [CSS](front/css.md)
 
 ## Back
