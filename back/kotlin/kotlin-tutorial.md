@@ -38,7 +38,7 @@ description: 코틀린을 기초부분을 전체적으로 학습한다.
 
 ### 각종 kotlin function
 
-### onst, lateinit lazy
+### const, lateinit lazy
 
 ### kotlin coroutine
 
