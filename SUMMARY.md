@@ -3,16 +3,9 @@
 * [게시물 출처](README.md)
 * [소개](developer.md)
 
-## Current Interests
-
-* [PHP 세팅 이슈](current-interests/php.md)
-* [SSH KeyGen](current-interests/ssh-keygen.md)
-* [카테고리 설명](current-interests/undefined.md)
-* [Docker](current-interests/docker.md)
-
 ## Front
 
-* [JavaScript \(Basic\)](front/javascript-basic/README.md)
+* [JavaScript (Basic)](front/javascript-basic/README.md)
   * [자바스크립트란](front/javascript-basic/untitled-1.md)
   * [변수](front/javascript-basic/untitled-2.md)
   * [문법 어휘구조](front/javascript-basic/undefined.md)
@@ -26,9 +19,9 @@
   * [이벤트 & 이벤트 핸들링](front/javascript-basic/untitled-9.md)
   * [This Binding](front/javascript-basic/untitled-10.md)
   * [클래스와 모듈](front/javascript-basic/untitled-12.md)
-  * [객체의 변경불가성 \(immutability\)](front/javascript-basic/immutability.md)
-* [Javascript \(ES6~NOW\)](front/javascript-es6-now/README.md)
-  * [문법과 어휘구조2\(ES6~new\)](front/javascript-es6-now/2-es6-new.md)
+  * [객체의 변경불가성 (immutability)](front/javascript-basic/immutability.md)
+* [Javascript (ES6\~NOW)](front/javascript-es6-now/README.md)
+  * [문법과 어휘구조2(ES6\~new)](front/javascript-es6-now/2-es6-new.md)
   * [let, const, BlockLevel Scope](front/javascript-es6-now/let-const-blocklevel-scope.md)
   * [모듈](front/javascript-es6-now/undefined-1.md)
   * [Iteration](front/javascript-es6-now/iteration.md)
@@ -49,22 +42,20 @@
 
 * [Java](back/java/README.md)
   * [Java - Generic](back/java/untitled-1.md)
-  * [Java - Inheritance\(상속\)](back/java/java-inheritance.md)
+  * [Java - Inheritance(상속)](back/java/java-inheritance.md)
   * [Java - Interface](back/java/java-interface.md)
-* [Kotlin](back/kotlin/README.md)
+* [Kotlin](current-interests/kotlin.md)
   * [Kotlin Tutorial](back/kotlin/kotlin-tutorial.md)
 
 ## Infra
 
-* [Jenkins](infra/jenkins.md)
 * [AWS](infra/aws/README.md)
   * [AMI](infra/aws/ami.md)
   * [Elastic BeanStalk](infra/aws/elastic-beanstalk.md)
   * [Load Balancer](infra/aws/load-balancer.md)
   * [SSL 인증서 발급](infra/aws/ssl.md)
-* [SonaType](infra/sonatype.md)
-* [CI/CD](infra/ci-cd.md)
-* [Apache 설정하기](infra/apache.md)
+* [CI/CD](infra/ci-cd/README.md)
+  * [Jenkins](infra/ci-cd/jenkins.md)
 
 ## Conference
 
@@ -78,7 +69,6 @@
 
 * [칸반 보드에 대해서 알아보자](software-development-process/undefined.md)
 
-## Domain Driven Design\(DDD\)
+## Domain Driven Design(DDD)
 
 * [도메인 주도 설계 핵심](domain-driven-design-ddd/domain-driven-design-distilled.md)
-

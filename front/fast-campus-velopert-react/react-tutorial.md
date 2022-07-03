@@ -7,9 +7,9 @@ description: 튜토리얼
 ### 최신 흐름을 추구하는 리액트 강좌
 
 * 프론트 영역의 변화는 극심하지만 최신 흐름을 파악하는 것을 목표로 함.
-* 현재 상황에서는 클래스 컴포넌트의 도퇴되는 과정과, Hooks 와 Functional Component 의 부흥이 꼽혀진다 \(2019년 기준\)
+* 현재 상황에서는 클래스 컴포넌트의 도퇴되는 과정과, Hooks 와 Functional Component 의 부흥이 꼽혀진다 (2019년 기준)
 
-### 리액트는 어쩌다가 만들어졌을까? 
+### 리액트는 어쩌다가 만들어졌을까?&#x20;
 
 ```javascript
 <h2 id="number">0</h2>
@@ -36,38 +36,38 @@ decrease.onclick = () => {
 ```
 
 * 간단한 카운트를 행하는 소스다.
-*  `DOM` 을 직접 다루거나 이벤트가 더 많아 지는 경우에는 관리하기 매우 까다로워 진다.
+* &#x20;`DOM` 을 직접 다루거나 이벤트가 더 많아 지는 경우에는 관리하기 매우 까다로워 진다.
 * `react`는 대상이 되는 `component`를  특정한 규칙에 의해서 업데이트를 하는 것이 아닌, 새로 만드는 것에 대해서 사상을 가지고  있다.
-* 매번 복잡한 구조의 컴포넌트를 새로 만든다면 시간 낭비일 수 있으나, `virtual DOM` 이라는 것을 통해서 성능적인 이슈도 해결했다고 한다. 
+* 매번 복잡한 구조의 컴포넌트를 새로 만든다면 시간 낭비일 수 있으나, `virtual DOM` 이라는 것을 통해서 성능적인 이슈도 해결했다고 한다.&#x20;
 
-![&#xB9AC;&#xC561;&#xD2B8;&#xC758; DOM Rendering &#xACFC;&#xC815;](../../.gitbook/assets/image%20%2824%29.png)
+![리액트의 DOM Rendering 과정](<../../.gitbook/assets/image (24).png>)
 
 * `react`가 `DOM`을 `Rendering` 하는 과정
-  * RealDOM &lt;--&gt; VirtualDOM 비교 과정
+  * RealDOM <--> VirtualDOM 비교 과정
   * 일치하지 않는 것을 patch 과정을 통해서 부분적인 업데이트를 진
-  *  이로서 전체적인 것을 다시 그리는 행위를 취하지 않고 성능도 지켜나갈 수 있다.
+  *    이로서 전체적인 것을 다시 그리는 행위를 취하지 않고 성능도 지켜나갈 수 있다.
   * 고로 어떻게 업데이트 하냐의 관점이 아닌 어떻게 보여줄 지에 집중이 필요하다고 한다.
 
-### 작업환경 준비 
+### 작업환경 준비&#x20;
 
 * `Node.js` 설치
-* `yarn`\(더 빠른 설치\) or `npm` 중 취향적인 선택
-* 본인인 intellij 에서 프로젝트를 함. 
+* `yarn`(더 빠른 설치) or `npm` 중 취향적인 선택
+* 본인인 intellij 에서 프로젝트를 함.&#x20;
 
-### 나의 첫번째 리액트 컴포넌트 
+### 나의 첫번째 리액트 컴포넌트&#x20;
 
 * 이미 클래스, 함수형 스타일의 컴포넌트를 실습했다.
 
-### JSX 
+### JSX&#x20;
 
 * `JSX` 에서 선언하는 태그는 반드시 닫혀야한다.
-* N개 이상의 태그는 하나로 감싸야하고 감싸는 용도로 보통 `<div>` 를 사용하는 편이나 이마저도 싫다면 편법으로는 fragment를 사용한다. 
+* N개 이상의 태그는 하나로 감싸야하고 감싸는 용도로 보통 `<div>` 를 사용하는 편이나 이마저도 싫다면 편법으로는 fragment를 사용한다.&#x20;
 * `javascript` 변수를 `JSX` 내에서 사용하고 자하는경우 `{}`를 사용하면 된다.
 * `JSX` 내에서 style 은 객체 형태로 지정해야한다. 그리고 camelCase 형식으로 지정해야한다.
 * `JSX` 내에서 `css`의 class 를 지하는 것은 className으로 사용해야 한다.
 * 주석을 작성하는 법은 제시해줬으나 사용하고 싶지 않다. `{}` 사용
 
-### props 를 통해 컴포넌트에게 값 전달하기 
+### props 를 통해 컴포넌트에게 값 전달하기&#x20;
 
 #### props의 개요
 
@@ -95,7 +95,7 @@ function Hello(props) {
 export default Hello;
 ```
 
-* 매번 위와 같은 구조로 `props.` 과 같은 과정으로 호출하게되면 상당히 귀찮기 마련이다. 비 구조화 할당을 통해서 바로 사용하고자 하는 값을 곧바로 쓸 수도 있다. 
+* 매번 위와 같은 구조로 `props.` 과 같은 과정으로 호출하게되면 상당히 귀찮기 마련이다. 비 구조화 할당을 통해서 바로 사용하고자 하는 값을 곧바로 쓸 수도 있다.&#x20;
 * 아래와 같은 구조로 사용하는 것이 비 구조화 할당이라 명명한다.
 
 ```javascript
@@ -187,7 +187,7 @@ export default Wrapper;
 
 * 이전 항목에서 배운 비구조화 할당을 활용하면 위와 같이 간략하게 작성이 가능해졌다.
 
-### 조건부 렌더링 
+### 조건부 렌더링&#x20;
 
 #### `isSpecial` 사용자 정의 `props` 설정 및 활용해보기
 
@@ -209,7 +209,7 @@ export default function App() {
 ```
 
 * 간단한 삼항 연산자로 조건부 렌더링을 실습해보았다.
-* 다양하게 `props` 값을 설정할 수 있으나, 자바스크립트 값을 쓰기위해선 `{}`를 사용한다. 
+* 다양하게 `props` 값을 설정할 수 있으나, 자바스크립트 값을 쓰기위해선 `{}`를 사용한다.&#x20;
 * 또한 `props` 값을 생략하면 default value 는 `true` 이다.
 
 #### 조금더 축약된 표현을 활용해 본다면..
@@ -233,7 +233,7 @@ Hello.defaultProps = {
 
 * 우리가 단순히 보이고 안 보이고 수준의 표기용도이라면 `&&` 연산자를 고려해보는 것도 나쁘지 않다.
 
-### `useState` 를 통해 컴포넌트에서 바뀌는 값 관리하기 
+### `useState` 를 통해 컴포넌트에서 바뀌는 값 관리하기&#x20;
 
 #### 사용자 인터렉션에 변화에 따른 구현 방법
 
@@ -291,9 +291,9 @@ export default function Counter() {
 {% endtab %}
 {% endtabs %}
 
-* 엘리먼트에 이벤트를 설정 시 `xxxMethod()`와 같은 형태 호출하여로 넣게되면 `DOM`이 렌더링 되기 전에 실행되버리므로 오류가 난다. 
+* 엘리먼트에 이벤트를 설정 시 `xxxMethod()`와 같은 형태 호출하여로 넣게되면 `DOM`이 렌더링 되기 전에 실행되버리므로 오류가 난다.&#x20;
 
-### `input` 상태 관리하기 
+### `input` 상태 관리하기&#x20;
 
 ```javascript
 import React,{useState} from 'react'
@@ -321,7 +321,7 @@ export default function InputSample() {
 }
 ```
 
-### 여러개의 `input` 상태 관리하기 
+### 여러개의 `input` 상태 관리하기&#x20;
 
 ```javascript
 import React,{useState} from 'react';
@@ -375,13 +375,13 @@ export default function InputSample() {
 * 위와 같이 기존 객체를 통해서 새로운 객체를 생성해 나가며 불변성을 지켜나가야만 리액트 컴포넌트에서 상태가 업데이트 됨을 감지하고 필요해 의하여 리렌더링이 진행된다.
 * 만약 직접 수정하는 경우 값이 바뀌어도 리렌더링이 되지 않는다.
 
-#### 코드에서 \[name\] : value, name:value 차이가 무엇인가요?
+#### 코드에서 \[name] : value, name:value 차이가 무엇인가요?
 
-![\[name\] , name &#xC758; &#xCC28;&#xC774;&#xC810;](../../.gitbook/assets/image%20%2871%29.png)
+![\[name\] , name 의 차이점](<../../.gitbook/assets/image (71).png>)
 
 * 궁금할때 직접 찍어보는 것도 하나의 답이 된다.
 
-### `useRef` 로 특정 `DOM` 선택하기 
+### `useRef` 로 특정 `DOM` 선택하기&#x20;
 
 #### `DOM`을 선택해야하는 상황과 리액트에서 처리하는 방향
 
@@ -448,7 +448,7 @@ export default function InputSample() {
 
 * `useRef()` 를 사용하여 `Ref` 객체 생성하여 선택하고자하는 `DOM` 요소에 `ref` 값으로 설정한 코
 
-### 배열 렌더링하기 
+### 배열 렌더링하기&#x20;
 
 #### 배열 데이터 처리 변천
 
@@ -581,9 +581,9 @@ export default function UserList() {
 
 #### key Props
 
-![key props &#xC124;&#xC815;&#xC744; &#xC548;&#xD55C; &#xACBD;&#xC6B0;](../../.gitbook/assets/image%20%2818%29.png)
+![key props 설정을 안한 경우](<../../.gitbook/assets/image (18).png>)
 
-* 리액트에서 배열을 랜더링시 `key`라는 `props`를 설정해야 한다. 
+* 리액트에서 배열을 랜더링시 `key`라는 `props`를 설정해야 한다.&#x20;
 
 ```javascript
 return (
@@ -599,29 +599,29 @@ return (
 
 * 고유한 값을 다음과 같이 `key props`에 설정해본다. 왜 귀찮게 해야 하는가 생각이 들 수 있다.
 
-![key props &#xAC00; &#xC5C6;&#xB294;&#xACBD;&#xC6B0;](../../.gitbook/assets/3rkaiy1.gif)
+![key props 가 없는경우](../../.gitbook/assets/3rkaiy1.gif)
 
 * 리렌더링 때, 해당 변화를 주고자하는 컴포넌트의 인덱스와 상관없이 모든 컴포넌트를 순차적으로 변경하는 과정을 취한다.
 
-![key props &#xAC00; &#xC788;&#xB294; &#xACBD;&#xC6B0;](../../.gitbook/assets/yeus6bx.gif)
+![key props 가 있는 경우](../../.gitbook/assets/yeus6bx.gif)
 
-* 특정 인덱스의 컴포넌트에 변화를 주려면 고유 값을 알아야 원하는 곳만 변화를 줄 수 있다.  
+* 특정 인덱스의 컴포넌트에 변화를 주려면 고유 값을 알아야 원하는 곳만 변화를 줄 수 있다. &#x20;
 
-### useRef 로 컴포넌트 안의 변수 만들기 
+### useRef 로 컴포넌트 안의 변수 만들기&#x20;
 
 #### useRef의 또다른 용도
 
 * 컴포넌트 내부에서 조회 및 수정이 가능한 변수를 관리하는 용도
 * 값이 변경이 되어도 컴포넌트 리렌더링에 관여하지 않는다.
-* 일반적인 컴포넌트는 상태를 바꾸는 함수를 호출 -&gt; 랜더링 이후에 업데이트 된 상태를 조회하는 반면 useRef는 관리하고 있는 변수를 설정 이후 바로 조회가 가능하다.
+* 일반적인 컴포넌트는 상태를 바꾸는 함수를 호출 -> 랜더링 이후에 업데이트 된 상태를 조회하는 반면 useRef는 관리하고 있는 변수를 설정 이후 바로 조회가 가능하다.
 
 #### 위 용도를 통한 다양한 관리 사례
 
-* 비동기 이벤트를 통해 생성된 고유값 \(ex: id값\)
+* 비동기 이벤트를 통해 생성된 고유값 (ex: id값)
 * 외부 라이브러리를 통해 생성된 인스턴스
 * scroll 위치
 
-#### 직접 실습하여 보자 
+#### 직접 실습하여 보자&#x20;
 
 ```javascript
 const nextId = useRef(4);
@@ -759,9 +759,9 @@ export default function UserList({ users }) {
 
 * 불변성을 지키기 위해 배열의 `push`, `splice`, `sort` 등의 함수를 사용할 경우 새로운 배열에 복사하여 사용한다. 간편하게 사용하고 싶을 때는 다음의 두가지 방법을 따른다.
   * `spread` 연산자
-  * `concat`\(\) : 기존 배열을 수정하지 않고 새로운 배열을 생성
+  * `concat`() : 기존 배열을 수정하지 않고 새로운 배열을 생성
 
-### 배열에 항목 제거하기 
+### 배열에 항목 제거하기&#x20;
 
 {% tabs %}
 {% tab title="CreateUser Component" %}
@@ -884,7 +884,7 @@ export default function UserList({ users, onRemove }) {
 
 ### 배열에 항목 수정하기
 
-#### 간단한 색상 수정기능 
+#### 간단한 색상 수정기능&#x20;
 
 {% tabs %}
 {% tab title="User에 active 속성 추가" %}
@@ -1078,14 +1078,16 @@ export default function UserList({ users, onRemove, onToggle }) {
     );
 }
 ```
+
+
 {% endtab %}
 {% endtabs %}
 
 #### 구현 화면
 
-![&#xAD6C;&#xD604; &#xD654;&#xBA74;](../../.gitbook/assets/captured-1.gif)
+![구현 화면](../../.gitbook/assets/captured-1.gif)
 
-### `useEffect`를 사용하여 마운트/언마운트/업데이트시 할 작업 설정하기 
+### `useEffect`를 사용하여 마운트/언마운트/업데이트시 할 작업 설정하기&#x20;
 
 #### `useEffect`를 통한 컴포넌트 마운트, 언마운트 관리
 
@@ -1098,7 +1100,7 @@ useEffect(() =>{
 },[]);
 ```
 
-* `useEffect`를 사용할 때에는 첫번째 파라미터에 함수, 두번째 파라미터에 의존값이 들어있는 배열\(`deps`\)를 넣는다. 
+* `useEffect`를 사용할 때에는 첫번째 파라미터에 함수, 두번째 파라미터에 의존값이 들어있는 배열(`deps`)를 넣는다.&#x20;
 * 첫번째 함수에서 함수를 반환이 가능하며 이 함수를 `cleanup`함수라고 부른다. `cleanup`함수는 `deps`를 생략한 경우 컴포넌트가 사라질 때 사용된다.
 
 #### `mount`시 주요 작업 예시
@@ -1110,7 +1112,7 @@ useEffect(() =>{
 
 #### `unmount`시 주요 작업 예시
 
-* `setInterval()`,`setTimeout()` 사용한 작업 clear. \(`clearInterval()`, `clearTimeout()`\)
+* `setInterval()`,`setTimeout()` 사용한 작업 clear. (`clearInterval()`, `clearTimeout()`)
 * 라이브러리 인스턴스 제거
 
 #### `deps`에 특정 값 넣기
@@ -1144,12 +1146,12 @@ useEffect(() => {
 
 * 이럴 경우 리렌더링 될때마다 호출이 된다.
 
-![&#xB9AC;&#xB79C;&#xB354;&#xB9C1;&#xB9C8;&#xB2E4; &#xD638;&#xCD9C;](../../.gitbook/assets/image%20%2831%29.png)
+![리랜더링마다 호출](<../../.gitbook/assets/image (31).png>)
 
 * 리액트 컴포넌트는 부모가 리렌더링 되면 자식컴포넌트 또한 리렌더링이 수행된다.
 * 실제 `DOM`에 변화가 반영되는것은 바뀐 내용에 해당되는 컴포넌트만 되지만, `Virtual DOM`에서는 모든 `DOM`을 렌더링하므로 컴포넌트의 최적화하는 과정에서 이러한 불필요한 과정의 리소스를 절약하는 것이 가능하다.
 
-### useMemo 를 사용하여 연산한 값 재사용하기 
+### useMemo 를 사용하여 연산한 값 재사용하기&#x20;
 
 {% tabs %}
 {% tab title="활성 사용자 수" %}
@@ -1265,7 +1267,7 @@ export default function App() {
 * 이러한 상황에는 `useMemo` 라는 Hook 함수를 사용하면 성능을 최적화 한다. 이전에 계산 한 값을 재사용하는 방법이다.
 * `useMemo` 의 첫번째 파라미터에는 어떻게 연산할지 정의하는 함수를 넣어주면 되고 두번째 파라미터에는 `deps` 배열을 넣어주면 되는데, 이 배열 안에 넣은 내용이 바뀌면, 우리가 등록한 함수를 호출해서 값을 연산해주고, 만약에 내용이 바뀌지 않았다면 이전에 연산한 값을 재사용한다.
 
-### useCallback 를 사용하여 함수 재사용하기 
+### useCallback 를 사용하여 함수 재사용하기&#x20;
 
 ```jsx
 import React,{useRef, useState, useMemo, useCallback} from 'react';
@@ -1376,7 +1378,7 @@ const onToggle = useMemo(
 * [https://blog.woolta.com/categories/1/posts/159](https://blog.woolta.com/categories/1/posts/159) 에서 그에 대한 대처법을 블로그했다.
 * 하지만 4.2버전부터는 원활하게 잘된다.
 
-### React.memo 를 사용한 컴포넌트 리렌더링 방지 
+### React.memo 를 사용한 컴포넌트 리렌더링 방지&#x20;
 
 {% tabs %}
 {% tab title="CreateUser" %}
@@ -1538,7 +1540,7 @@ export default function App() {
 {% endtab %}
 {% endtabs %}
 
-* `React.memo` 의 활용안은 기존 컴포넌트를 담을 수 있게 변수로 할당하고_\(할필요는 없지만 가독성을 위해서\)_ 해당 변수를 `React.memo`에 인자값으로 설정해준다.
+* `React.memo` 의 활용안은 기존 컴포넌트를 담을 수 있게 변수로 할당하고_(할필요는 없지만 가독성을 위해서)_ 해당 변수를 `React.memo`에 인자값으로 설정해준다.
 * 다른 컴포넌트도 동일하게 적용을 해나갈 수도 있지만 `User`의 경우에 한개만 건드려도 모든 `User`, `CreateUser`까지 리렌더링 되는 현상이 있다.
 * 몇 가지 점검을 해야 올바르게 작동한다.
   * `App`에서 `users`배열을 변경시  의존하는 함수들의 `deps`에 대해서 `useState`로 관리하는 `users`의 정보를 함수형으로 업데이트를 하는 구조로 변경이 필요하다.
@@ -1548,7 +1550,7 @@ export default function App() {
 
 #### 완벽하지 않은 React DevTool V4.2
 
-* _**hightlight update**_ 기능이 아직 완벽하게 픽스 된것 같지는 않다. \(2019.11.08 기준\)
+* _**hightlight update**_ 기능이 아직 완벽하게 픽스 된것 같지는 않다. (2019.11.08 기준)
 * 개발툴에 의존해서 확인하는 것 보다 각 컴포넌트에서 직접 확인해서 체크하는 것도 하나의 방법이다.
 
 #### useMemo의 구성
@@ -1590,7 +1592,7 @@ function useMemo(nextCreate, deps) {
 
 * 사실 이해하기엔 아직 아는게 없지만, 이런 식으로 구성을 한번 살펴보는거도 공부가 될 것이라고 생각한다.
 
-### `useReducer` 를 사용하여 상태 업데이트 로직 분리하기 
+### `useReducer` 를 사용하여 상태 업데이트 로직 분리하기&#x20;
 
 #### `useReducer`는 무엇인가?
 
@@ -1659,7 +1661,7 @@ export default function Counter() {
 {% endtabs %}
 
 * "함수만 분리했는데 무엇이 따로 관리하는 것인가" 라는 의문이 들수도 있다.
-* 중요한 포인트는 ****`useReducer`_**의**_ `reducer`_**를 다른 파일에 작성해도 무방**_하다.
+* 중요한 포인트는 **** `useReducer`_**의**_ `reducer`_**를 다른 파일에 작성해도 무방**_하다.
 * 상태관련 업데이트를 따로 분리가 가능하다는 점이다.
 
 #### `useReducer`를 활용한 `App` 컴포넌트 재구성
@@ -1835,7 +1837,7 @@ export default function App() {
 {% endtab %}
 {% endtabs %}
 
-* 조금 더 많은 기능이 존재하는 `App`의 `useState` -&gt;`useReducer`변환 코드.
+* 조금 더 많은 기능이 존재하는 `App`의 `useState` ->`useReducer`변환 코드.
 * 개인적으론 상태관리를 신경쓰는 **관심사**가 분리되어 더욱 가독성이 좋아진 것 같다.
 * `switch~case` 분기를 위해 작성한 값은 `typeScript`를 도입해서 `enum`으로 대체하고 싶다.
 
@@ -1844,7 +1846,7 @@ export default function App() {
 * 정답은 없다고 한다.
 * 상태관리를 함에 있어서 두가지 관점으로 보자면 다음과 같다.
   1. 내가 관리하는 상태 값이 한개 인가?
-  2. 내가 관리하는 상태 값이 1~n 개 인가?
+  2. 내가 관리하는 상태 값이 1\~n 개 인가?
   3. 혹은 현재는 단일 상태 값만 관리하지만 유동적일 가능성이 있는가?
 * 1번 이라면 `useState`를 권장한다.
 * 2,3번 이라면 `useReducer`를 권장한다.
@@ -1854,12 +1856,12 @@ export default function App() {
 * 상태값이 몇개 인지에서 생각하는 관점이 아니라, 기능 상으로 동일하다면 해당 로직에 더욱 집중을 하도록 애초부터 분리를 하여 집중할 수 있도록 분리하는 `useReducer`를 택할 것이다.
 * 그런데 상태 관리에 관한 여러 기술들 `Context API`, `Redux`, `MobX`등이 있다곤 한다.
 
-### 커스텀 Hooks 만들기 
+### 커스텀 Hooks 만들기&#x20;
 
 #### 공통되는 로직을 관리해보자.
 
 {% tabs %}
-{% tab title="useState & useInputs\(custom\)" %}
+{% tab title="useState & useInputs(custom)" %}
 ```jsx
 import { useState, useCallback } from 'react';
 
@@ -1970,9 +1972,9 @@ export default function App() {
 {% endtabs %}
 
 * 컴포넌트를 생성하다보면, 공통적인 로직이 발생하기 마련이다.
-* `custom Hooks` 를 생성하여 재사용하는 방법에 대해서 실습했다. 
+* `custom Hooks` 를 생성하여 재사용하는 방법에 대해서 실습했다.&#x20;
 
-#### custom hooks : `useState` -&gt; `useReducer` 전환 연습하기
+#### custom hooks : `useState` -> `useReducer` 전환 연습하기
 
 {% tabs %}
 {% tab title="초기 풀이" %}
@@ -2010,7 +2012,7 @@ export default function useInputs(initialForm) {
 ```
 {% endtab %}
 
-{% tab title="1차 개선\(for...in 활용\)" %}
+{% tab title="1차 개선(for...in 활용)" %}
 ```jsx
 import {useReducer, useCallback} from 'react';
 
@@ -2046,7 +2048,7 @@ export default function useInputs(initialForm) {
 ```
 {% endtab %}
 
-{% tab title="2차 개선\(reduce\(\) 활용\)" %}
+{% tab title="2차 개선(reduce() 활용)" %}
 ```jsx
 import {useReducer, useCallback} from 'react';
 
@@ -2099,9 +2101,9 @@ export default function useInputs(initialForm) {
 
 #### Array.prototype.reduce를 잠깐 짚고 넘어가자
 
-*  **`reduce()`** 메서드는 배열의 각 요소에 대해 주어진 **리듀서**\(reducer\) 함수를 실행하고, 하나의 결과값을 반환한다.
+* &#x20;**`reduce()` ** 메서드는 배열의 각 요소에 대해 주어진 **리듀서**(reducer) 함수를 실행하고, 하나의 결과값을 반환한다.
 * 크게 `callback`, `initialValue`로 나뉜다.
-* `callback` 
+* `callback`&#x20;
   * 컬렉션의 각 요소에 대해 실행할 함수. 4개의 인수를 가지고 있다.
     * 필수요소
       * `accumulator` : 콜백의 반환값을 누적한다.. 콜백의 이전 반환값 또는, 콜백의 첫 번째 호출과정에서 `initialValue`를 제공한 경우에는 `initialValue`의 초기값 이다.
@@ -2109,12 +2111,12 @@ export default function useInputs(initialForm) {
     * 옵션
       * `currentIndex`  : Optional처리할 현재 요소의 인덱스. `initialValue`를 제공한 경우 0, 아니면 1부터 시작합니다.
       * `array` : Optional`reduce()`를 호출한 배열.
-* `initialValue` 
+* `initialValue`&#x20;
   * Optional`callback`의 최초 호출에서 첫 번째 인수에 제공하는 값.
-  * 초기값을 제공하지 않으면 배열의 첫 번째 요소를 사용한다. 
+  * 초기값을 제공하지 않으면 배열의 첫 번째 요소를 사용한다.&#x20;
   * 빈 배열에서 초기값 없이 `reduce()`를 호출하면 오류가 발생한다.
 
-### Context API 를 사용한 전역 값 관리 
+### Context API 를 사용한 전역 값 관리&#x20;
 
 #### 부모에게서 자식으로 "값"을 전달할 경우 고찰..
 
@@ -2135,7 +2137,7 @@ const UserDispatch = React.createContext(null);
 
 * Context의 기본값을 설정할 수 있다.
 * 내부 컴포넌트로 `Provider` 라는 컴포넌트가 구성되어있고 `Context`의 값을 지정할 수 있다.
-  *  `attribute`로 `value`를 설정이 가능하다. 본 챕터에서는 `fragment` 대신 교체가 되고 `useReducer`에서 추출한 `dispatch`를 `value`로 설정했다.
+  * &#x20;`attribute`로 `value`를 설정이 가능하다. 본 챕터에서는 `fragment` 대신 교체가 되고 `useReducer`에서 추출한 `dispatch`를 `value`로 설정했다.
 
 #### 실습코드
 
@@ -2277,15 +2279,15 @@ export default React.memo(
 * `App`
   * `onToggle`, `onRemove`의 삭제.
   * Context API 사용.
-  * fragment -&gt; Context 로 교체.
+  * fragment -> Context 로 교체.
 * `UserList`
   * App 에서 삭제된 `onToggle`, `onRemove` 구현.
   * App 에서 선언한 Context 활용.
   * 기존 User에 전달하기 위한 `onToggle`, `onRemove` props 제거.
 
-#### 벨로퍼트의 숙제 완료 코드\(숙제 그만 좀..\)
+#### 벨로퍼트의 숙제 완료 코드(숙제 그만 좀..)
 
-* 요구사항     
+* 요구사항    &#x20;
 
 {% hint style="success" %}
 User 컴포넌트에게 따로 `onToggle` / `onRemove` 를 `props`로 전달하지 않고 바로 `dispatch` 를 사용했던 것 처럼, `CreateUser` 컴포넌트에서도 `dispatch` 를 직접 하도록 구현을 해보세요.
@@ -2443,9 +2445,9 @@ export default React.memo(
 {% endtab %}
 {% endtabs %}
 
-* Context API 를 통해서 각 컴포넌트의 "값"의 변화는 필요한 컴포넌트에서 관리하게 되는 이점을 얻게 되었다. 
+* Context API 를 통해서 각 컴포넌트의 "값"의 변화는 필요한 컴포넌트에서 관리하게 되는 이점을 얻게 되었다.&#x20;
 
-### `Immer`를 사용한 더 쉬운 불변성 관리 
+### `Immer`를 사용한 더 쉬운 불변성 관리&#x20;
 
 #### 불변성의 중요성
 
@@ -2519,7 +2521,7 @@ const nextState = produce(state, draft => {
 {% endtab %}
 {% endtabs %}
 
-* 비교적 직관적으로 코드가 보인다. 
+* 비교적 직관적으로 코드가 보인다.&#x20;
 
 #### `Immer` 설치
 
@@ -2656,16 +2658,16 @@ const onClick = useCallback(() => {
 
 * 성능
   * 인간이 시각적으로 인지하는 기준은 13ms
-    *  `Immer`가 5만개의 원소중 5천개를 업데이트하는 속도는 약 31ms
+    * &#x20;`Immer`가 5만개의 원소중 5천개를 업데이트하는 속도는 약 31ms
     * `Native Reducer`가 업데이트하는 속도는 약 6ms
-  * 성능적으로 Navtive Reducer 보다 좋지 않다. 
+  * 성능적으로 Navtive Reducer 보다 좋지 않다.&#x20;
   * 그러므로 데이터의 양이 적거나, 구조가 복잡할 때 복잡도를  방지하는 차원의 용도로 권장한다.
-  *  Immer 는 JavaScript 엔진의 [Proxy](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 라는 기능을 사용
+  * &#x20;Immer 는 JavaScript 엔진의 [Proxy](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global\_Objects/Proxy) 라는 기능을 사용
     * 구형 브라우저 및 react-native 같은 환경에서는 미지원
       * 위 환경에서 ES5 fallback 을 사용하게 되고 191ms 정도로, 꽤나 느려지게 다.
     * Proxy 처럼 작동하지만 Proxy는 아니다.
 
-### 클래스형 컴포넌트 
+### 클래스형 컴포넌트&#x20;
 
 #### 함수형 컴포넌트가 하지 못하는 작업을 처리하자
 
@@ -2843,7 +2845,7 @@ export default class Counter extends Component{
 
 * 클래스 컴포넌트에서 이벤트를 등록하는 과정에서 각 메서드와 컴포넌트 인스턴스의 관계가 바인딩이 되지 않는 상황이 존재한다.
 * 해결법은 생성자 바인, Arrow Function, 직접 함수를 전달하는 방식이 존재한다.
-* CRA\(Create-React-App\)으로 생성한 프로젝트에서 클래스 컴포넌트 내부에 Arrow Function 선언을 가능하게 해주는 class-properties 라는 문법을 사용이 가능하나 정식 자바스크립트 문법이 아니니 주의해야한다.
+* CRA(Create-React-App)으로 생성한 프로젝트에서 클래스 컴포넌트 내부에 Arrow Function 선언을 가능하게 해주는 class-properties 라는 문법을 사용이 가능하나 정식 자바스크립트 문법이 아니니 주의해야한다.
 * 직접 전달하는 법은 랜더링 때마다 함수도 새로 생성되기 때문에 컴포넌트 최적화를 위해선 배제해야한다.
 
 #### 상태 선언, 업데이트 하기
@@ -3107,11 +3109,11 @@ export default class Counter extends Component {
 {% endtabs %}
 
 * `setState` 를 한다고 해서 상태가 바로 바뀌지 않는다.
-* `setState` 는 단순히 상태를 바꾸는 함수가 아니라 상태로 바꿔달라고 요청해주는 함수이기 때문이다.[\(참고\)](https://ko.reactjs.org/docs/react-component.html#setstate)
+* `setState` 는 단순히 상태를 바꾸는 함수가 아니라 상태로 바꿔달라고 요청해주는 함수이기 때문이다.[(참고)](https://ko.reactjs.org/docs/react-component.html#setstate)
 * 성능적인 이유 때문에 리액트에서는 상태가 바로 업데이트 되지 않고 비동기적으로 업데이트가 된다고 한다.
-* 만약에, 상태가 업데이트 되고 나서 어떤 작업을 하고 싶다면 다음과 같이 `setState` 의 두번째 파라미터에 콜백함수를 넣어 활용한다.        
+* 만약에, 상태가 업데이트 되고 나서 어떤 작업을 하고 싶다면 다음과 같이 `setState` 의 두번째 파라미터에 콜백함수를 넣어 활용한다.       &#x20;
 
-### LifeCycle Method 
+### LifeCycle Method&#x20;
 
 #### 무엇을 공부하든 중요한 생명주기
 
@@ -3121,7 +3123,7 @@ export default class Counter extends Component {
 
 #### 생명주기 호출 과정
 
-![&#xC0DD;&#xBA85;&#xC8FC;&#xAE30; &#xBA54;&#xC11C;&#xB4DC; &#xD750;&#xB984;](../../.gitbook/assets/image%20%2863%29.png)
+![생명주기 메서드 흐름](<../../.gitbook/assets/image (63).png>)
 
 #### 마운트
 
@@ -3184,7 +3186,7 @@ getSnapshotBeforeUpdate(prevProps, prevState) {
 ```
 
 * `componentDidUpdate`
-  * `componentDidUpdate` 는 리렌더링 이후, 변화가 모두 반영되고 난 뒤 호출되는 메서드입니다. 
+  * `componentDidUpdate` 는 리렌더링 이후, 변화가 모두 반영되고 난 뒤 호출되는 메서드입니다.&#x20;
   * 3번째 파라미터로 `getSnapshotBeforeUpdate` 에서 반환한 값을 조회가 가능하.
 
 ```jsx
@@ -3196,7 +3198,7 @@ componentDidUpdate(prevProps, prevState, snapshot) {
 }
 ```
 
-#### getSnapshotBeforeUpdate의 활용 예 \(스크롤바 유지하기\)
+#### getSnapshotBeforeUpdate의 활용 예 (스크롤바 유지하기)
 
 ```jsx
 import React, { Component } from "react";
@@ -3272,11 +3274,13 @@ componentWillUnmount() {
 
 ### componentDidCatch 로 에러 잡아내기
 
-#### Sentry 연동 
+#### Sentry 연동&#x20;
 
 * 본인은 GitHub 계정을 통해서 [Sentry.io](https://sentry.io/) 에 방문하여 다음 동영상과 같이 시작 절차를 진행했다.
 
-{% file src="../../.gitbook/assets/2019-12-03-8.48.36.mov" caption="센트리 따라해보기" %}
+{% file src="../../.gitbook/assets/2019-12-03-8.48.36.mov" %}
+센트리 따라해보기
+{% endfile %}
 
 * npm 을 통한 sentry 설치 진행
 
@@ -3284,7 +3288,7 @@ componentWillUnmount() {
 $ npm install @sentry/browser
 ```
 
-* Sentry에 SDK 연결을 수행해야 한다. Sentry에서 프로젝트 설정을 완료하면 Sentry는 _DSN_ 또는 _Data Source Name_ 이라는 값을 제공합니다 . 표준 URL과 비슷하지만 Sentry SDK에 필요한 구성을 나타내며 프로토콜, 공개 키, 서버 주소 및 프로젝트 식별자를 포함하여 몇 가지로 구성된다. 해당 스크린샷을 참조하여 index.js 를 수정하여 최종적인 센트리 등록을 마치자. 
+* Sentry에 SDK 연결을 수행해야 한다. Sentry에서 프로젝트 설정을 완료하면 Sentry는 _DSN_ 또는 _Data Source Name_ 이라는 값을 제공합니다 . 표준 URL과 비슷하지만 Sentry SDK에 필요한 구성을 나타내며 프로토콜, 공개 키, 서버 주소 및 프로젝트 식별자를 포함하여 몇 가지로 구성된다. 해당 스크린샷을 참조하여 index.js 를 수정하여 최종적인 센트리 등록을 마치자.&#x20;
 
 ```jsx
 import React from "react";
@@ -3299,7 +3303,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 {% tabs %}
 {% tab title="인증 전" %}
-![](../../.gitbook/assets/image%20%283%29.png)
+![](<../../.gitbook/assets/image (3).png>)
 {% endtab %}
 
 {% tab title="인증 후" %}
@@ -3309,7 +3313,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 * 그 이후 다음과 같은 Sentry UI를 확인 할 수 있다.
 
-![](../../.gitbook/assets/image%20%288%29.png)
+![](<../../.gitbook/assets/image (8).png>)
 
 #### 그래서  실제로 프로덕션 환경에서 어떻게 활용하는가.
 
@@ -3354,7 +3358,7 @@ $ npm install -g serve
 $ serve -s build
 ```
 
-* 위 명령어를 통해 모든 과정을 마치면, **localhost:5000/** 에서도 정상적으로 센트리와 연동이 완료된다. 
+* 위 명령어를 통해 모든 과정을 마치면, **localhost:5000/** 에서도 정상적으로 센트리와 연동이 완료된다.&#x20;
 
 ### 리액트 개발 할 때 사용하면 편리한 도구들
 
@@ -3370,7 +3374,7 @@ $ serve -s build
 {% endtab %}
 
 {% tab title="prettier config 생성" %}
-![](../../.gitbook/assets/image%20%2838%29.png)
+![](<../../.gitbook/assets/image (38).png>)
 {% endtab %}
 
 {% tab title="본인 취향의 문법 포맷 지정" %}
@@ -3378,7 +3382,7 @@ $ serve -s build
 {% endtab %}
 
 {% tab title="최종적으로 To use it 따라하기" %}
-![](../../.gitbook/assets/image%20%2855%29.png)
+![](<../../.gitbook/assets/image (55).png>)
 {% endtab %}
 {% endtabs %}
 
@@ -3454,9 +3458,7 @@ export default function Counter() {
 
 * create-react-app 으로 개발 시에는 미리 경험을 해본 관계로 생략한다.
 
-#### Snippet 
+#### Snippet&#x20;
 
 * 코드관련 템플릿에 관한 것이며, vscode 기준이기도 하며 다양한 플러그인을 intellij에서도 지원하니 취향거 선택하여 사한다.
-
-
 

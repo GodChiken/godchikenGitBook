@@ -8,22 +8,22 @@
 
 ### 왜 선택했나
 
-* 자체적인 js 프레임워크인 Woowahan JS\(???\)를 사용하고 있었다.
+* 자체적인 js 프레임워크인 Woowahan JS(???)를 사용하고 있었다.
 * 그러나 backbone.js, jquery에 대한 의존성이 너무 강했다고한다.
   * backbone.js 에 대한 문제는 못 들었으나, jquery 에서의 dom 조작의 경우 사이드 이펙트에 대한 측정이 불가능 했다고 한다.
 * 미흡한 테스트 환경과 개발도구도 한 몫을 했다고 한다.
 * 또한 자체 개발 프레임워크를 공부하자고 하니, 별도의 러닝커브가 발생했다고 한다.
 * 성능도 별로라고 한다.
 * 다들 쓰니까의 느낌으로 접근한다기 보다 좋은 제품을 만들기 위한 기준을 정하고 결정했다고 한다.
-  * 좋은 제품의 8 가지 기준 \(Garvin, David A. Managing Quality: The Strategic and Competitive Edge, Free Press, 1988\)
-    1. 성능 \(Performance\) - 더 빠르고 효과적인 어플리케이션 
-    2. 특징 \(Feature\) - 제공하는 기능과 활용성
-    3. 신뢰성 \(Reliability\) - 안정성
-    4. 일치성 \(Conformance\) - 코드에 대한 신뢰
-    5. 내구성 \(Durability\) - 코드의 수명
-    6. 서비스성 \(Serviceability\) - 유지보수성
-    7. 심미성 \(Aesthetics\) - 가독성
-    8. 고객이 느끼는 품질 \(Perceived Quality\) - 핵심 결과물
+  * 좋은 제품의 8 가지 기준 (Garvin, David A. Managing Quality: The Strategic and Competitive Edge, Free Press, 1988)
+    1. 성능 (Performance) - 더 빠르고 효과적인 어플리케이션&#x20;
+    2. 특징 (Feature) - 제공하는 기능과 활용성
+    3. 신뢰성 (Reliability) - 안정성
+    4. 일치성 (Conformance) - 코드에 대한 신뢰
+    5. 내구성 (Durability) - 코드의 수명
+    6. 서비스성 (Serviceability) - 유지보수성
+    7. 심미성 (Aesthetics) - 가독성
+    8. 고객이 느끼는 품질 (Perceived Quality) - 핵심 결과물
 * 어딜가든 누구에게 듣든지, 동일한 소리를 많이 들었다 **리액트는 프레임워크가 아닌 라이브러리** 라는 점이다.
   * 기술 선택이 자유롭다.
   * 컴포넌트 단위 개발하기 적합하다.
@@ -31,11 +31,11 @@
   * 가볍게 뷰 렌더링만 사용 시에도 적합하다.
 * JSX 의 선언적인 구조 덕에 가독성과 유지보수성을 얻었다곤 했다만 정말 그런지는 잘 모르겠다.
 * Virtual DOM 기반의 렌더링 연산 처리 과정으로 성능적 향상을 얻었다고 한다.
-  * 일반적인 브라우저에서의 DOM Rendering process는 다음과 같다.\([좀 더 상세한 자료는 이곳에서 확인이 가능하다.](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/)\)
-  * 직접 DOM을 수정하는 경우 attachment =&gt; render tree & layout =&gt; painting =&gt; display 등의 과정이 연산이 요청마다 이루어지기에 비 효율적이게 된다.
+  * 일반적인 브라우저에서의 DOM Rendering process는 다음과 같다.([좀 더 상세한 자료는 이곳에서 확인이 가능하다.](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/))
+  * 직접 DOM을 수정하는 경우 attachment => render tree & layout => painting => display 등의 과정이 연산이 요청마다 이루어지기에 비 효율적이게 된다.
   * React는 위 rerender flow를 타지 않는 Virtual DOM을 만들고 수정한 결과물을 DOM에 전달한다.
 
-![&#xBE0C;&#xB77C;&#xC6B0;&#xC800;&#xC758; DOM Rendering Process](../.gitbook/assets/20191028_165220.png)
+![브라우저의 DOM Rendering Process](../.gitbook/assets/20191028\_165220.png)
 
 * 그래서 많고 많은 장점들이 있어서 매력을 느꼈다한다.
   * 다양한 dev tool & debug enviroment
@@ -46,7 +46,7 @@
 
 ### 왜 TypeScript 인가
 
-![Type Script](../.gitbook/assets/20191028_170350.png)
+![Type Script](../.gitbook/assets/20191028\_170350.png)
 
 * 자바스크립트의 표준을 지원을 하고 표준을 어긋나지 않게 확장된 슈퍼셋 이기 때문이다.
 * 정적 타입을 제공하여 안정성을 제공한다고 한다.
@@ -193,18 +193,18 @@ f2(imgs2).catch(_ => 0).then(log);
 * 순수함수에서는 별도의 타입가드를 통한 에러처리 보다 에러를 발생시키도록 두는것이 더욱 좋은 방안.
 * 에러 핸들링 코드는 부수효과를 일으킬 코드쪽에서 작성하는 것이 더욱 좋은 방안.
 * 불필요한 에러핸들링 효과는 오히려 에러를 숨기게 되어 에러 발생원인조차 모르게 되는 최악의 케이스로 가는 길.
-* 차라리 에러를 발생시켜 이를 **sentry.io** 같은 모니터링툴에 연동해 이를 모니터링 하는게 더욱 좋은 방안\(유저 , 회사 관점\)
+* 차라리 에러를 발생시켜 이를 **sentry.io** 같은 모니터링툴에 연동해 이를 모니터링 하는게 더욱 좋은 방안(유저 , 회사 관점)
 
 ## React Native로 Native한 애니메이션 구현하기
 
 ### 개요
 
-* 애니메이션과 인터렉션이 모바일에서 사용자에게 좋은 경험을 제공하지 않을까? 라는 관점을 소개 
+* 애니메이션과 인터렉션이 모바일에서 사용자에게 좋은 경험을 제공하지 않을까? 라는 관점을 소개&#x20;
 * 내부적으로 작동하는 방식에 대해서, 자료는 크게 없어서 직접 뜯어봐야하는편
 
 ### 사용자 입장에서의 좋은 앱의 기준은 무엇인가?
 
-* 애니메이션과 인터렉션\(상호작용\)이 기준이 아닐까 생각한다고 한다.
+* 애니메이션과 인터렉션(상호작용)이 기준이 아닐까 생각한다고 한다.
 
 ### 발표목적
 
@@ -214,7 +214,7 @@ f2(imgs2).catch(_ => 0).then(log);
 
 ### React Native Architecture
 
-![Native Thread &#xC640; JS Thread&#xC758; &#xD1B5;&#xC2E0; &#xBC29;&#xC2DD;](../.gitbook/assets/20191029_095045.png)
+![Native Thread 와 JS Thread의 통신 방식](../.gitbook/assets/20191029\_095045.png)
 
 * 리액트 네이티브에는 크게 위와 같은 `Native Thread` , `Bridge`,`JS Thread`로 이루어졌다.
   * `Bridge`는 두 스레드의 통신 공유를 위하여 존재한다.
@@ -225,7 +225,7 @@ f2(imgs2).catch(_ => 0).then(log);
 
 #### without useNativeDriver
 
-![without useNativeDriver &#xC758; &#xACFC;&#xC815;](../.gitbook/assets/20191029_100808.png)
+![without useNativeDriver 의 과정](../.gitbook/assets/20191029\_100808.png)
 
 * 단 1 프레임을 업데이트 하기위하여 많은 호출과정이 이루어진다.
 * 프레임 단위로 호출되기에 1프레임이 생성시 3번의 브릿지 페이지를 호출하는 과정을 취하는데 60프레임 기준 180번의 브릿지 페이지가 호출됨을 의미한다고한다.
@@ -233,18 +233,18 @@ f2(imgs2).catch(_ => 0).then(log);
 
 #### with useNativeDriver
 
-![with useNativeDriver](../.gitbook/assets/20191029_101150.png)
+![with useNativeDriver](../.gitbook/assets/20191029\_101150.png)
 
 * startNativeAnimation 함수로 처리하게 되면 네이티브를 호출하여 처리하는 방식
 * 모든프레임에 대한 연산을 한꺼번에 진행하기때문에 blocking 코드를 만나더라도 애니메이션에 영향이 없다고 한다.
 
 ### 그래서 둘에 대해 최종적으로 비교를 해본다면?
 
-![useNativeDriver &#xC0AC;&#xC6A9; &#xC720;&#xBB34;&#xC758; &#xCC28;&#xC774;&#xC810;](../.gitbook/assets/20191029_101735.png)
+![useNativeDriver 사용 유무의 차이점](../.gitbook/assets/20191029\_101735.png)
 
 ### 라이러리를 추천했다.
 
-* **react-native-reanimated** 
+* **react-native-reanimated**&#x20;
 * 리액트에서 애니메이션 관련된 처리를 할 경우 고려해보는게 좋겠다.
 
 ### 느낀 점
@@ -280,35 +280,35 @@ f2(imgs2).catch(_ => 0).then(log);
 
 #### 4가지의 인터페이스
 
-![request - response Interface](../.gitbook/assets/20191029_105822.png)
+![request - response Interface](../.gitbook/assets/20191029\_105822.png)
 
-* 각 Message 마다 Unique한 ID를 생성합니다 \(UUID\)
+* 각 Message 마다 Unique한 ID를 생성합니다 (UUID)
 * 응답 메시지에 요청 메시지의 ID를 넣어 One-to-one 대응 관계를 만들어줍니다
 
-![action - reaction Interface](../.gitbook/assets/image%20%289%29.png)
+![action - reaction Interface](<../.gitbook/assets/image (9).png>)
 
-* 응답 메세지와 요청 메세지에 유니크한 id\(uuid\) 부여하여 관리
+* 응답 메세지와 요청 메세지에 유니크한 id(uuid) 부여하여 관리
 * 응답 메시지에 요청 메시지의 ID를 넣어 One-to-many 대응 관계를 만들어줍니다
 
-![one-way - binding Interface](../.gitbook/assets/image%20%282%29.png)
+![one-way - binding Interface](<../.gitbook/assets/image (2).png>)
 
 * MobX를 사용하여, React, Vue, Angular 모두 지원
 * Props를 Component 등에서 Observer로 사용
-* event Interface \(Mobx Observable 활용\) 는 잘 기억이 나지 않는다.
+* event Interface (Mobx Observable 활용) 는 잘 기억이 나지 않는다.
   * 그래서 발표자에게 직접 질문을 했다.
   * Event 인터페이스 같은 경우에는 postMessage, onmessage 방식 그대로이기 때문에 제가 따로 설명하지 않았다고 한다.
   * 혹시나 해서 다시 정리를 해준 내용
     * R-R 인터페이스와 A-R 인터페이스는 반드시 자식 → 부모로 요청을 보내는 형식으로 디자인.
     * 부모→ 자식은 One-way Binding으로만 통신
     * Event 인터페이스는 특정 상황에서 부모 → 자식에게 이벤트를 Push 할 때만 보통 사용됨.
-    * 예를 들면, 단축키 기능을 만든다고 했을때, 상위 마이크로서비스에서 KeyDown 이벤트가 발생하면 자식에게 해당 이벤트를 내려주는 형식이 있을 수 있다. 
+    * 예를 들면, 단축키 기능을 만든다고 했을때, 상위 마이크로서비스에서 KeyDown 이벤트가 발생하면 자식에게 해당 이벤트를 내려주는 형식이 있을 수 있다.&#x20;
     * React, Vue, Angular 역시 컴포넌트 간 One-way binding 방식을 사용하고 있고, 해당 프레임워크에서 부모 → 자식으로의 Event Push는 대부분 전역 Event Bus를 통해 예외적으로 처리합니다. 따라서 Event 인터페이스를 반드시 사용해야하는 요구사항은 어플리케이션 상에서 거의 발생하지 않기 때문에, 이리온 클래스룸 역시 대부분 R-R, A-R, OB 방식으로 구현.
     * off-the-record로 Practical하게 말씀드리면, 일단 특정 복잡한 통신 기능이 당장 개발이 빨리 되야된다고 하면 onmessage 리스너에서 대충 switch-case로 처리한 뒤에 추후 리팩토링 과정에서 세가지 인터페이스의 조합으로 바꾸는 방식을 주로 사용.
     * Message Protocol는 반드시 지키기 때문에 추후 리팩토링 과정에서 어려움은 없었다고 한다.
 
-### 네가지 인터페이스 관리하기 위한 메세지 프로토콜 구성 
+### 네가지 인터페이스 관리하기 위한 메세지 프로토콜 구성&#x20;
 
-![](../.gitbook/assets/image%20%2854%29.png)
+![](<../.gitbook/assets/image (54).png>)
 
 ### 핵심 역할 인터페이스 명
 
@@ -338,7 +338,7 @@ type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
 
 * 해당 코어의 기능은 다음과 같다.
   * 메세지 생성
-  * 메세지 송수신\(드라이버\)
+  * 메세지 송수신(드라이버)
   * 메세지 처리
   * 메세지 리스너 등록
 * 그리고 코어적인 부분의 구현의 된 이후 SPA 웹앱을 Static File Hosting 을 통해 배포후 해당 url을 받아 iframe내부에서 사용한다
@@ -347,11 +347,11 @@ type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
 
 ### 위 설계들을 통하여 취한 Isomorphic Implementation 개발
 
-![Server - Client\(Parent\) - Client\(iframe\)](../.gitbook/assets/image%20%2858%29.png)
+![Server - Client(Parent) - Client(iframe)](<../.gitbook/assets/image (58).png>)
 
 * 이전 항목에서 언급한 core의 구현체를 서로 던져가며 이득을 취하는 것 같다.
 * MSA 기반 대규모 Front-end Application의 지향점
-  * 기능들 사이의 의존성을 최소화한다 
+  * 기능들 사이의 의존성을 최소화한다&#x20;
   * 기능들 사이의 통신은 공통의 Protocol로만 가능하도록 설계한다
   * 기능들 사이의 통신은 충분히 고도화된 하나의 코드로 관리한다
   * 각 기능 내부에서 오류가 발생해도, 전체 앱은 멈추지 않도록 한다
@@ -369,9 +369,9 @@ type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
     * 렌더링 단계도 브라우저의 최적화를 통해 멀티쓰레드로 가능하지 않을까?
   * 현실
     * iframe + postMessage은 Single-Thread로 동작
-    * OOPIFs\(Out-of-Process iframes\) 에 대한 논의는 현재 진행형
+    * OOPIFs(Out-of-Process iframes) 에 대한 논의는 현재 진행형
     * postMessage, onmessage 인터페이스는 보안상의 샌드박스를 위한 추상화에 불과
-    * iframe으로 인한 렌더링 성능 하락 \(약 30%\)
+    * iframe으로 인한 렌더링 성능 하락 (약 30%)
 
 ### 좋았던 점
 
@@ -379,7 +379,7 @@ type ActionListener = (react: (ret: any)=>void, …args: string[]) => void
 * url 변경만으로 충분한 알파테스트가 이루어 짐으로 배포할 것만 신경쓰면됨.
 * 신규 feature에 오류가 발생해도 iframe을 통한 물리적인 격리로 사이드 이펙트 최소
 
-### 기타 의견\([**@sunginHwang**](https://github.com/sunginHwang)**\)**
+### 기타 의견([**@sunginHwang**](https://github.com/sunginHwang)**)**
 
 * 크롬 한정의 서비스라 보통의 프로덕트에서는 적용하기 힘든 방식이 아닐지..
 
@@ -415,7 +415,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 * **react-scenejs** : React용 Scene.js
 * **ngx-scenejs** : Angular용 Scene.js
-* **vue-scenejs** : Vue용 Scene.js 
+* **vue-scenejs** : Vue용 Scene.js&#x20;
 * **@scenejs/effects** : 이펙트 컬렉션
 * **@scenejs/media** : Video, Audio를 재생할 수 있는 모듈
 * **@scenejs/iframe** : Iframe에있는Scene을재생할 수 있는 모듈
@@ -434,7 +434,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 하다보니 유튜버가 소개를 하기도..
 
-![DesignCourse](../.gitbook/assets/image%20%2848%29.png)
+![DesignCourse](<../.gitbook/assets/image (48).png>)
 
 ## 글로벌 서비스를 하게 되면 겪게 될 폰트 렌더링 문제
 
@@ -453,35 +453,35 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 예측하기 어려운 폰트의 대응안
 
-![Redered Fonts &#xB97C; &#xCCB4;&#xD06C;&#xB97C; &#xD544;&#xD788; &#xD558;&#xC790;](../.gitbook/assets/image%20%2823%29.png)
+![Redered Fonts 를 체크를 필히 하자](<../.gitbook/assets/image (23).png>)
 
 * 폰트는 미리 예측하기 어렵다.
-* 크롬 디버그 툴을 이용하여 랜더링 폰트를 체크하면 내가 적용한 폰트가 잘 적용됬는지 확인이 가능하다. 
-* [폰트의 상세적인 속성에 대해 공부하려면 다음 링크를 보라](http://designwithfontforge.com/en-US/The_EM_Square.html)😀 
+* 크롬 디버그 툴을 이용하여 랜더링 폰트를 체크하면 내가 적용한 폰트가 잘 적용됬는지 확인이 가능하다.&#x20;
+* [폰트의 상세적인 속성에 대해 공부하려면 다음 링크를 보라](http://designwithfontforge.com/en-US/The\_EM\_Square.html):grinning:&#x20;
 * 디자이너와의 협업으로 유연한 UI를 구성하라
 * 웹폰트로 고정 및 최적화를 시도하
 
 ### 다른 글로벌 서비스 사이트는 어떻게 대응하는가
 
-![&#xBC1C;&#xD45C;&#xC790;&#xAC00; &#xAC00;&#xC7A5; &#xCD94;&#xCC9C;&#xD558;&#xB294; &#xBC29;&#xC2DD;](../.gitbook/assets/image%20%2856%29.png)
+![발표자가 가장 추천하는 방식](<../.gitbook/assets/image (56).png>)
 
 ### lang attribute
 
-![&#xC5B8;&#xC5B4;&#xB97C; &#xC9C0;&#xC815;&#xD558;&#xB294; &#xC804;&#xC5ED;&#xC18D;&#xC131;](../.gitbook/assets/image%20%2829%29.png)
+![언어를 지정하는 전역속성](<../.gitbook/assets/image (29).png>)
 
 * 언어별 폰트셋을 사용
 * 언어별 CSS 스타일 적용
-* 번역툴에게 힌트를 제공 
-* 검색엔진에 힌트를 제공 브라우저의 문법 체크 기능 
+* 번역툴에게 힌트를 제공&#x20;
+* 검색엔진에 힌트를 제공 브라우저의 문법 체크 기능&#x20;
 * 그 외 각종 파서에서 유용하게 사용 가능
 
 ### 말은 쉽지만 그 수많은 페이지를 어떻게 UI 테스트 합니까?
 
-![Cypress.io](../.gitbook/assets/image%20%2852%29.png)
+![Cypress.io](<../.gitbook/assets/image (52).png>)
 
 * 다른 E2E 테스트를 시도하지 않았다곤 한다.
 * 크롬브라우저 위에서 Dom 기반으로 진행하는 테스트
-* 유저의 실제 행위에 대한 테스트 가능 \(클릭, 스크롤 등\)
+* 유저의 실제 행위에 대한 테스트 가능 (클릭, 스크롤 등)
 * 에러 발생 시, 스크린샷을 제공
 * 동영상 녹화 기능 제공
 
@@ -489,21 +489,21 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 * UI의 Unit Test 용으로는 적절하나 모든 브라우저의 테스트 용도는 아닌 듯 하다.
   * [관련 글](https://medium.com/hbsmith/selenium%EC%97%90%EC%84%9C-cypress%EB%A1%9C-%EA%B0%88%EC%95%84%ED%83%84-%ED%9B%84%EA%B8%B0-324f224c14db)이다.
-* 다른 테스트 도구도 찾아봐야겠다. 
-* 연사가 [TestCafe](https://devexpress.github.io/testcafe/documentation/getting-started/)도 있다고 했다. 
+* 다른 테스트 도구도 찾아봐야겠다.&#x20;
+* 연사가 [TestCafe](https://devexpress.github.io/testcafe/documentation/getting-started/)도 있다고 했다.&#x20;
 
 ## Vue.js 입문자가 실무에서 주의해야 할 5가지 특징
 
 ### 반응성 - 왜 내 화면은 다시 그려지지 않는 걸까?
 
-![](../.gitbook/assets/image%20%2870%29.png)
+![](<../.gitbook/assets/image (70).png>)
 
 * 생성하는 시점에 객체에 없던 프로퍼티에 대하여 값의 변경을 요할 경우 반응을 하지 않는다.
 * 크게 다음과 같은 경우에 실수를 유발한다고 한다.
   * toggle 역할을 하는 ui를 다룰 경우
   * 서버에서 불러온 데이터에 임의의 값을 추가하여 사용하는 경
 
-![](../.gitbook/assets/image%20%2867%29.png)
+![](<../.gitbook/assets/image (67).png>)
 
 * vuex의 state 도 동일하니 주의가 필요하다.
 * Vue 3.0에서는 Proxy를 기반으로 변화할 예정이므로 괜찮다고 한다.
@@ -550,7 +550,7 @@ Draggable, Resizable, Scalable, Rotatable, Warpable, Pinchable, Groupable, Snapp
 
 ### 라이프 사이클 - 나는 인스턴스를 얼마나 파악하나
 
-![Vue Life Cycle](../.gitbook/assets/image%20%2851%29.png)
+![Vue Life Cycle](<../.gitbook/assets/image (51).png>)
 
 #### 뷰의 템플릿 속성
 
@@ -574,9 +574,9 @@ function render() {
 ```
 
 * 뷰의 인스턴스 컴포넌트의 표현부를 정의하는 속
-*  **vue tempalate-explorer** 확인하면  랜더링된 부분을  볼수 있다고 한다.
-* 실제 DOM이 아닌 Virtual DOM\(javascript object\)이다.
-* **인스턴스가 실제로 화면에 mounted\(부착\) 된 이후부터 유효하다.**
+* &#x20;**vue tempalate-explorer** 확인하면  랜더링된 부분을  볼수 있다고 한다.
+* 실제 DOM이 아닌 Virtual DOM(javascript object)이다.
+* **인스턴스가 실제로 화면에 mounted(부착) 된 이후부터 유효하다.**
 * 실제로 이 사실을 알고 가지 않는다면 다음과 같은 경우를 겪을 수 있다.
   * ```javascript
     <!-- 템플릿 속성 -->
@@ -663,4 +663,3 @@ function render() {
 
 * 내년 3월 오픈 예정 vuex 의 map helper 함수가 사라진다는 이야기가 있다.
 * 이것 때문에 TypeScript 도입이 좌절되는 요소가 있다곤하는데 잘 모르겠다.
-
