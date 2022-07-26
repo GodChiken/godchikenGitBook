@@ -36,7 +36,6 @@
   * [Redux](front/fast-campus-velopert-react/redux.md)
   * [Redux Middleware](front/fast-campus-velopert-react/redux-middleware.md)
   * [React & TypeScript](front/fast-campus-velopert-react/react-and-typescript.md)
-* [CSS](front/css.md)
 
 ## Back
 
@@ -49,11 +48,6 @@
 
 ## Infra
 
-* [AWS](infra/aws/README.md)
-  * [AMI](infra/aws/ami.md)
-  * [Elastic BeanStalk](infra/aws/elastic-beanstalk.md)
-  * [Load Balancer](infra/aws/load-balancer.md)
-  * [SSL 인증서 발급](infra/aws/ssl.md)
 * [CI/CD](infra/ci-cd/README.md)
   * [Jenkins](infra/ci-cd/jenkins.md)
 
