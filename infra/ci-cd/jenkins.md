@@ -2,9 +2,13 @@
 
 ## CI / CD
 
-💡 해당 정보들을 단계별로 진행하시면 CI / CD 구성이 가능합니다.
+{% hint style="success" %}
+해당 정보들을 단계별로 진행하시면 CI / CD 구성이 가능합니다.
+{% endhint %}
 
-⚙️ SpringBoot, S3, ElasitcBeanstalk 를 기준으로 작성하였습니다.
+{% hint style="info" %}
+SpringBoot, S3, ElasitcBeanstalk 를 기준으로 작성하였습니다.
+{% endhint %}
 
 ## 개요
 
@@ -200,3 +204,11 @@ pipeline {
   }
 }
 ```
+
+
+
+{% hint style="success" %}
+지금까지 Jenkins, SpringBoot, S3, ElasitcBeanstalk을 활용항 CI/CD 구성을 알아보았습니다.
+
+처음부터 접근하면 어려울 수 있으나, 차근차근 접근하여 좋은 웹 서비스를 만드는데 도움이 되길 바랍니다.
+{% endhint %}
