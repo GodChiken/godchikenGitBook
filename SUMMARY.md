@@ -33,7 +33,7 @@
 
 ## Back
 
-* [Spring](back/spring/README.md)
+* [Spring](back/spring.md)
   * [Spring MVC](back/spring/spring-mvc.md)
   * [Spring Boot](back/spring/spring-boot/README.md)
     * [Spring Boot 원리](back/spring/spring-boot/spring-boot.md)
