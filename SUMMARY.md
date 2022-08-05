@@ -34,7 +34,8 @@
 ## Back
 
 * [Spring](back/spring.md)
-  * [Spring MVC](back/spring/spring-mvc.md)
+  * [Spring MVC](back/spring/spring-mvc/README.md)
+    * [Servlet](back/spring/spring-mvc/servlet.md)
   * [Spring Boot](back/spring/spring-boot/README.md)
     * [Spring Boot 원리](back/spring/spring-boot/spring-boot.md)
     * [Spring Boot 활용](back/spring/spring-boot/spring-boot-1.md)
