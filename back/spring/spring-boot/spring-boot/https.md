@@ -48,6 +48,8 @@ server.ssl.keyAlias: tomcat
 * 실습 이후에 https를 적용하면 더 이상 http 프로토콜을 사용할 수 없다.&#x20;
 * 왜냐하면  http connecter는 하나이기 때문이므로 둘다 쓰려면 참고예제로 코딩을해보자
 * 하는 김에 http2 허용까지 진행한다.
+* 애석하게도 http protocol에 http2를 적용은 같이되지 않는다. 직접 코딩해줘야 한다.
+* tomcat 9.0 or undertow 등으로 하면 복잡하게 설정하지 않고 프로퍼티로 속성을 정의하여 http2 허용은 끝난다. 각 서블릿 컨테이너마다 다르므로 필요 시 검색하여 사용한다.
 
 {% tabs %}
 {% tab title="HTTPS 요청하기" %}
