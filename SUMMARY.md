@@ -40,6 +40,8 @@
     * [Spring Boot 원리](back/spring/spring-boot/spring-boot/README.md)
       * [스프링 부트와 스프링 프레임워크의 차이](back/spring/spring-boot/spring-boot/undefined.md)
       * [AutoConfiguration에 대한 이해](back/spring/spring-boot/spring-boot/autoconfiguration.md)
+      * [내장 톰켓(Embedded Tomcat)](back/spring/spring-boot/spring-boot/embedded-tomcat.md)
+      * [스프링 부트 내에 HTTPS 적용해보기](back/spring/spring-boot/spring-boot/https.md)
     * [Spring Boot 활용](back/spring/spring-boot/spring-boot-1.md)
     * [Spring Boot 운영](back/spring/spring-boot/spring-boot-2.md)
     * [Spring Boot 버전별 변천사](back/spring/spring-boot/spring-boot-3.md)
