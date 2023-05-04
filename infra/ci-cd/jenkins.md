@@ -89,7 +89,7 @@ SpringBoot, S3, ElasitcBeanstalk 를 기준으로 작성하였습니다.
 # 패키지 관리툴 업데이트
 $ sudo apt update
 # 자바 설치
-$ sudo apt install openjdk-8-jdk
+$ sudo apt install openjdk-11-jdk
 # 버전 체크
 $ java -version
 # 홈 디렉토리 확인

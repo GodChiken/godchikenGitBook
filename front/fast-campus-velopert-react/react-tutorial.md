@@ -1661,7 +1661,7 @@ export default function Counter() {
 {% endtabs %}
 
 * "함수만 분리했는데 무엇이 따로 관리하는 것인가" 라는 의문이 들수도 있다.
-* 중요한 포인트는 **** `useReducer`_**의**_ `reducer`_**를 다른 파일에 작성해도 무방**_하다.
+* 중요한 포인트는 `useReducer`_**의**_ `reducer`_**를 다른 파일에 작성해도 무방**_하다.
 * 상태관련 업데이트를 따로 분리가 가능하다는 점이다.
 
 #### `useReducer`를 활용한 `App` 컴포넌트 재구성
@@ -2101,7 +2101,7 @@ export default function useInputs(initialForm) {
 
 #### Array.prototype.reduce를 잠깐 짚고 넘어가자
 
-* &#x20;**`reduce()` ** 메서드는 배열의 각 요소에 대해 주어진 **리듀서**(reducer) 함수를 실행하고, 하나의 결과값을 반환한다.
+* &#x20;**`reduce()`** 메서드는 배열의 각 요소에 대해 주어진 **리듀서**(reducer) 함수를 실행하고, 하나의 결과값을 반환한다.
 * 크게 `callback`, `initialValue`로 나뉜다.
 * `callback`&#x20;
   * 컬렉션의 각 요소에 대해 실행할 함수. 4개의 인수를 가지고 있다.
